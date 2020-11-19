@@ -1,0 +1,18 @@
+.button{
+    background: #ffffff;
+    color: #344dc4;
+}
+#standard-basic{
+    color: #344dc4;
+}
+.Box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 250px;
+    margin: 20px;
+}
+.container{
+    text-align: -webkit-center;
+}
