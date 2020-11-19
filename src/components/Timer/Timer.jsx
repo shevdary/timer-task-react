@@ -9,7 +9,10 @@ import * as actions from "../../actions/TimerActions";
 import store from "../../store";
 const { dispatch } = store;
 
-const { stopTimer, startTimer } = bindActionCreators(actions, dispatch);
+const { stopTimer, startTimer, addNewTask } = bindActionCreators(
+  actions,
+  dispatch
+);
 
 class Timer extends Component {
   state = {
@@ -18,11 +21,11 @@ class Timer extends Component {
 
   onClick = () => {
     const { isActiveTimer } = this.state;
-    isActiveTimer ? this.stop() : this.start();
+    isActiveTimer ? this.timerStop() : this.timerStart();
     this.setState({ isActiveTimer: !isActiveTimer });
   };
 
-  start = () => {
+  timerStart = () => {
     this.timer();
   };
 
@@ -30,13 +33,15 @@ class Timer extends Component {
     this.interval = setInterval(startTimer, 1000);
   };
 
-  stop = () => {
+  timerStop = () => {
+    const { onAddedToList } = this.props;
     clearInterval(this.interval);
     stopTimer();
+    onAddedToList({ id: 2 });
   };
 
   render() {
-    let { currentTime } = this.props;
+    const { currentTime } = this.props;
     const { isActiveTimer } = this.state;
 
     const minutes = currentTime ? Math.trunc((currentTime / 60) % 60) : 0;
@@ -60,11 +65,14 @@ class Timer extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentTime: state.currentTime
+    currentTime: state.currentTime,
+    ...state
   };
 };
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    onAddedToList: object => dispatch(addNewTask(object))
+  };
 };
 
-export default connect(mapStateToProps)(Timer);
+export default connect(mapStateToProps,mapDispatchToProps)(Timer);
