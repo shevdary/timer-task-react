@@ -3,14 +3,13 @@ import "./Timer.css";
 import { Button, Box, Container } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import {bindActionCreators} from "redux";
+import { bindActionCreators } from "redux";
 import * as actions from "../../actions/TimerActions";
 
 import store from "../../store";
-const {dispatch}=store;
+const { dispatch } = store;
 
-const {stopTimer,startTimer} = bindActionCreators( actions, dispatch);
-
+const { stopTimer, startTimer } = bindActionCreators(actions, dispatch);
 
 class Timer extends Component {
   state = {
@@ -28,10 +27,7 @@ class Timer extends Component {
   };
 
   timer = () => {
-    this.interval = setInterval(
-      startTimer,
-      1000
-    );
+    this.interval = setInterval(startTimer, 1000);
   };
 
   stop = () => {
@@ -42,10 +38,12 @@ class Timer extends Component {
   render() {
     let { currentTime } = this.props;
     const { isActiveTimer } = this.state;
-    console.log(isActiveTimer, "a");
-    const minutes = currentTime ? Math.trunc(currentTime / 60) : 0;
-    const hours = minutes == null ? 0 : Math.trunc(minutes / 60);
-    const second = currentTime > 60 ? 0 : currentTime;
+
+    const minutes = currentTime ? Math.trunc((currentTime / 60) % 60) : 0;
+    const hours =
+      minutes == null ? 0 : Math.trunc((currentTime / 60 / 60) % 60);
+    const second = currentTime > 60 ? currentTime % 60 : currentTime;
+
     return (
       <Container className="container">
         <TextField id="standard-basic" label="Name of your task" />
@@ -65,10 +63,8 @@ const mapStateToProps = state => {
     currentTime: state.currentTime
   };
 };
-const mapDispatchToProps=dispatch=>{
-    return{
-
-    }
-}
+const mapDispatchToProps = dispatch => {
+  return {};
+};
 
 export default connect(mapStateToProps)(Timer);
