@@ -37,7 +37,6 @@ class Timer extends Component {
 
   timerStop = () => {
     const { onAddedToList } = this.props;
-    console.log(" onclick")
     const { name } = this.state;
     clearInterval(this.interval);
     onAddedToList(name);
@@ -73,14 +72,13 @@ class Timer extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state, "maptate")
   return {
     currentTime: state.currentTime
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onAddedToList: name => dispatch(addNewTask(name))
+    onAddedToList: name => addNewTask(name)
   };
 };
 

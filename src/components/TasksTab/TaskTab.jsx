@@ -1,50 +1,39 @@
 import React, { Component } from "react";
 import TasksLog from "../TasksLog/TasksLog";
-import {
-  Box,
-  Paper,
-  Table,
-  TableCell,
-  TableContainer,
-  TableHead,
-  withStyles
-} from "@material-ui/core";
-import {Button,Grid} from "@material-ui/core";
-const StyledTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: "#01bcd5",
-    color: theme.palette.common.white
-  },
-  body: {
-    fontSize: 12
+import { Box } from "@material-ui/core";
+import { Tabs, AppBar, Tab } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import { TabPanel } from "../TabPanel/TabPanel";
 
-  }
-}))(Box);
+const TaskTab = () => {
+  const [value, setValue] = React.useState(0);
 
-class TaskTab extends Component {
-  render() {
-    return (
-        <StyledTableCell flexDirection="row" justifyContent="center">
-            <Button>
-                {" "}
-                <TasksLog />
-            </Button>
-            <Button>
-                second
-            </Button>
-        </StyledTableCell>
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-    );
-  }
-}
+  return (
+    <div>
+      <AppBar position="static">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
+          <Tab label="Item One">
+            <TasksLog />
+          </Tab>
+          <Tab label="Item Two" />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        <TasksLog value={value} />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+         НУ И ЧЕ КАК Я ДОЛЖНА ГРАФИК ЭТОТ ВАШ ПОКАЗАТЬ
+      </TabPanel>
+    </div>
+  );
+};
 
 export default TaskTab;
-/*<StyledTableCell flexDirection="row" justifyContent="center">
- <Button>
- {" "}
- <TasksLog />
- </Button>
- <Button>
- second
- </Button>
- </StyledTableCell>*/
