@@ -1,9 +1,10 @@
 export const startTimer = () => {
   return { type: "TIMER_START" };
 };
-export const stopTimer = () => {
-  return { type: "TIMER_STOP" };
+
+export const addNewTask = taskName => {
+  return { type: "TIMER_STOP_TASK", payload: taskName };
 };
-export const addNewTask = task => {
-  return { type: "ADD_TASK", payload: task };
+export const removeTaskItem = taskID => {
+  return { type: "REMOVE_ITEM_TASK", payload: taskID };
 };

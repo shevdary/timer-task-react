@@ -9,20 +9,22 @@ import * as actions from "../../actions/TimerActions";
 import store from "../../store";
 const { dispatch } = store;
 
-const { stopTimer, startTimer, addNewTask } = bindActionCreators(
-  actions,
-  dispatch
-);
+const { startTimer, addNewTask } = bindActionCreators(actions, dispatch);
 
 class Timer extends Component {
   state = {
-    isActiveTimer: false
+    isActiveTimer: false,
+    name: ""
   };
 
   onClick = () => {
     const { isActiveTimer } = this.state;
     isActiveTimer ? this.timerStop() : this.timerStart();
     this.setState({ isActiveTimer: !isActiveTimer });
+  };
+
+  onChange = e => {
+    this.setState({ name: e.target.value });
   };
 
   timerStart = () => {
@@ -35,14 +37,16 @@ class Timer extends Component {
 
   timerStop = () => {
     const { onAddedToList } = this.props;
+    console.log(" onclick")
+    const { name } = this.state;
     clearInterval(this.interval);
-    stopTimer();
-    onAddedToList({ id: 2 });
+    onAddedToList(name);
+    this.setState({ name: "" });
   };
 
   render() {
     const { currentTime } = this.props;
-    const { isActiveTimer } = this.state;
+    const { isActiveTimer, name } = this.state;
 
     const minutes = currentTime ? Math.trunc((currentTime / 60) % 60) : 0;
     const hours =
@@ -51,7 +55,12 @@ class Timer extends Component {
 
     return (
       <Container className="container">
-        <TextField id="standard-basic" label="Name of your task" />
+        <TextField
+          id="standard-basic"
+          label="Name of your task"
+          onChange={this.onChange}
+          value={name}
+        />
         <Box borderRadius="50%" boxShadow={5} className="Box">
           {hours + ":" + minutes + ":" + second}
         </Box>
@@ -64,14 +73,14 @@ class Timer extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state, "maptate")
   return {
-    currentTime: state.currentTime,
-    ...state
+    currentTime: state.currentTime
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onAddedToList: object => dispatch(addNewTask(object))
+    onAddedToList: name => dispatch(addNewTask(name))
   };
 };
 
