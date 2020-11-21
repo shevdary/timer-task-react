@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import TasksLog from "../TasksLog/TasksLog";
-import { Box } from "@material-ui/core";
-import { Tabs, AppBar, Tab } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import { Tabs, AppBar, Tab, withStyles } from "@material-ui/core";
 import { TabPanel } from "../TabPanel/TabPanel";
 
 const TaskTab = () => {
@@ -11,26 +9,31 @@ const TaskTab = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const StyleTabs = withStyles(theme => ({
+    root: {
+      backgroundColor: "#01bcd5"
+    }
+  }))(Tabs);
   return (
     <div>
       <AppBar position="static">
-        <Tabs
+        <StyleTabs
+          variant="fullWidth"
           value={value}
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="Item One">
+          <Tab label="Item One" classes="new-class">
             <TasksLog />
           </Tab>
           <Tab label="Item Two" />
-        </Tabs>
+        </StyleTabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <TasksLog value={value} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-         НУ И ЧЕ КАК Я ДОЛЖНА ГРАФИК ЭТОТ ВАШ ПОКАЗАТЬ
+        НУ И ЧЕ КАК Я ДОЛЖНА ГРАФИК ЭТОТ ВАШ ПОКАЗАТЬ
       </TabPanel>
     </div>
   );
