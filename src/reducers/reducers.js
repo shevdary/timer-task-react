@@ -15,26 +15,32 @@ const reducer = (state = initialState, action) => {
         tasks: state.tasks
       };
     case "TIMER_STOP_TASK":
-      const timeEnd = `${data.getHours()}:${data.getMinutes()}:${data.getSeconds() +
-        state.currentTime}`;
-      const getLastId =state.tasks.id?state.tasks[state.tasks.length - 1].id:0;
+      const minutes = state.currentTime
+        ? Math.trunc((state.currentTime / 60) % 60)
+        : 0;
+      const hours =
+        minutes == null ? 0 : Math.trunc((state.currentTime / 60 / 60) % 60);
+      const second =
+        state.currentTime > 60 ? state.currentTime % 60 : state.currentTime;
+      const timeEnd = `${Number(data.getHours()) +
+        hours}:${Number(data.getMinutes()+minutes)}:${Number(data.getSeconds())+second}`;
+      const getLastId = state.tasks.id
+        ? state.tasks[state.tasks.length - 1].id
+        : 0;
       const countTime = `${
-        state.currentTime ? Math.trunc((state.currentTime / 60) % 60) : 0
-      }:${Math.trunc((state.currentTime / 60 / 60) % 60)}:${
-        state.currentTime > 60 ? state.currentTime % 60 : state.currentTime
+          hours + ":" + minutes + ":" + second
       }`;
-      console.log("task")
       return {
         currentTime: 0,
         tasks: [
+          ...state.tasks,
           {
             id: getLastId + 1,
             timeStart: date,
             timeEnd: timeEnd,
             name: action.payload,
             timeSpend: countTime
-          },
-          ...state.tasks,
+          }
         ]
       };
     case "REMOVE_ITEM_TASK":
