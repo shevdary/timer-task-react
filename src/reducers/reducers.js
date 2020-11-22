@@ -4,9 +4,6 @@ const initialState = {
   tasks: []
 };
 
-const data = new Date();
-const date = data.toLocaleTimeString();
-
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "TIMER_START":
@@ -15,6 +12,8 @@ const reducer = (state = initialState, action) => {
         tasks: state.tasks
       };
     case "TIMER_STOP_TASK":
+      const data = new Date();
+      const date = data.toLocaleTimeString();
       const minutes = state.currentTime
         ? Math.trunc((state.currentTime / 60) % 60)
         : 0;
@@ -22,14 +21,13 @@ const reducer = (state = initialState, action) => {
         minutes == null ? 0 : Math.trunc((state.currentTime / 60 / 60) % 60);
       const second =
         state.currentTime > 60 ? state.currentTime % 60 : state.currentTime;
-      const timeEnd = `${Number(data.getHours()) +
-        hours}:${Number(data.getMinutes()+minutes)}:${Number(data.getSeconds())+second}`;
-      const getLastId = state.tasks.id
+      const timeEnd = `${Number(data.getHours()) + hours}:${Number(
+        data.getMinutes() + minutes
+      )}:${Number(data.getSeconds()) + second}`;
+      const getLastId = state.tasks[0]
         ? state.tasks[state.tasks.length - 1].id
         : 0;
-      const countTime = `${
-          hours + ":" + minutes + ":" + second
-      }`;
+      const countTime = `${hours + ":" + minutes + ":" + second}`;
       return {
         currentTime: 0,
         tasks: [
