@@ -1,8 +1,9 @@
 import React, {Component, useEffect} from 'react';
 import { connect } from "react-redux";
 import {Grid,Typography,Chip,Divider,Button,makeStyles} from "@material-ui/core";
-import {createBrowserHistory as history} from "history";
-
+import {createBrowserHistory} from "history";
+let history = createBrowserHistory();
+/*import {useHistory} from 'react-router-dom';*/
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -22,16 +23,16 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 1, 1),
     },
 }));
-const TaskInfo =(props)=> {
-        const {tasksId,tasks}=props;
-        const classes=useStyles()
+class TaskInfo extends Component{
+    render() {
+        const {tasksId,tasks}=this.props;
+
         const info = tasks.find(item=>item.id==tasksId);
-        console.log(history())
         const details=info==undefined?<div>Такой страницы не существует
-        <button onClick={()=>history.goBack}>go back</button></div>:
+                <button onClick={()=>history.back()}>go back</button></div>:
             <div>
-                <div className={classes.root}>
-                    <div className={classes.section1}>
+                <div >
+                    <div >
                         <Grid container alignItems="center">
                             <Grid item xs>
                                 <Typography gutterBottom variant="h4">
@@ -41,7 +42,7 @@ const TaskInfo =(props)=> {
                         </Grid>
                     </div>
                     <Divider variant="middle" />
-                    <div className={classes.section2}>
+                    <div >
                         <Typography gutterBottom variant="body1">
                         </Typography>
                         <Grid item xs>
@@ -51,7 +52,7 @@ const TaskInfo =(props)=> {
                         </Grid>
                     </div>
                     <Divider variant="middle" />
-                    <div className={classes.section2}>
+                    <div >
                         <Typography gutterBottom variant="body1">
                         </Typography>
                         <Grid item xs>
@@ -64,10 +65,14 @@ const TaskInfo =(props)=> {
             </div>
         return (
             <div>
+                <button onClick={()=>history.back()}>Back</button>
                 {details}
             </div>
 
         );
+    }
+
+
 }
 
 const mapStateToProps = state => {

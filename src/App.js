@@ -4,16 +4,15 @@ import { createBrowserHistory } from "history";
 import MainPage from "./components/MainPage/MainPage";
 import TaskInfo from "./components/TaskInfo/TaskInfo";
 
-
 export default function App() {
   return (
 <BrowserRouter history={createBrowserHistory()}>
     <Switch>
-      <Route exact path="/tab-log" component={() => <Redirect to={"/tasks"} />} />
-      <Route  exact path="/tasks" component={MainPage} />
+      <Route exact path="/" component={() => <Redirect to={"/tab-log"} />} />
+      <Route  exact path="/tab-log" component={MainPage} />
       <Route
         exact
-        path="/tasks/:id"
+        path="/tab-log/tasks/:id"
         render={({ match }) => {
           const { id } = match.params;
           return <TaskInfo tasksId={id} />;

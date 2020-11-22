@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import "./Timer.css";
-import { Button, Box, Container } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
+import { Button, Box, Container,TextField  } from "@material-ui/core";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../../actions/TimerActions";
 
 import store from "../../store";
-import withRouter from "react-router-dom/es/withRouter";
 import {createBrowserHistory} from "history";
 const { dispatch } = store;
 
