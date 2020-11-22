@@ -51,7 +51,6 @@ class Timer extends Component {
     const hours =
       minutes == null ? 0 : Math.trunc((currentTime / 60 / 60) % 60);
     const second = currentTime > 60 ? currentTime % 60 : currentTime;
-
     return (
       <Container className="container">
         <TextField
@@ -78,7 +77,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onAddedToList: name => addNewTask(name)
+    onAddedToList:addNewTask
   };
 };
 
