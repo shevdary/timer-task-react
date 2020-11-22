@@ -7,6 +7,8 @@ import { bindActionCreators } from "redux";
 import * as actions from "../../actions/TimerActions";
 
 import store from "../../store";
+import withRouter from "react-router-dom/es/withRouter";
+import {createBrowserHistory} from "history";
 const { dispatch } = store;
 
 const { startTimer, addNewTask } = bindActionCreators(actions, dispatch);
@@ -16,11 +18,17 @@ class Timer extends Component {
     isActiveTimer: false,
     name: ""
   };
+  componentDidMount(){
 
+    const history = createBrowserHistory();
+    history.push("/tab-log");
+
+  }
   onClick = () => {
     const { isActiveTimer } = this.state;
     isActiveTimer ? this.timerStop() : this.timerStart();
     this.setState({ isActiveTimer: !isActiveTimer });
+
   };
 
   onChange = e => {
@@ -29,6 +37,7 @@ class Timer extends Component {
 
   timerStart = () => {
     this.timer();
+
   };
 
   timer = () => {
@@ -77,7 +86,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onAddedToList:addNewTask
+    onAddedToList:addNewTask,
   };
 };
 
