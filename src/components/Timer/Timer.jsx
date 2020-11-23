@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./Timer.css";
-import { Button, Box, Container,TextField  } from "@material-ui/core";
+import { Button, Box, Container, TextField } from "@material-ui/core";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../../actions/TimerActions";
 
 import store from "../../store";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 const { dispatch } = store;
 
 const { startTimer, addNewTask } = bindActionCreators(actions, dispatch);
@@ -16,17 +16,14 @@ class Timer extends Component {
     isActiveTimer: false,
     name: ""
   };
-  componentDidMount(){
-
+  componentDidMount() {
     const history = createBrowserHistory();
     history.push("/tab-log");
-
   }
   onClick = () => {
     const { isActiveTimer } = this.state;
     isActiveTimer ? this.timerStop() : this.timerStart();
     this.setState({ isActiveTimer: !isActiveTimer });
-
   };
 
   onChange = e => {
@@ -35,11 +32,10 @@ class Timer extends Component {
 
   timerStart = () => {
     this.timer();
-
   };
 
   timer = () => {
-    this.interval = setInterval(startTimer, 1000);
+    this.interval = setInterval(startTimer, 1);
   };
 
   timerStop = () => {
@@ -57,6 +53,7 @@ class Timer extends Component {
     const minutes = currentTime ? Math.trunc((currentTime / 60) % 60) : 0;
     const hours =
       minutes == null ? 0 : Math.trunc((currentTime / 60 / 60) % 60);
+
     const second = currentTime > 60 ? currentTime % 60 : currentTime;
     return (
       <Container className="container">
@@ -67,7 +64,9 @@ class Timer extends Component {
           value={name}
         />
         <Box borderRadius="50%" boxShadow={5} className="Box">
-          {hours + ":" + minutes + ":" + second}
+          {`${hours < 10 ? "0" + hours : hours}:${
+            minutes < 10 ? "0" + minutes : minutes
+          }:${second < 10 ? "0" + second : second}`}
         </Box>
         <Button variant="contained" onClick={this.onClick} className="button">
           {isActiveTimer ? "stop" : "start"}
@@ -84,7 +83,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onAddedToList:addNewTask,
+    onAddedToList: addNewTask
   };
 };
 
