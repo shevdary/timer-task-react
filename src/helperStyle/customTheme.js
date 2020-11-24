@@ -10,4 +10,17 @@ const themeError = createMuiTheme({
     }
   }
 });
-export { themeError };
+
+const themeInfo = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#c23e69"
+    },
+    secondary: {
+      main: "#09d928"
+    }
+  }
+});
+
+export { themeError, themeInfo };
+

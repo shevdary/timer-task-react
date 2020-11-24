@@ -7,6 +7,8 @@
     "@devexpress/dx-react-chart-bootstrap4": "^2.7.3",
     "@devexpress/dx-react-chart-material-ui": "^2.7.3",
     "@devexpress/dx-react-core": "^2.7.3",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "latest",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
@@ -19,8 +21,7 @@
     "react-scripts": "4.0.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "web-vitals": "^0.2.4",
-    "@material-ui/styles": "latest"
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",

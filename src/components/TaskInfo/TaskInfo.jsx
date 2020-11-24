@@ -1,81 +1,89 @@
-import React, {Component, useEffect} from 'react';
+import React, { Component, useEffect } from "react";
 import { connect } from "react-redux";
-import {Grid,Typography,Chip,Divider,Button,makeStyles} from "@material-ui/core";
-import {createBrowserHistory} from "history";
+import {
+  Typography,
+  Button,
+  Dialog,
+  ThemeProvider,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
+} from "@material-ui/core";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { createBrowserHistory } from "history";
+import { themeError, themeInfo } from "../../helperStyle/customTheme";
+import green from "@material-ui/core/colors/green";
 let history = createBrowserHistory();
-/*import {useHistory} from 'react-router-dom';*/
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-    chip: {
-        margin: theme.spacing(0.5),
-    },
-    section1: {
-        margin: theme.spacing(3, 2),
-    },
-    section2: {
-        margin: theme.spacing(2),
-    },
-    section3: {
-        margin: theme.spacing(3, 1, 1),
-    },
-}));
-class TaskInfo extends Component{
-    render() {
-        const {tasksId,tasks}=this.props;
 
-        const info = tasks.find(item=>item.id==tasksId);
-        const details=info==undefined?<div>Такой страницы не существует
-                <button onClick={()=>history.back()}>go back</button></div>:
-            <div>
-                <div >
-                    <div >
-                        <Grid container alignItems="center">
-                            <Grid item xs>
-                                <Typography gutterBottom variant="h4">
-                                    {info.name}
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </div>
-                    <Divider variant="middle" />
-                    <div >
-                        <Typography gutterBottom variant="body1">
-                        </Typography>
-                        <Grid item xs>
-                            <Typography gutterBottom variant="h6">
-                                time spend : {info.timeSpend}
-                            </Typography>
-                        </Grid>
-                    </div>
-                    <Divider variant="middle" />
-                    <div >
-                        <Typography gutterBottom variant="body1">
-                        </Typography>
-                        <Grid item xs>
-                            <Typography gutterBottom variant="h6">
-                                time start : {info.timeStart}
-                            </Typography>
-                        </Grid>
-                    </div>
-                </div>
-            </div>
-        return (
-            <div>
-                <button onClick={()=>history.back()}>Back</button>
-                {details}
-            </div>
-
-        );
-    }
-
-
+class TaskInfo extends Component {
+  render() {
+    const { tasksId, tasks } = this.props;
+    const info = tasks.find(item => item.id == tasksId);
+    const details =
+      info == undefined ? (
+        <Dialog open={true} fullWidth={"true"} maxWidth="md">
+          <ThemeProvider theme={themeError}>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                You are trying to get info about a non-existent task
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => history.back()}
+                color="secondary"
+                autoFocus
+              >
+                back
+              </Button>
+            </DialogActions>
+          </ThemeProvider>
+        </Dialog>
+      ) : (
+        <div>
+          <Dialog
+            aria-labelledby="customized-dialog-title"
+            open={true}
+            maxWidth="sm"
+            fullWidth="true"
+          >
+            <ThemeProvider theme={themeInfo}>
+              <DialogTitle id="customized-dialog-title">
+                <DoneAllIcon  style={{ color: green[500] }}/>{info.name}
+              </DialogTitle>
+              <DialogContent dividers>
+                <Typography gutterBottom>ID: {info.id}</Typography>
+                <Typography gutterBottom>
+                  Time start : {info.timeStart}
+                </Typography>
+                <Typography gutterBottom>
+                  Time end : {info.timeEnd}
+                </Typography>
+                <Typography gutterBottom>
+                  Time spend : {info.timeSpend}
+                </Typography>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => history.back()}
+                >
+                  <ArrowBackIcon/> Back
+                </Button>
+              </DialogActions>
+            </ThemeProvider>
+          </Dialog>
+        </div>
+      );
+    return <div>{details}</div>;
+  }
 }
 
 const mapStateToProps = state => {
-    return{tasks: state.tasks}
+  return { tasks: state.tasks };
 };
-export default connect(mapStateToProps)(TaskInfo); {/*   */}
+export default connect(mapStateToProps)(TaskInfo);
