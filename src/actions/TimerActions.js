@@ -8,3 +8,6 @@ export const addNewTask = taskName => {
 export const removeItem = taskID => {
   return { type: "REMOVE_ITEM_TASK", payload: taskID };
 };
+export const onAfkTimer = () => {
+  return { type: "ONLOAD" };
+};

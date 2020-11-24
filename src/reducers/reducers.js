@@ -1,7 +1,8 @@
 
 const initialState = {
   currentTime: 0,
-  tasks: []
+  tasks: [],
+  isLoad: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -9,12 +10,14 @@ const reducer = (state = initialState, action) => {
     case "TIMER_START":
       return {
         currentTime: state.currentTime + 1,
-        tasks: state.tasks
+        tasks: state.tasks,
+        isLoad: true
       };
     case "TIMER_STOP_TASK":
       const data = new Date();
       const date = data.toLocaleTimeString();
       const { currentTime, tasks } = state;
+      localStorage.clear();
       let minutes = currentTime ? Math.trunc((currentTime / 60) % 60) : 0;
       const hours =
         minutes == null ? 0 : Math.trunc((currentTime / 60 / 60) % 60);
@@ -65,6 +68,7 @@ const reducer = (state = initialState, action) => {
       }:${second < 10 ? "0" + second : second}`;
       return {
         currentTime: 0,
+        isLoad: false,
         tasks: [
           ...state.tasks,
           {

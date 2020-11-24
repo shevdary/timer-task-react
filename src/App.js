@@ -3,7 +3,7 @@ import {Route, Switch, Redirect, Router, BrowserRouter} from "react-router-dom";
 import { createBrowserHistory } from "history";
 import MainPage from "./components/MainPage/MainPage";
 import TaskInfo from "./components/TaskInfo/TaskInfo";
-import TasksChart from "./components/TasksChart/TaskChart";
+import MyChart from "./components/TasksChart/TaskChart";
 
 export default function App() {
   return (
@@ -19,7 +19,7 @@ export default function App() {
           return <TaskInfo tasksId={id} />;
         }}
       />
-        <Route  exact path="/tab-chart" component={TasksChart} />
+        <Route  exact path="/tab-chart" component={MyChart} />
     </Switch>
 </BrowserRouter>
   );
