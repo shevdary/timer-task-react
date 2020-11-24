@@ -10,16 +10,15 @@ import {
   DialogContentText,
   DialogActions
 } from "@material-ui/core";
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import DoneAllIcon from '@material-ui/icons/DoneAll';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import DoneAllIcon from "@material-ui/icons/DoneAll";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { createBrowserHistory } from "history";
 import { themeError, themeInfo } from "../../helperStyle/customTheme";
 import green from "@material-ui/core/colors/green";
 let history = createBrowserHistory();
 
 class TaskInfo extends Component {
-    render() {
+  render() {
     const { tasksId, tasks } = this.props;
     const info = tasks.find(item => item.id == tasksId);
     const details =
@@ -52,16 +51,15 @@ class TaskInfo extends Component {
           >
             <ThemeProvider theme={themeInfo}>
               <DialogTitle id="customized-dialog-title">
-                <DoneAllIcon  style={{ color: green[500] }}/>{info.name}
+                <DoneAllIcon style={{ color: green[500] }} />
+                {info.name}
               </DialogTitle>
               <DialogContent dividers>
                 <Typography gutterBottom>ID: {info.id}</Typography>
                 <Typography gutterBottom>
                   Time start : {info.timeStart}
                 </Typography>
-                <Typography gutterBottom>
-                  Time end : {info.timeEnd}
-                </Typography>
+                <Typography gutterBottom>Time end : {info.timeEnd}</Typography>
                 <Typography gutterBottom>
                   Time spend : {info.timeSpend}
                 </Typography>
@@ -72,7 +70,7 @@ class TaskInfo extends Component {
                   color="secondary"
                   onClick={() => history.back()}
                 >
-                  <ArrowBackIcon/> Back
+                  <ArrowBackIcon /> Back
                 </Button>
               </DialogActions>
             </ThemeProvider>
