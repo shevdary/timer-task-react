@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import {
   TableCell,
   TableContainer,
@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { removeItem } from "../../actions/TimerActions";
 import Typography from "@material-ui/core/Typography";
 import { StyledTableCell, StyleTableRow } from "../../helperStyle/customStyles";
+import { createBrowserHistory } from "history";
 const { dispatch } = store;
 
 const headerText = [
@@ -28,6 +29,11 @@ const headerText = [
 ];
 
 const TasksLog = ({ tasks, onDelete, onInfo }) => {
+  useEffect(() => {
+    const history = createBrowserHistory();
+    history.push("/tab-log");
+  });
+
   const TableBodyRow = (item, idx) => {
     return (
       <StyleTableRow key={item.id}>
