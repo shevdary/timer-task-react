@@ -46,7 +46,7 @@ const TasksLog = ({ tasks, onDelete, onInfo }) => {
         <TableCell align="left">{item.timeSpend}</TableCell>
         <TableCell align="left">
           <Button onClick={() => onInfo(item.id)} color="primary">
-            <Link to={{ pathname: `/tab-log/tasks/${item.id}`, state: item }}>
+            <Link to={{ pathname: `/tasks/${item.id}`, state: item }}>
               Info
             </Link>
           </Button>

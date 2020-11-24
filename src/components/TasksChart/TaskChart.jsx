@@ -38,7 +38,6 @@ export default class MyChart extends Component {
   componentDidMount() {
     const history = createBrowserHistory();
     history.push("/tab-chart");
-    const { data } = this.state;
   }
 
   render() {
