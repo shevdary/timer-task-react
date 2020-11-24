@@ -94,8 +94,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onDelete: id => {
       dispatch(removeItem(id));
-    },
-    onInfo: taskItem => {}
+    }
   };
 };
 

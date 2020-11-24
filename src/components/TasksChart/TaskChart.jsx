@@ -1,8 +1,7 @@
-import React, { Component, PureComponent } from "react";
+import React, { Component} from "react";
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,18 +10,13 @@ import {
   ResponsiveContainer
 } from "recharts";
 import { createBrowserHistory } from "history";
+import { connect } from "react-redux";
 
-/*const data = [
-  {
-    name: 0
-  }
-];*/
-
-export default class MyChart extends Component {
+class Chart extends Component {
   constructor() {
     super();
     this.state = {
-      data: [{}]
+      data: []
     };
     this.renderTable();
   }
@@ -30,7 +24,7 @@ export default class MyChart extends Component {
     const { data } = this.state;
     const date = data;
     for (let i = 0; i < 24; i++) {
-      date.push({ name: i, min: localStorage.getItem("count") });
+      date.push({ name: i, minutes: localStorage.getItem("count") });
     }
     this.setState({ date: date });
   };
@@ -38,7 +32,36 @@ export default class MyChart extends Component {
   componentDidMount() {
     const history = createBrowserHistory();
     history.push("/tab-chart");
+    this.onCharts();
   }
+
+  onCharts = () => {
+    const { data } = this.state;
+    const { tasks } = this.props;
+    let copyData = data;
+    let newArrayTime = [];
+    let start, end;
+    if (tasks.length != 0) {
+      tasks.map(item => {
+        newArrayTime.push([item.timeStart.split(":"), item.timeEnd.split(":")]);
+      });
+    }
+    let getIndexLastElement = newArrayTime[newArrayTime.length - 1];
+    let timeStartHour = getIndexLastElement[0];
+    let timeEnd = getIndexLastElement[1];
+    if (timeEnd[0] == timeStartHour[0]) {
+      end = copyData.find(item => item.name == Number(timeStartHour[0]));
+      end.minutes = timeEnd[1] - timeStartHour[1];
+    } else {
+      end = copyData.find((item, i) => item.name == Number(timeEnd[0]));
+      start = copyData.find((item, i) => item.name == Number(timeStartHour[0]));
+      start.minutes = 60 - timeStartHour[1];
+      end.minutes = timeEnd[1];
+      copyData
+        .slice(Number(timeStartHour[0]) + 1, Number(timeEnd[0]))
+        .forEach(item => (item.minutes = 60));
+    }
+  };
 
   render() {
     return (
@@ -63,3 +86,9 @@ export default class MyChart extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    tasks: state.tasks
+  };
+};
+export default connect(mapStateToProps)(Chart)

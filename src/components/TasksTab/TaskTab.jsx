@@ -3,7 +3,7 @@ import TasksLog from "../TasksLog/TasksLog";
 import { AppBar, Tab } from "@material-ui/core";
 import { TabPanel } from "../TabPanel/TabPanel";
 import { StyleTabs } from "../../helperStyle/customStyles";
-import MyChart from "../TasksChart/TaskChart";
+import Chart from "../TasksChart/TaskChart";
 
 const TaskTab = () => {
   const [value, setValue] = React.useState(0);
@@ -31,7 +31,7 @@ const TaskTab = () => {
         <TasksLog value={value} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <MyChart/>
+        <Chart />
       </TabPanel>
     </div>
   );

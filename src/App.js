@@ -9,7 +9,7 @@ import {
 import { createBrowserHistory } from "history";
 import MainPage from "./components/MainPage/MainPage";
 import TaskInfo from "./components/TaskInfo/TaskInfo";
-import MyChart from "./components/TasksChart/TaskChart";
+import Chart from "./components/TasksChart/TaskChart";
 
 export default function App() {
   return (
@@ -25,7 +25,7 @@ export default function App() {
             return <TaskInfo tasksId={id} />;
           }}
         />
-        <Route exact path="/tab-chart" component={MyChart} />
+        <Route exact path="/tab-chart" component={Chart} />
       </Switch>
     </BrowserRouter>
   );

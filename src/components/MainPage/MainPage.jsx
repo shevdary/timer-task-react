@@ -8,10 +8,7 @@ import { bindActionCreators } from "redux";
 import * as actions from "../../actions/TimerActions";
 const { dispatch } = store;
 
-const { startTimer, addNewTask, onAfkTimer } = bindActionCreators(
-  actions,
-  dispatch
-);
+const { onLoad, startTimer } = bindActionCreators(actions, dispatch);
 
 class MainPage extends Component {
   state = {
@@ -22,7 +19,7 @@ class MainPage extends Component {
       this.onLoad();
     }, 1000);
     window.addEventListener("beforeunload", () => {
-      if (this.props.isLoad == true) {
+      if (this.props.isLoad === true) {
         this.setState({ load: true });
       }
     });
@@ -37,11 +34,13 @@ class MainPage extends Component {
     }
   }
   onLoad = () => {
+    const { onUpdate } = this.props;
     let countFromStorage = localStorage.getItem("count");
-    if (localStorage.getItem("load") == "true") {
+    if (localStorage.getItem("load") === "true") {
       localStorage.setItem("count", Number(countFromStorage) + 1);
+      onUpdate();
     }
-    if (this.props.isLoad == true) {
+    if (this.props.isLoad === true) {
       this.onLoadStorage(this.props.currentTime);
     }
   };
@@ -65,4 +64,9 @@ const mapStateToProps = state => {
     ...state
   };
 };
-export default connect(mapStateToProps)(MainPage);
+const mapDispatchToProps = () => {
+  return {
+    onUpdate: onLoad
+  };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(MainPage);

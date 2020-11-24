@@ -9,25 +9,38 @@ import { createBrowserHistory } from "history";
 import { AlertDialog } from "../ErrorBoundary/ErrorBoundary";
 
 const { dispatch } = store;
-const { startTimer, addNewTask } = bindActionCreators(
-  actions,
-  dispatch
-);
+const { startTimer, addNewTask } = bindActionCreators(actions, dispatch);
 
 class Timer extends Component {
-  state = {
-    isActiveTimer: false,
-    name: null,
-    open: false
-  };
+  constructor() {
+    super();
+    this.state = {
+      isActiveTimer: false,
+      name: null,
+      open: false,
+      stateTimer: 0
+    };
+  }
+
   componentDidMount() {
     const history = createBrowserHistory();
+    const { isActiveTimer } = this.state;
     history.push("/tab-log");
+    setInterval(() => {
+      this.setState({ stateTimer: Number(localStorage.getItem("count")) });
+    }, 1000);
+    if (localStorage.getItem("load") == "true") {
+      this.setState({ isActiveTimer: !isActiveTimer });
+    }
   }
 
   onClick = () => {
     const { isActiveTimer } = this.state;
     if (isActiveTimer) {
+      if (this.state.name === null) {
+        console.log(this.state.name, typeof this.state.name);
+        this.setState({ open: true });
+      }
       this.timerStop();
     }
     if (!isActiveTimer) {
@@ -41,19 +54,19 @@ class Timer extends Component {
   };
 
   timerStart = () => {
-    this.interval = setInterval(startTimer, 1000);
+    this.interval = setInterval(startTimer, 10);
   };
 
   timerStop = () => {
     const { onAddedToList } = this.props;
-    const { name, open, isActiveTimer } = this.state;
-    if (name === null) {
+    const { name, isActiveTimer } = this.state;
+    if (name === null || name == "") {
       this.setState({ open: true });
     }
-    if (name !== null) {
+    if (name !== null && name != "") {
       clearInterval(this.interval);
-      localStorage.clear();
       onAddedToList(name);
+      localStorage.clear();
       this.setState({ name: "", isActiveTimer: !isActiveTimer });
     }
   };
@@ -61,14 +74,36 @@ class Timer extends Component {
   closeError = () => {
     this.setState({ open: false });
   };
+  getCurrentTime = seconds => {
+    let minutes = 0,
+      hours = 0,
+      second = 0;
+    minutes = seconds ? Math.trunc((seconds / 60) % 60) : 0;
+    hours = minutes == null ? 0 : Math.trunc((seconds / 60 / 60) % 60);
+    second = seconds > 60 ? seconds % 60 : seconds;
+    return { minutes, hours, second };
+  };
 
   render() {
     const { currentTime } = this.props;
     const { isActiveTimer, name } = this.state;
-    const minutes = currentTime ? Math.trunc((currentTime / 60) % 60) : 0;
-    const hours =
-      minutes == null ? 0 : Math.trunc((currentTime / 60 / 60) % 60);
-    const second = currentTime > 60 ? currentTime % 60 : currentTime;
+    const storage = localStorage.getItem("load");
+    const timerStorage = Number(localStorage.getItem("count"));
+    let minutes = 0,
+      hours = 0,
+      second = 0;
+    if (storage === "true") {
+      const time = this.getCurrentTime(timerStorage);
+      minutes = time.minutes;
+      hours = time.hours;
+      second = time.second;
+    }
+    if (currentTime != 0) {
+      const time = this.getCurrentTime(currentTime);
+      minutes = time.minutes;
+      hours = time.hours;
+      second = time.second;
+    }
 
     return (
       <Container className="container">
