@@ -5,19 +5,16 @@ import {
   TableHead,
   TableRow,
   Paper,
-  withStyles,
   Table,
-  TableBody
+  TableBody,
+  Button
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as actions from "../../actions/TimerActions";
 import store from "../../store";
-import TableBodyRow from "../TableRow/TabRow";
-import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { removeItem } from "../../actions/TimerActions";
 import Typography from "@material-ui/core/Typography";
+import { StyledTableCell, StyleTableRow } from "../../helperStyle/customStyles";
 const { dispatch } = store;
 
 const headerText = [
@@ -30,21 +27,6 @@ const headerText = [
   "Delete"
 ];
 
-const StyledTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: "#ffffff",
-    color: theme.palette.text.disabled,
-    fontSize: 12
-  },
-  body: {
-    fontSize: 14
-  }
-}))(TableCell);
-const StyleTableRow = withStyles(theme => ({
-  root: {
-    backgroundColor: "#eaf6ff"
-  }
-}))(TableRow);
 const TasksLog = ({ tasks, onDelete, onInfo }) => {
   const TableBodyRow = (item, idx) => {
     return (
@@ -58,17 +40,25 @@ const TasksLog = ({ tasks, onDelete, onInfo }) => {
         <TableCell align="left">{item.timeSpend}</TableCell>
         <TableCell align="left">
           <Button onClick={() => onInfo(item.id)} color="primary">
-           <Link to={{ pathname: `/tab-log/tasks/${item.id}`, state: item }}>Info</Link>
+            <Link to={{ pathname: `/tab-log/tasks/${item.id}`, state: item }}>
+              Info
+            </Link>
           </Button>
         </TableCell>
         <TableCell align="left">
-          <Button onClick={() => onDelete(idx)} classes={{root:"Button"}} variant="contained">Delete</Button>
+          <Button
+            onClick={() => onDelete(idx)}
+            classes={{ root: "Button" }}
+            variant="contained"
+          >
+            Delete
+          </Button>
         </TableCell>
       </StyleTableRow>
     );
   };
   return (
-    <TableContainer component={Paper} className="TableContainer" >
+    <TableContainer component={Paper} className="TableContainer">
       <Table aria-label="customized table">
         <TableHead className="table-head">
           <TableRow>
@@ -99,9 +89,7 @@ const mapDispatchToProps = dispatch => {
     onDelete: id => {
       dispatch(removeItem(id));
     },
-    onInfo: taskItem => {
-      console.log(taskItem, "id");
-    }
+    onInfo: taskItem => {}
   };
 };
 

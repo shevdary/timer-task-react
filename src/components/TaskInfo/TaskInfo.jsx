@@ -19,7 +19,7 @@ import green from "@material-ui/core/colors/green";
 let history = createBrowserHistory();
 
 class TaskInfo extends Component {
-  render() {
+    render() {
     const { tasksId, tasks } = this.props;
     const info = tasks.find(item => item.id == tasksId);
     const details =

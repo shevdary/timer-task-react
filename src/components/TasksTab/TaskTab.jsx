@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import TasksLog from "../TasksLog/TasksLog";
-import { Tabs, AppBar, Tab, withStyles } from "@material-ui/core";
+import { AppBar, Tab } from "@material-ui/core";
 import { TabPanel } from "../TabPanel/TabPanel";
+import { StyleTabs } from "../../helperStyle/customStyles";
+import MyChart from "../TasksChart/TaskChart";
 
 const TaskTab = () => {
   const [value, setValue] = React.useState(0);
@@ -9,11 +11,7 @@ const TaskTab = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const StyleTabs = withStyles(theme => ({
-    root: {
-      backgroundColor: "#01bcd5"
-    }
-  }))(Tabs);
+
   return (
     <div>
       <AppBar position="static">
@@ -23,17 +21,17 @@ const TaskTab = () => {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="Item One" classes="new-class">
+          <Tab label="TASKS LOG" classes="new-class">
             <TasksLog />
           </Tab>
-          <Tab label="Item Two" />
+          <Tab label="TASKS CHART" />
         </StyleTabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <TasksLog value={value} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        НУ И ЧЕ КАК Я ДОЛЖНА ГРАФИК ЭТОТ ВАШ ПОКАЗАТЬ
+        <MyChart/>
       </TabPanel>
     </div>
   );
