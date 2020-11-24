@@ -4,26 +4,36 @@ import { Button, Box, Container, TextField } from "@material-ui/core";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../../actions/TimerActions";
-
 import store from "../../store";
 import { createBrowserHistory } from "history";
-const { dispatch } = store;
+import { AlertDialog } from "../ErrorBoundary/ErrorBoundary";
 
-const { startTimer, addNewTask } = bindActionCreators(actions, dispatch);
+const { dispatch } = store;
+const { startTimer, addNewTask } = bindActionCreators(
+  actions,
+  dispatch
+);
 
 class Timer extends Component {
   state = {
     isActiveTimer: false,
-    name: ""
+    name: null,
+    open: false
   };
   componentDidMount() {
     const history = createBrowserHistory();
     history.push("/tab-log");
   }
+
   onClick = () => {
     const { isActiveTimer } = this.state;
-    isActiveTimer ? this.timerStop() : this.timerStart();
-    this.setState({ isActiveTimer: !isActiveTimer });
+    if (isActiveTimer) {
+      this.timerStop();
+    }
+    if (!isActiveTimer) {
+      this.timerStart();
+      this.setState({ isActiveTimer: !isActiveTimer });
+    }
   };
 
   onChange = e => {
@@ -31,30 +41,35 @@ class Timer extends Component {
   };
 
   timerStart = () => {
-    this.timer();
-  };
-
-  timer = () => {
-    this.interval = setInterval(startTimer, 1);
+    this.interval = setInterval(startTimer, 1000);
   };
 
   timerStop = () => {
     const { onAddedToList } = this.props;
-    const { name } = this.state;
-    clearInterval(this.interval);
-    onAddedToList(name);
-    this.setState({ name: "" });
+    const { name, open, isActiveTimer } = this.state;
+    if (name === null) {
+      this.setState({ open: true });
+    }
+    if (name !== null) {
+      clearInterval(this.interval);
+      localStorage.clear();
+      onAddedToList(name);
+      this.setState({ name: "", isActiveTimer: !isActiveTimer });
+    }
+  };
+
+  closeError = () => {
+    this.setState({ open: false });
   };
 
   render() {
     const { currentTime } = this.props;
     const { isActiveTimer, name } = this.state;
-
     const minutes = currentTime ? Math.trunc((currentTime / 60) % 60) : 0;
     const hours =
       minutes == null ? 0 : Math.trunc((currentTime / 60 / 60) % 60);
-
     const second = currentTime > 60 ? currentTime % 60 : currentTime;
+
     return (
       <Container className="container">
         <TextField
@@ -71,6 +86,7 @@ class Timer extends Component {
         <Button variant="contained" onClick={this.onClick} className="button">
           {isActiveTimer ? "stop" : "start"}
         </Button>
+        <AlertDialog open={this.state.open} handleClose={this.closeError} />
       </Container>
     );
   }
@@ -78,10 +94,12 @@ class Timer extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentTime: state.currentTime
+    currentTime: state.currentTime,
+    isLoad: state.isLoad
   };
 };
-const mapDispatchToProps = dispatch => {
+
+const mapDispatchToProps = () => {
   return {
     onAddedToList: addNewTask
   };
