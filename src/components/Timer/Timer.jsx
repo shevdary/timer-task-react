@@ -38,7 +38,6 @@ class Timer extends Component {
     const { isActiveTimer } = this.state;
     if (isActiveTimer) {
       if (this.state.name === null) {
-        console.log(this.state.name, typeof this.state.name);
         this.setState({ open: true });
       }
       this.timerStop();

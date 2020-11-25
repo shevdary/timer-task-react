@@ -16,6 +16,7 @@ import { removeItem } from "../../actions/TimerActions";
 import Typography from "@material-ui/core/Typography";
 import { StyledTableCell, StyleTableRow } from "../../helperStyle/customStyles";
 import { createBrowserHistory } from "history";
+import Redirect from "react-router-dom/es/Redirect";
 const { dispatch } = store;
 
 const headerText = [
@@ -28,7 +29,7 @@ const headerText = [
   "Delete"
 ];
 
-const TasksLog = ({ tasks, onDelete, onInfo }) => {
+const TasksLog = ({ tasks, onDelete}) => {
   useEffect(() => {
     const history = createBrowserHistory();
     history.push("/tab-log");
@@ -45,7 +46,7 @@ const TasksLog = ({ tasks, onDelete, onInfo }) => {
         <TableCell align="left">{item.timeEnd}</TableCell>
         <TableCell align="left">{item.timeSpend}</TableCell>
         <TableCell align="left">
-          <Button onClick={() => onInfo(item.id)} color="primary">
+          <Button color="primary">
             <Link to={{ pathname: `/tasks/${item.id}`, state: item }}>
               Info
             </Link>
@@ -94,7 +95,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onDelete: id => {
       dispatch(removeItem(id));
+
     }
+
   };
 };
 

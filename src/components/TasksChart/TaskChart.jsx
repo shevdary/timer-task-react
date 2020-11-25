@@ -2,6 +2,7 @@ import React, { Component} from "react";
 import {
   BarChart,
   Bar,
+  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -45,7 +46,7 @@ class Chart extends Component {
       tasks.map(item => {
         newArrayTime.push([item.timeStart.split(":"), item.timeEnd.split(":")]);
       });
-    }
+
     let getIndexLastElement = newArrayTime[newArrayTime.length - 1];
     let timeStartHour = getIndexLastElement[0];
     let timeEnd = getIndexLastElement[1];
@@ -60,7 +61,7 @@ class Chart extends Component {
       copyData
         .slice(Number(timeStartHour[0]) + 1, Number(timeEnd[0]))
         .forEach(item => (item.minutes = 60));
-    }
+    } }
   };
 
   render() {
