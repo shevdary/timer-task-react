@@ -17,10 +17,10 @@ const reducer = (state = initialState, action) => {
       const { currentTime, tasks } = state;
       const getLastId = tasks[0] ? tasks[tasks.length - 1].id : 0;
       let timer = countTime(Number(localStorage.getItem("count")));
-      const storage=JSON.parse(localStorage.getItem("tasksData"));
+      const storage = JSON.parse(localStorage.getItem("tasksData"));
       let newTask;
-      if (storage==null){
-        newTask= [
+      if (storage == null) {
+        newTask = [
           ...state.tasks,
           {
             id: getLastId + 1,
@@ -29,15 +29,15 @@ const reducer = (state = initialState, action) => {
             name: action.payload,
             timeSpend: timer.countTime
           }
-        ]
+        ];
         return {
           currentTime: 0,
           isLoad: false,
-          tasks:newTask
+          tasks: newTask
         };
       }
-      if(storage!=null){
-        const getLastID=storage[storage.length-1].id
+      if (storage != null) {
+        const getLastID = storage[storage.length - 1].id;
         newTask = [
           ...state.tasks,
           {
@@ -47,15 +47,14 @@ const reducer = (state = initialState, action) => {
             name: action.payload,
             timeSpend: timer.countTime
           }
-        ]
+        ];
         return {
           currentTime: 0,
           isLoad: false,
-          tasks:newTask
+          tasks: newTask
         };
       }
     case "REMOVE_ITEM_TASK":
-      const storageList=JSON.parse(localStorage.getItem("tasksData"));
 
       return {
         ...state,

@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, {   useEffect, useState } from "react";
 import {
   TableCell,
   TableContainer,
@@ -29,15 +29,26 @@ const headerText = [
   "Delete"
 ];
 
-const TasksLog = ({ tasks, onDelete }) => {
+const TasksLog = ({ tasks }) => {
   const [storage, setStorage] = useState([]);
+  const [update, setUpdate] = useState(false);
+
   useEffect(() => {
     const history = createBrowserHistory();
     history.push("/tab-log");
     if (JSON.parse(localStorage.getItem("tasksData"))) {
       setStorage(JSON.parse(localStorage.getItem("tasksData")));
     }
-  }, [tasks]);
+  }, [tasks, update]);
+
+  const onClick = id => {
+    let storageList = JSON.parse(localStorage.getItem("tasksData"));
+    localStorage.setItem(
+      "tasksData",
+      JSON.stringify(storageList.filter(item => item.id !== id))
+    );
+    setUpdate(!update);
+  };
 
   const TableBodyRow = (item, idx) => {
     return (
@@ -58,7 +69,7 @@ const TasksLog = ({ tasks, onDelete }) => {
         </TableCell>
         <TableCell align="left">
           <Button
-            onClick={() => onDelete(idx)}
+            onClick={() => onClick(item.id)}
             classes={{ root: "Button" }}
             variant="contained"
           >
