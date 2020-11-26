@@ -7,6 +7,7 @@ import * as actions from "../../actions/TimerActions";
 import store from "../../store";
 import { createBrowserHistory } from "history";
 import { AlertDialog } from "../ErrorBoundary/ErrorBoundary";
+import { countTime } from "../../reducers/countTime";
 
 const { dispatch } = store;
 const { startTimer, addNewTask } = bindActionCreators(actions, dispatch);
@@ -31,6 +32,38 @@ class Timer extends Component {
     }, 1000);
     if (localStorage.getItem("load") == "true") {
       this.setState({ isActiveTimer: !isActiveTimer });
+    }
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.tasks != this.props.tasks) {
+      const { tasks } = this.props;
+      const mass = [];
+      if (localStorage.getItem("tasksData") != null) {
+        JSON.parse(localStorage.getItem("tasksData")).forEach(item =>
+          mass.push(item)
+        );
+        if (!prevProps.tasks[0]) {
+          tasks.forEach(item => mass.push(item));
+          localStorage.setItem("tasksData", JSON.stringify(mass));
+        }
+        if (prevProps.tasks[0]) {
+          const getLastId = tasks[0] ? tasks[tasks.length - 1].id : 0;
+          let timer = countTime(Number(localStorage.getItem("count")));
+          let newA = {
+            id: getLastId,
+            timeStart: timer.date,
+            timeEnd: timer.timeEnd,
+            name: tasks[tasks.length - 1].name,
+            timeSpend: timer.countTime
+          };
+
+          mass.push(newA);
+          localStorage.setItem("tasksData", JSON.stringify(mass));
+        }
+      }
+      if (localStorage.getItem("tasksData") == null) {
+        localStorage.setItem("tasksData", JSON.stringify(tasks));
+      }
     }
   }
 
@@ -65,7 +98,8 @@ class Timer extends Component {
     if (name !== null && name != "") {
       clearInterval(this.interval);
       onAddedToList(name);
-      localStorage.clear();
+      localStorage.removeItem("count");
+      localStorage.removeItem("load");
       this.setState({ name: "", isActiveTimer: !isActiveTimer });
     }
   };
@@ -129,9 +163,11 @@ class Timer extends Component {
 const mapStateToProps = state => {
   return {
     currentTime: state.currentTime,
-    isLoad: state.isLoad
+    isLoad: state.isLoad,
+    ...state
   };
 };
+
 
 const mapDispatchToProps = () => {
   return {

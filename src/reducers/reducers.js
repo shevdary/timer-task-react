@@ -16,24 +16,47 @@ const reducer = (state = initialState, action) => {
     case "TIMER_STOP_TASK":
       const { currentTime, tasks } = state;
       const getLastId = tasks[0] ? tasks[tasks.length - 1].id : 0;
-      let timer = countTime(currentTime, tasks);
-      let n = countTime(Number(localStorage.getItem("count")));
-      return {
-        currentTime: 0,
-        isLoad: false,
-        tasks: [
+      let timer = countTime(Number(localStorage.getItem("count")));
+      const storage=JSON.parse(localStorage.getItem("tasksData"));
+      let newTask;
+      if (storage==null){
+        newTask= [
           ...state.tasks,
           {
             id: getLastId + 1,
-            timeStart: n.date,
-            timeEnd: n.timeEnd,
+            timeStart: timer.date,
+            timeEnd: timer.timeEnd,
             name: action.payload,
-            timeSpend: n.countTime
+            timeSpend: timer.countTime
           }
         ]
-      };
-
+        return {
+          currentTime: 0,
+          isLoad: false,
+          tasks:newTask
+        };
+      }
+      if(storage!=null){
+        const getLastID=storage[storage.length-1].id
+        newTask = [
+          ...state.tasks,
+          {
+            id: getLastID + 1,
+            timeStart: timer.date,
+            timeEnd: timer.timeEnd,
+            name: action.payload,
+            timeSpend: timer.countTime
+          }
+        ]
+        return {
+          currentTime: 0,
+          isLoad: false,
+          tasks:newTask
+        };
+      }
     case "REMOVE_ITEM_TASK":
+      const storageList=JSON.parse(localStorage.getItem("tasksData"));
+
       return {
         ...state,
         tasks: [

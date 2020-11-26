@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import {
   TableCell,
   TableContainer,
@@ -29,11 +29,15 @@ const headerText = [
   "Delete"
 ];
 
-const TasksLog = ({ tasks, onDelete}) => {
+const TasksLog = ({ tasks, onDelete }) => {
+  const [storage, setStorage] = useState([]);
   useEffect(() => {
     const history = createBrowserHistory();
     history.push("/tab-log");
-  });
+    if (JSON.parse(localStorage.getItem("tasksData"))) {
+      setStorage(JSON.parse(localStorage.getItem("tasksData")));
+    }
+  }, [tasks]);
 
   const TableBodyRow = (item, idx) => {
     return (
@@ -76,9 +80,9 @@ const TasksLog = ({ tasks, onDelete}) => {
             ))}
           </TableRow>
         </TableHead>
-        <TableBody>{tasks.map(TableBodyRow)}</TableBody>
+        <TableBody>{storage ? storage.map(TableBodyRow) : true}</TableBody>
       </Table>
-      {tasks.length === 0 ? (
+      {tasks.length === 0 && storage[0] == null ? (
         <Typography align="center" color="textSecondary" variant="h4">
           Your task list is empty
         </Typography>
@@ -95,9 +99,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onDelete: id => {
       dispatch(removeItem(id));
-
     }
-
   };
 };
 
