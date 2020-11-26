@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
+import Timer from "../Timer/Timer";
 
 class Chart extends Component {
   constructor() {
@@ -66,6 +67,8 @@ class Chart extends Component {
 
   render() {
     return (
+        <div>
+
       <ResponsiveContainer minWidth={"100%"} minHeight={"100%"} aspect={5 / 1}>
         <BarChart
           data={this.state.data}
@@ -84,6 +87,7 @@ class Chart extends Component {
           <Bar dataKey="minutes" fill="#344dc4" />
         </BarChart>
       </ResponsiveContainer>
+        </div>
     );
   }
 }

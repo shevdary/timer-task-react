@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   Typography,
@@ -7,40 +7,28 @@ import {
   ThemeProvider,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions
 } from "@material-ui/core";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { createBrowserHistory } from "history";
-import { themeError, themeInfo } from "../../helperStyle/customTheme";
+import { themeInfo } from "../../helperStyle/customTheme";
 import green from "@material-ui/core/colors/green";
+import TaskInfoUndefined from "./TaskInfoUndefined";
 let history = createBrowserHistory();
 
 class TaskInfo extends Component {
   render() {
     const { tasksId, tasks } = this.props;
-    const info = tasks.find(item => item.id == tasksId);
+    let info = tasks.find(item => item.id == tasksId);
+    if (info == undefined) {
+      info = JSON.parse(localStorage.getItem("tasksData")).find(
+        item => item.id == tasksId
+      );
+    }
     const details =
       info == undefined ? (
-        <Dialog open={true} fullWidth={"true"} maxWidth="md">
-          <ThemeProvider theme={themeError}>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                You are trying to get info about a non-existent task
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => history.back()}
-                color="secondary"
-                autoFocus
-              >
-                back
-              </Button>
-            </DialogActions>
-          </ThemeProvider>
-        </Dialog>
+        <TaskInfoUndefined />
       ) : (
         <div>
           <Dialog

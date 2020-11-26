@@ -86,7 +86,7 @@ class Timer extends Component {
   };
 
   timerStart = () => {
-    this.interval = setInterval(startTimer, 10);
+    this.interval = setInterval(startTimer, 1000);
   };
 
   timerStop = () => {
