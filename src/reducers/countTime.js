@@ -6,8 +6,8 @@ export const countTime = (currentTime, tasks) => {
   const second = currentTime > 60 ? currentTime % 60 : currentTime;
   const secEnd =
     data.getSeconds() + currentTime > 60
-      ? (data.getSeconds() + currentTime) % 60
-      : data.getSeconds() + currentTime;
+      ? Math.trunc((data.getSeconds() + currentTime) % 60)
+      : Math.trunc(data.getSeconds() + currentTime);
   let minEnd;
   if (minutes + data.getMinutes() >= 60 && data.getSeconds() + second >= 60) {
     minEnd =
@@ -36,5 +36,5 @@ export const countTime = (currentTime, tasks) => {
   const countTime = `${hours < 10 ? "0" + hours : hours}:${
     minutes < 10 ? "0" + minutes : minutes
   }:${second < 10 ? "0" + second : second}`;
-  return { timeEnd, countTime, date };
+  return { timeEnd , countTime, date };
 };

@@ -14,6 +14,7 @@ import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
 import Timer from "../Timer/Timer";
 import { TabPanel } from "../TabPanel/TabPanel";
+import ButtonGenerate from "../ButtonGenerate/ButtonGenerate";
 
 class Chart extends Component {
   constructor() {
@@ -36,6 +37,9 @@ class Chart extends Component {
     const history = createBrowserHistory();
     history.push("/tab-chart");
     this.onCharts();
+    let a=JSON.parse(localStorage.getItem("tasksData"));
+    this.setState({data:a})
+
   }
 
   onCharts = () => {
@@ -44,7 +48,7 @@ class Chart extends Component {
     let copyData = data;
     let newArrayTime = [];
     let start, end;
-    if (tasks.length != 0) {
+    if (tasks) {
       tasks.map(item => {
         newArrayTime.push([item.timeStart.split(":"), item.timeEnd.split(":")]);
       });
@@ -67,7 +71,6 @@ class Chart extends Component {
       }
     }
   };
-
   render() {
     return (
       <div>
@@ -92,8 +95,11 @@ class Chart extends Component {
               <Tooltip />
               <Legend />
               <Bar dataKey="minutes" fill="#344dc4" />
+              <Bar dataKey={"papappa"}/>
+
             </BarChart>
-          </ResponsiveContainer>{" "}
+          </ResponsiveContainer>
+          <ButtonGenerate />
         </TabPanel>
       </div>
     );
