@@ -1,4 +1,4 @@
-import React, {   useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TableCell,
   TableContainer,
@@ -61,10 +61,12 @@ const TasksLog = ({ tasks }) => {
         <TableCell align="left">{item.timeEnd}</TableCell>
         <TableCell align="left">{item.timeSpend}</TableCell>
         <TableCell align="left">
-          <Button color="primary">
-            <Link to={{ pathname: `/tasks/${item.id}`, state: item }}>
-              Info
-            </Link>
+          <Button
+            color="primary"
+            component={Link}
+            to={{ pathname: `/tasks/${item.id}`, state: item }}
+          >
+            Info
           </Button>
         </TableCell>
         <TableCell align="left">
