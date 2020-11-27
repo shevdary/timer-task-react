@@ -14,7 +14,7 @@ import { themeError } from "../../helperStyle/customTheme";
 export const AlertDialog = ({ open, handleClose }) => {
   return (
     <div>
-      <Dialog open={open} fullWidth={"true"} maxWidth="md">
+      <Dialog open={open} fullWidth={ true } maxWidth="md">
         <ThemeProvider theme={themeError}>
           <DialogTitle id="alert-dialog-title">
             <Typography variant="h6" color="primary">

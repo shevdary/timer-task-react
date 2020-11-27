@@ -1,15 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
 import TasksLog from "../TasksLog/TasksLog";
 import { AppBar, Tab } from "@material-ui/core";
-import { TabPanel } from "../TabPanel/TabPanel";
 import { StyleTabs } from "../../helperStyle/customStyles";
 import Chart from "../TasksChart/TaskChart";
 
-const TaskTab = () => {
-  const [value, setValue] = React.useState(0);
+const TaskTab = ({ props }) => {
+  const page = props.match.params.page;
+  const history = props.history;
+  const tabNameToIndex = {
+    0: "tab-log",
+    1: "tab-chart"
+  };
+  const index = {
+    "tab-log": 0,
+    "tab-chart": 1
+  };
+  const [value, setValue] = React.useState(index[page]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    history.push(`/${tabNameToIndex[newValue]}`);
   };
 
   return (
@@ -21,18 +31,12 @@ const TaskTab = () => {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="TASKS LOG" >
-            <TasksLog />
-          </Tab>
+          <Tab label="TASKS LOG"/>
           <Tab label="TASKS CHART" />
         </StyleTabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        <TasksLog value={value} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Chart />
-      </TabPanel>
+      {value === 0 && <TasksLog history={history}/>}
+      {value === 1 && <Chart />}
     </div>
   );
 };

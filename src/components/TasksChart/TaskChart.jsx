@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -10,11 +9,7 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
-import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
-import Timer from "../Timer/Timer";
-import { TabPanel } from "../TabPanel/TabPanel";
-import ButtonGenerate from "../ButtonGenerate/ButtonGenerate";
 
 class Chart extends Component {
   constructor() {
@@ -34,12 +29,7 @@ class Chart extends Component {
   };
 
   componentDidMount() {
-    const history = createBrowserHistory();
-    history.push("/tab-chart");
     this.onCharts();
-    let a=JSON.parse(localStorage.getItem("tasksData"));
-    this.setState({data:a})
-
   }
 
   onCharts = () => {
@@ -73,35 +63,26 @@ class Chart extends Component {
   };
   render() {
     return (
-      <div>
-        <TabPanel value={1} index={1}>
-          <ResponsiveContainer
-            minWidth={"100%"}
-            minHeight={"100%"}
-            aspect={5 / 1}
-          >
-            <BarChart
-              data={this.state.data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="minutes" fill="#344dc4" />
-              <Bar dataKey={"papappa"}/>
-
-            </BarChart>
-          </ResponsiveContainer>
-          <ButtonGenerate />
-        </TabPanel>
-      </div>
+        <div>
+      <ResponsiveContainer minWidth="100%" minHeight="100%" aspect={5 / 1}>
+        <BarChart
+          data={this.state.data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="minutes" fill="#344dc4" />
+        </BarChart>
+      </ResponsiveContainer>
+        </div>
     );
   }
 }

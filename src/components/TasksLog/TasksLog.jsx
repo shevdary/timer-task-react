@@ -7,11 +7,9 @@ import {
   Paper,
   Table,
   TableBody,
-  Button
+  Link
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import store from "../../store";
-import { Link } from "react-router-dom";
 import { removeItem } from "../../actions/TimerActions";
 import Typography from "@material-ui/core/Typography";
 import {
@@ -20,9 +18,9 @@ import {
   StyleTableRow
 } from "../../helperStyle/customStyles";
 import { createBrowserHistory } from "history";
-import Redirect from "react-router-dom/es/Redirect";
-const { dispatch } = store;
-
+import { Redirect } from "react-router";
+import TaskInfo from "../TaskInfo/TaskInfo";
+const history = createBrowserHistory();
 const headerText = [
   "№",
   "Task",
@@ -33,12 +31,11 @@ const headerText = [
   "Delete"
 ];
 
-const TasksLog = ({ tasks }) => {
+const TasksLog = ({ tasks,history }) => {
   const [storage, setStorage] = useState([]);
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
-    const history = createBrowserHistory();
     history.push("/tab-log");
     if (JSON.parse(localStorage.getItem("tasksData"))) {
       setStorage(JSON.parse(localStorage.getItem("tasksData")));
@@ -53,11 +50,14 @@ const TasksLog = ({ tasks }) => {
     );
     setUpdate(!update);
   };
+const onClicks=()=>{
 
+
+}
   const TableBodyRow = (item, idx) => {
     return (
-      <StyleTableRow key={item.id}  >
-        <TableCell component="th" scope="row"  >
+      <StyleTableRow key={item.id}>
+        <TableCell component="th" scope="row">
           {idx + 1}
         </TableCell>
         <TableCell align="left">{item.name}</TableCell>
@@ -68,7 +68,8 @@ const TasksLog = ({ tasks }) => {
           <StyleButton
             color="primary"
             component={Link}
-            to={{ pathname: `/tasks/${item.id}`, state: item }}
+            onClick={onClicks(item.id)}
+            to={{ pathname: `tasks/${item.id}`, state: item }}
           >
             Info
           </StyleButton>
@@ -81,28 +82,31 @@ const TasksLog = ({ tasks }) => {
       </StyleTableRow>
     );
   };
+
   return (
-    <TableContainer component={Paper} className="TableContainer" >
-      <Table aria-label="customized table">
-        <TableHead className="table-head">
-          <TableRow>
-            {headerText.map((title, key) => (
-              <StyledTableCell key={key} align="left">
-                {title}
-              </StyledTableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>{storage ? storage.map(TableBodyRow) : true}</TableBody>
-      </Table>
-      {tasks.length === 0 && storage[0] == null ? (
-        <Typography align="center" color="textSecondary" variant="h4">
-          Your task list is empty
-        </Typography>
-      ) : (
-        false
-      )}
-    </TableContainer>
+    <div>
+      <TableContainer component={Paper} className="TableContainer">
+        <Table aria-label="customized table">
+          <TableHead className="table-head">
+            <TableRow>
+              {headerText.map((title, key) => (
+                <StyledTableCell key={key} align="left">
+                  {title}
+                </StyledTableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>{storage ? storage.map(TableBodyRow) : true}</TableBody>
+        </Table>
+        {tasks.length === 0 && storage[0] == null ? (
+          <Typography align="center" color="textSecondary" variant="h4">
+            Your task list is empty
+          </Typography>
+        ) : (
+          false
+        )}
+      </TableContainer>
+    </div>
   );
 };
 const mapStateToProps = ({ tasks }) => {

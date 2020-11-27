@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Timer from "../Timer/Timer";
-import TasksLog from "../TasksLog/TasksLog";
 import TaskTab from "../TasksTab/TaskTab";
 import { connect } from "react-redux";
 import store from "../../store";
@@ -8,12 +7,13 @@ import { bindActionCreators } from "redux";
 import * as actions from "../../actions/TimerActions";
 const { dispatch } = store;
 
-const { onLoad, startTimer } = bindActionCreators(actions, dispatch);
+const { onLoad } = bindActionCreators(actions, dispatch);
 
 class MainPage extends Component {
   state = {
     load: false
   };
+
   componentDidMount() {
     setInterval(() => {
       this.onLoad();
@@ -52,11 +52,12 @@ class MainPage extends Component {
     return (
       <div>
         <Timer />
-        <TaskTab />
+        <TaskTab props={this.props.props} />
       </div>
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     currentTime: state.currentTime,
@@ -64,6 +65,7 @@ const mapStateToProps = state => {
     ...state
   };
 };
+
 const mapDispatchToProps = () => {
   return {
     onUpdate: onLoad

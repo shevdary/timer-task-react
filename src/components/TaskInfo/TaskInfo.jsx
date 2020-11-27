@@ -35,7 +35,7 @@ class TaskInfo extends Component {
             aria-labelledby="customized-dialog-title"
             open={true}
             maxWidth="sm"
-            fullWidth="true"
+            fullWidth={true}
           >
             <ThemeProvider theme={themeInfo}>
               <DialogTitle id="customized-dialog-title">

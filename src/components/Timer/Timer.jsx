@@ -19,16 +19,14 @@ class Timer extends Component {
     super();
     this.state = {
       isActiveTimer: false,
-      name: null,
+      name: '',
       open: false,
       stateTimer: 0
     };
   }
 
   componentDidMount() {
-    const history = createBrowserHistory();
     const { isActiveTimer } = this.state;
-    history.push("/tab-log");
     setInterval(() => {
       this.setState({ stateTimer: Number(localStorage.getItem("count")) });
     }, 1000);
@@ -36,6 +34,7 @@ class Timer extends Component {
       this.setState({ isActiveTimer: !isActiveTimer });
     }
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.tasks != this.props.tasks) {
       const { tasks } = this.props;
@@ -171,7 +170,6 @@ const mapStateToProps = state => {
     ...state
   };
 };
-
 
 const mapDispatchToProps = () => {
   return {

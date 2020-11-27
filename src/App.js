@@ -7,18 +7,18 @@ import {
   BrowserRouter
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import MainPage from "./components/MainPage/MainPage";
 import TaskInfo from "./components/TaskInfo/TaskInfo";
-import Chart from "./components/TasksChart/TaskChart";
-import TasksLog from "./components/TasksLog/TasksLog";
-
+import MainPage from "./components/MainPage/MainPage";
 export default function App() {
   return (
-    <BrowserRouter history={createBrowserHistory()}>
+    <BrowserRouter>
       <Switch>
-        <Route  exact path="/"   component={()=><Redirect to={"/tab-log"}/>}/>
-          <Route exac path="/tab-log" component={MainPage} />
-          <Route exact path="/tab-chart" component={Chart} />
+        <Redirect exact from="/" to={"/tab-log"} />
+        <Route
+          exact
+          path="/:page"
+          component={props => <MainPage props={props} />}
+        />
         <Route
           exact
           path="/tasks/:id"
@@ -31,14 +31,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-/*<Route exact  path="/" component={()=><Redirect to={"/tab-log"}/>} />
- <Route exact  path="/tab-log" component={MainPage} />
- <Route exact path="/tab-chart" component={Chart} />
- <Route
- exact
- path="/tasks/:id"
- render={({ match }) => {
- const { id } = match.params;
- return <TaskInfo tasksId={id} />;
- }}
- />*/
