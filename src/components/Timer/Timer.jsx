@@ -8,6 +8,8 @@ import store from "../../store";
 import { createBrowserHistory } from "history";
 import { AlertDialog } from "../ErrorBoundary/ErrorBoundary";
 import { countTime } from "../../reducers/countTime";
+import {StyleBox, StyleButton} from "../../helperStyle/customStyles";
+import Typography from "@material-ui/core/Typography";
 
 const { dispatch } = store;
 const { startTimer, addNewTask } = bindActionCreators(actions, dispatch);
@@ -139,7 +141,7 @@ class Timer extends Component {
     }
 
     return (
-      <Container className="container">
+      <Box className="container" m={2}>
         <TextField
           id="standard-basic"
           label="Name of your task"
@@ -147,15 +149,17 @@ class Timer extends Component {
           value={name}
         />
         <Box borderRadius="50%" boxShadow={5} className="Box">
-          {`${hours < 10 ? "0" + hours : hours}:${
-            minutes < 10 ? "0" + minutes : minutes
-          }:${second < 10 ? "0" + second : second}`}
+          <Typography color= "primary" variant="h4">
+            {`${hours < 10 ? "0" + hours : hours}:${
+                minutes < 10 ? "0" + minutes : minutes
+            }:${second < 10 ? "0" + second : second}`}
+          </Typography>
         </Box>
-        <Button variant="contained" onClick={this.onClick} className="button">
+        <StyleButton color="primary"  onClick={this.onClick} className="button" >
           {isActiveTimer ? "stop" : "start"}
-        </Button>
+        </StyleButton>
         <AlertDialog open={this.state.open} handleClose={this.closeError} />
-      </Container>
+      </Box>
     );
   }
 }

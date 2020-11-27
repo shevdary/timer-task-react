@@ -1,4 +1,5 @@
-import {TableCell, TableRow, Tabs, withStyles} from "@material-ui/core";
+import {Box, Button, TableCell, TableRow, Tabs, withStyles} from "@material-ui/core";
+import {red} from "@material-ui/core/colors";
 
 const StyleTabs = withStyles(theme => ({
     root: {
@@ -20,4 +21,16 @@ const StyleTableRow = withStyles(theme => ({
         backgroundColor: "#eaf6ff"
     }
 }))(TableRow);
-export {StyleTabs,StyledTableCell,StyleTableRow };
+const StyleButton=withStyles(theme=>({
+    root: {
+        backgroundColor: "#ffffff",
+        boxShadow: "0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)",
+}}))(Button)
+const StyleBox=withStyles(()=>({
+    root:{
+       text:{primary:"#344dc4",}
+
+    }})
+)(Box)
+
+export {StyleTabs,StyledTableCell,StyleTableRow,StyleButton,StyleBox };

@@ -37,7 +37,7 @@ const reducer = (state = initialState, action) => {
         };
       }
       if (storage != null) {
-        const getLastID = storage[storage.length - 1].id;
+        const getLastID =storage[0]? storage[storage.length - 1].id:0;
         newTask = [
           ...state.tasks,
           {

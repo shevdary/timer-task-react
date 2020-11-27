@@ -14,7 +14,11 @@ import store from "../../store";
 import { Link } from "react-router-dom";
 import { removeItem } from "../../actions/TimerActions";
 import Typography from "@material-ui/core/Typography";
-import { StyledTableCell, StyleTableRow } from "../../helperStyle/customStyles";
+import {
+  StyleButton,
+  StyledTableCell,
+  StyleTableRow
+} from "../../helperStyle/customStyles";
 import { createBrowserHistory } from "history";
 import Redirect from "react-router-dom/es/Redirect";
 const { dispatch } = store;
@@ -52,8 +56,8 @@ const TasksLog = ({ tasks }) => {
 
   const TableBodyRow = (item, idx) => {
     return (
-      <StyleTableRow key={item.id}>
-        <TableCell component="th" scope="row">
+      <StyleTableRow key={item.id}  >
+        <TableCell component="th" scope="row"  >
           {idx + 1}
         </TableCell>
         <TableCell align="left">{item.name}</TableCell>
@@ -61,28 +65,24 @@ const TasksLog = ({ tasks }) => {
         <TableCell align="left">{item.timeEnd}</TableCell>
         <TableCell align="left">{item.timeSpend}</TableCell>
         <TableCell align="left">
-          <Button
+          <StyleButton
             color="primary"
             component={Link}
             to={{ pathname: `/tasks/${item.id}`, state: item }}
           >
             Info
-          </Button>
+          </StyleButton>
         </TableCell>
         <TableCell align="left">
-          <Button
-            onClick={() => onClick(item.id)}
-            classes={{ root: "Button" }}
-            variant="contained"
-          >
+          <StyleButton color="primary" onClick={() => onClick(item.id)}>
             Delete
-          </Button>
+          </StyleButton>
         </TableCell>
       </StyleTableRow>
     );
   };
   return (
-    <TableContainer component={Paper} className="TableContainer">
+    <TableContainer component={Paper} className="TableContainer" >
       <Table aria-label="customized table">
         <TableHead className="table-head">
           <TableRow>

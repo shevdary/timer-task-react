@@ -21,7 +21,7 @@ const TaskTab = () => {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="TASKS LOG" classes="new-class">
+          <Tab label="TASKS LOG" >
             <TasksLog />
           </Tab>
           <Tab label="TASKS CHART" />
