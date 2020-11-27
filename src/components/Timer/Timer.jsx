@@ -54,7 +54,7 @@ class Timer extends Component {
             timeStart: timer.date,
             timeEnd: timer.timeEnd,
             name: tasks[tasks.length - 1].name,
-            timeSpend: timer.countTime
+            timeSpend: tasks[tasks.length - 1].timeSpend
           };
 
           mass.push(newA);
@@ -86,7 +86,7 @@ class Timer extends Component {
   };
 
   timerStart = () => {
-    this.interval = setInterval(startTimer, 1000);
+    this.interval = setInterval(startTimer, 10);
   };
 
   timerStop = () => {

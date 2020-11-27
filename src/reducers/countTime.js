@@ -1,5 +1,4 @@
 export const countTime = (currentTime, tasks) => {
-
   const data = new Date();
   const date = data.toLocaleTimeString();
   let minutes = currentTime ? Math.trunc((currentTime / 60) % 60) : 0;

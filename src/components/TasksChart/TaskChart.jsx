@@ -39,7 +39,7 @@ class Chart extends Component {
 
   onCharts = () => {
     const { data } = this.state;
-    const { tasks } = this.props;
+    const tasks=JSON.parse(localStorage.getItem("tasksData"))
     let copyData = data;
     let newArrayTime = [];
     let start, end;
@@ -47,7 +47,6 @@ class Chart extends Component {
       tasks.map(item => {
         newArrayTime.push([item.timeStart.split(":"), item.timeEnd.split(":")]);
       });
-
     let getIndexLastElement = newArrayTime[newArrayTime.length - 1];
     let timeStartHour = getIndexLastElement[0];
     let timeEnd = getIndexLastElement[1];
