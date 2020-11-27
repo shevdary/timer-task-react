@@ -1,29 +1,25 @@
 import React, { Component } from "react";
 import "./Timer.css";
-import { Button, Box, Container, TextField } from "@material-ui/core";
+import { Box, TextField } from "@material-ui/core";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../../actions/TimerActions";
 import store from "../../store";
-import { createBrowserHistory } from "history";
 import { AlertDialog } from "../ErrorBoundary/ErrorBoundary";
 import { countTime } from "../../reducers/countTime";
-import {StyleBox, StyleButton} from "../../helperStyle/customStyles";
+import { StyleButton} from "../../helperStyle/customStyles";
 import Typography from "@material-ui/core/Typography";
 
 const { dispatch } = store;
 const { startTimer, addNewTask } = bindActionCreators(actions, dispatch);
 
 class Timer extends Component {
-  constructor() {
-    super();
-    this.state = {
+  state = {
       isActiveTimer: false,
       name: '',
       open: false,
       stateTimer: 0
     };
-  }
 
   componentDidMount() {
     const { isActiveTimer } = this.state;
@@ -87,7 +83,7 @@ class Timer extends Component {
   };
 
   timerStart = () => {
-    this.interval = setInterval(startTimer, 10);
+    this.interval = setInterval(startTimer, 1000);
   };
 
   timerStop = () => {

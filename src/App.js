@@ -3,15 +3,15 @@ import {
   Route,
   Switch,
   Redirect,
-  Router,
   BrowserRouter
 } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import TaskInfo from "./components/TaskInfo/TaskInfo";
 import MainPage from "./components/MainPage/MainPage";
+import TasksLog from "./components/TasksLog/TasksLog";
+import {createBrowserHistory} from "history";
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={createBrowserHistory()}>
       <Switch>
         <Redirect exact from="/" to={"/tab-log"} />
         <Route
@@ -19,6 +19,7 @@ export default function App() {
           path="/:page"
           component={props => <MainPage props={props} />}
         />
+        {/*<Route path="/tab-log" component={TasksLog}/>*/}
         <Route
           exact
           path="/tasks/:id"

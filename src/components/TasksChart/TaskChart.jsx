@@ -12,8 +12,8 @@ import {
 import { connect } from "react-redux";
 
 class Chart extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props)
     this.state = {
       data: []
     };
@@ -76,7 +76,7 @@ class Chart extends Component {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis/>
           <Tooltip />
           <Legend />
           <Bar dataKey="minutes" fill="#344dc4" />

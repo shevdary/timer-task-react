@@ -17,10 +17,7 @@ import {
   StyledTableCell,
   StyleTableRow
 } from "../../helperStyle/customStyles";
-import { createBrowserHistory } from "history";
-import { Redirect } from "react-router";
-import TaskInfo from "../TaskInfo/TaskInfo";
-const history = createBrowserHistory();
+
 const headerText = [
   "№",
   "Task",
@@ -50,10 +47,7 @@ const TasksLog = ({ tasks,history }) => {
     );
     setUpdate(!update);
   };
-const onClicks=()=>{
 
-
-}
   const TableBodyRow = (item, idx) => {
     return (
       <StyleTableRow key={item.id}>
@@ -68,7 +62,6 @@ const onClicks=()=>{
           <StyleButton
             color="primary"
             component={Link}
-            onClick={onClicks(item.id)}
             to={{ pathname: `tasks/${item.id}`, state: item }}
           >
             Info
