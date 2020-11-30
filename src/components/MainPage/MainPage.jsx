@@ -11,43 +11,18 @@ const { onLoad } = bindActionCreators(actions, dispatch);
 
 class MainPage extends Component {
   state = {
-    load: false
+    load: false,
+    stateTimer: 0
   };
-
-  componentDidMount() {
-    setInterval(() => {
-      this.onLoad();
-    }, 1000);
-    window.addEventListener("beforeunload", () => {
-      if (this.props.isLoad === true) {
-        this.setState({ load: true });
-      }
-    });
+  componentWillMount() {
+    const { isActiveTimer } = this.state;
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state.load === true) {
       localStorage.setItem("load", "true");
-      setInterval(() => {
-        let storage = localStorage.getItem("count");
-        localStorage.setItem("count", storage + 1);
-      }, 1000);
+      setInterval(() => {}, 1000);
     }
   }
-  onLoad = () => {
-    const { onUpdate } = this.props;
-    let countFromStorage = localStorage.getItem("count");
-    if (localStorage.getItem("load") === "true") {
-      localStorage.setItem("count", Number(countFromStorage) + 1);
-      onUpdate();
-    }
-    if (this.props.isLoad === true) {
-      this.onLoadStorage(this.props.currentTime);
-    }
-  };
-  onLoadStorage = timer => {
-    localStorage.setItem("count", Number(timer) + 1);
-  };
-
   render() {
     return (
       <div>
@@ -71,4 +46,4 @@ const mapDispatchToProps = () => {
     onUpdate: onLoad
   };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

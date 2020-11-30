@@ -1,77 +1,70 @@
-import { countTime } from "./countTime";
+import { unixToTime } from "../helpers/unixToTime";
+
 const initialState = {
   currentTime: 0,
   tasks: [],
-  isLoad: false
+  isLoad: false,
+  isStartTime: 0
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "TIMER_START":
+    case "TICK_TIMER":
       return {
         currentTime: state.currentTime + 1,
+        isLoad: true,
         tasks: state.tasks,
-        isLoad: true
+        isStartTime: state.isStartTime
+      };
+    case "TIMER_START":
+      return {
+        currentTime: state.currentTime,
+        isLoad: state.isLoad,
+        tasks: state.tasks,
+        isStartTime: new Date().toLocaleTimeString()
       };
     case "TIMER_STOP_TASK":
-      const { currentTime, tasks } = state;
-      const getLastId = tasks[0] ? tasks[tasks.length - 1].id : 0;
-      let timer = countTime(Number(localStorage.getItem("count")));
-      const storage = JSON.parse(localStorage.getItem("tasksData"));
-      let newTask;
-      if (storage == null) {
-        newTask = [
-          ...state.tasks,
+      const getLastId = state.tasks[0] ? state.tasks[0].id : 0;
+      return {
+        currentTime: 0,
+        isStartTime: state.isStartTime,
+        tasks: [
           {
             id: getLastId + 1,
-            timeStart: timer.date,
-            timeEnd: timer.timeEnd,
             name: action.payload,
-            timeSpend: timer.countTime
-          }
-        ];
-        return {
-          currentTime: 0,
-          isLoad: false,
-          tasks: newTask
-        };
-      }
-      if (storage != null) {
-        const getLastID =storage[0]? storage[storage.length - 1].id:0;
-        newTask = [
-          ...state.tasks,
-          {
-            id: getLastID + 1,
-            timeStart: timer.date,
-            timeEnd: timer.timeEnd,
-            name: action.payload,
-            timeSpend: timer.countTime
-          }
-        ];
-        return {
-          currentTime: 0,
-          isLoad: false,
-          tasks: newTask
-        };
-      }
+            startTime: state.isStartTime,
+            endTime: new Date().toLocaleTimeString(),
+            spendTime: unixToTime(state.currentTime)
+          },
+          ...state.tasks
+        ]
+      };
     case "REMOVE_ITEM_TASK":
-
       return {
         ...state,
-        tasks: [
-          ...state.tasks.slice(0, action.payload),
-          ...state.tasks.slice(Number(action.payload) + 1)
-        ]
+        tasks: [...state.tasks.filter(item => item.id !== action.payload)]
       };
     case "TIMER_UPDATE_STORAGE":
       return {
-        currentTime: Number(localStorage.getItem("count")),
-        isLoad: true,
-        ...state
+        currentTime: action.payload.current,
+        tasks: state.tasks,
+        isLoad: state.isLoad,
+        isStartTime: state.isStartTime
       };
-
+    case "UPDATE_TASKS":
+      return {
+        currentTime: state.currentTime,
+        tasks: action.payload,
+        isLoad: state.isLoad,
+        isStartTime: state.isStartTime
+      };
     default:
       return state;
   }
 };
 export default reducer;
+
+
+
+
+

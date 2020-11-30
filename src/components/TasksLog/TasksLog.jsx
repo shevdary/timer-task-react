@@ -10,13 +10,15 @@ import {
   Link
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { removeItem } from "../../actions/TimerActions";
+import * as actions from "../../actions/TimerActions";
 import Typography from "@material-ui/core/Typography";
 import {
   StyleButton,
   StyledTableCell,
   StyleTableRow
 } from "../../helperStyle/customStyles";
+import {bindActionCreators} from "redux";
+import store from "../../store";const { dispatch } = store;
 
 const headerText = [
   "№",
@@ -27,8 +29,12 @@ const headerText = [
   "Info",
   "Delete"
 ];
+const { removeItem} = bindActionCreators(
+    actions,
+    dispatch
+);
 
-const TasksLog = ({ tasks,history }) => {
+const TasksLog = ({ tasks,history,onDelete }) => {
   const [storage, setStorage] = useState([]);
   const [update, setUpdate] = useState(false);
 
@@ -37,15 +43,16 @@ const TasksLog = ({ tasks,history }) => {
     if (JSON.parse(localStorage.getItem("tasksData"))) {
       setStorage(JSON.parse(localStorage.getItem("tasksData")));
     }
-  }, [tasks, update]);
+  }, [tasks]);
 
   const onClick = id => {
-    let storageList = JSON.parse(localStorage.getItem("tasksData"));
+   /* let storageList = JSON.parse(localStorage.getItem("tasksData"));
     localStorage.setItem(
       "tasksData",
       JSON.stringify(storageList.filter(item => item.id !== id))
     );
-    setUpdate(!update);
+    setUpdate(!update);*/
+
   };
 
   const TableBodyRow = (item, idx) => {
@@ -55,9 +62,9 @@ const TasksLog = ({ tasks,history }) => {
           {idx + 1}
         </TableCell>
         <TableCell align="left">{item.name}</TableCell>
-        <TableCell align="left">{item.timeStart}</TableCell>
-        <TableCell align="left">{item.timeEnd}</TableCell>
-        <TableCell align="left">{item.timeSpend}</TableCell>
+        <TableCell align="left">{item.startTime}</TableCell>
+        <TableCell align="left">{item.endTime}</TableCell>
+        <TableCell align="left">{item.spendTime}</TableCell>
         <TableCell align="left">
           <StyleButton
             color="primary"
@@ -68,7 +75,7 @@ const TasksLog = ({ tasks,history }) => {
           </StyleButton>
         </TableCell>
         <TableCell align="left">
-          <StyleButton color="primary" onClick={() => onClick(item.id)}>
+          <StyleButton color="primary" onClick={()=>onDelete(item.id)}>
             Delete
           </StyleButton>
         </TableCell>
@@ -89,9 +96,9 @@ const TasksLog = ({ tasks,history }) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>{storage ? storage.map(TableBodyRow) : true}</TableBody>
+          <TableBody>{tasks ? tasks.map(TableBodyRow) : true}</TableBody>
         </Table>
-        {tasks.length === 0 && storage[0] == null ? (
+        {tasks.length === 0  ? (
           <Typography align="center" color="textSecondary" variant="h4">
             Your task list is empty
           </Typography>
@@ -107,13 +114,9 @@ const mapStateToProps = ({ tasks }) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onDelete: id => {
-      dispatch(removeItem(id));
+    onDelete: id => removeItem(id),
     }
-  };
+
 };
-
-
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(TasksLog);
