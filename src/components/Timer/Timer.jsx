@@ -8,12 +8,11 @@ import Typography from "@material-ui/core/Typography";
 //redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as actions from "../../actions/TimerActions";
+import * as actions from "../../reducers/actions";
 import store from "../../store";
 //helpers
 import { AlertDialog } from "../ErrorBoundary/ErrorBoundary";
 import { isDifferenceTime, unixToTime } from "../../helpers/unixToTime";
-import moment from "moment";
 import {
   clearStorage,
   getDataFromStorage,
@@ -27,7 +26,7 @@ const {
   startTimer,
   tickTimer,
   addNewTask,
-  onLoad,
+  onUpdateTimer,
   onUpdateList
 } = bindActionCreators(actions, dispatch);
 
@@ -37,7 +36,7 @@ class Timer extends Component {
     isActiveTimer: false,
     isError: false,
     timeIsLoad: 0,
-    timerStart:0
+    timerStart: 0
   };
 
   componentWillMount() {
@@ -45,10 +44,9 @@ class Timer extends Component {
   }
 
   componentDidMount() {
-
     window.addEventListener("beforeunload", () => {
-      const { isStartTime, tasks } = this.props;
-      if (isStartTime != 0) {
+      const { isStartTime, tasks, currentTime } = this.props;
+      if (currentTime) {
         setStorageTimer(isStartTime);
       }
       if (!getDataFromStorage()) {
@@ -66,8 +64,8 @@ class Timer extends Component {
   }
   componentWillUnmount() {
     window.addEventListener("beforeunload", () => {
-      const { isStartTime, tasks } = this.props;
-      if (isStartTime != 0) {
+      const { isStartTime, tasks, currentTime } = this.props;
+      if (currentTime) {
         setStorageTimer(isStartTime);
       }
       if (!getDataFromStorage()) {
@@ -91,7 +89,7 @@ class Timer extends Component {
   };
 
   onClick = () => {
-    const { isActiveTimer,taskName } = this.state;
+    const { isActiveTimer, taskName } = this.state;
     if (isActiveTimer) {
       taskName ? this.ontimerStop() : this.setState({ isError: true });
     }
@@ -129,23 +127,23 @@ class Timer extends Component {
     const { isActiveTimer, taskName, timeIsLoad } = this.state;
     const isTimerValue = unixToTime(currentTime);
     return (
-        <Box className="container" m={2}>
-          <TextField
-              id="standard-basic"
-              label="Name of your task"
-              onChange={this.onChange}
-              value={taskName}
-          />
-          <Box borderRadius="50%" boxShadow={5} className="Box">
-            <Typography color="primary" variant="h4">
-              {isTimerValue}
-            </Typography>
-          </Box>
-          <StyleButton color="primary" onClick={this.onClick} className="button">
-            {isActiveTimer ? "stop" : "start"}
-          </StyleButton>
-          <AlertDialog open={this.state.isError} handleClose={this.closeError} />
+      <Box className="container" m={2}>
+        <TextField
+          id="standard-basic"
+          label="Name of your task"
+          onChange={this.onChange}
+          value={taskName}
+        />
+        <Box borderRadius="50%" boxShadow={5} className="Box">
+          <Typography color="primary" variant="h4">
+            {isTimerValue}
+          </Typography>
         </Box>
+        <StyleButton color="primary" onClick={this.onClick} className="button">
+          {isActiveTimer ? "stop" : "start"}
+        </StyleButton>
+        <AlertDialog open={this.state.isError} handleClose={this.closeError} />
+      </Box>
     );
   }
 }
@@ -162,7 +160,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = () => {
   return {
     onAddedToList: addNewTask,
-    onUpdateTimer: time => onLoad(time),
+    onUpdateTimer: time => onUpdateTimer(time),
     onUpdateTickTimer: startTimer,
     onUpdateTasks: tasks => onUpdateList(tasks)
   };

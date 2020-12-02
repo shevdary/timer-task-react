@@ -10,7 +10,7 @@ import {
   Link
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import * as actions from "../../actions/TimerActions";
+import * as actions from "../../reducers/actions";
 import Typography from "@material-ui/core/Typography";
 import {
   StyleButton,
