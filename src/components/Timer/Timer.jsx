@@ -47,15 +47,14 @@ class Timer extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", () => {
-      const { isStartTime, tasks,currentTime } = this.props;
-      if (currentTime) {
+      const { isStartTime, tasks } = this.props;
+      if (isStartTime != 0) {
         setStorageTimer(isStartTime);
       }
       if (!getDataFromStorage()) {
         setTasksStorage(tasks);
       }
     });
-
     if (getTimerFromStorage()) {
       this.setState({ isActiveTimer: true });
       this.onUpdate();
@@ -64,10 +63,11 @@ class Timer extends Component {
       this.props.onUpdateTasks(getDataFromStorage());
     }
   }
+
   componentWillUnmount() {
     window.addEventListener("beforeunload", () => {
-      const { isStartTime, tasks,currentTime } = this.props;
-      if (currentTime) {
+      const { isStartTime, tasks } = this.props;
+      if (isStartTime != 0) {
         setStorageTimer(isStartTime);
       }
       if (!getDataFromStorage()) {
@@ -77,7 +77,10 @@ class Timer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.tasks != this.props.tasks) {
+    const { onUpdateTasks, tasks } = this.props;
+    if (prevProps.tasks != tasks) {
+      onUpdateTasks(tasks);
+      setTasksStorage(tasks);
       return true;
     }
   }
@@ -93,10 +96,10 @@ class Timer extends Component {
   onClick = () => {
     const { isActiveTimer,taskName } = this.state;
     if (isActiveTimer) {
-      taskName ? this.ontimerStop() : this.setState({ isError: true });
+      taskName ? this.onTimerStop() : this.setState({ isError: true });
     }
     if (!isActiveTimer) {
-      this.ontimerStart();
+      this.onTimerStart();
     }
   };
 
@@ -104,20 +107,26 @@ class Timer extends Component {
     this.setState({ taskName: e.target.value });
   };
 
-  ontimerStart = () => {
+  onTimerStart = () => {
     this.setState({ isActiveTimer: true });
     setStorageTimer(0);
     startTimer();
     this.interval = setInterval(tickTimer, 1000);
   };
 
-  ontimerStop = () => {
+  onTimerStop = () => {
     const { onAddedToList } = this.props;
     const { taskName } = this.state;
+    const stopTimer = moment().format("HH:mm:ss");
+    const start = isDifferenceTime(
+        stopTimer,
+        unixToTime(this.props.currentTime)
+    );
+    onAddedToList(taskName, unixToTime(start), stopTimer);
     clearStorage();
     clearInterval(this.interval);
     clearInterval(this.timeInterval);
-    onAddedToList(taskName);
+
     this.setState({ taskName: "", isActiveTimer: false });
   };
   closeError = () => {

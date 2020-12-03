@@ -32,9 +32,9 @@ const reducer = (state = initialState, action) => {
         tasks: [
           {
             id: getLastId + 1,
-            name: action.payload,
-            startTime: state.isStartTime,
-            endTime: new Date().toLocaleTimeString(),
+            name: action.payload.name,
+            startTime: action.payload.start,
+            endTime:  action.payload.end,
             spendTime: unixToTime(state.currentTime)
           },
           ...state.tasks
@@ -47,7 +47,7 @@ const reducer = (state = initialState, action) => {
       };
     case timer.UPDATE:
       return {
-        currentTime: action.payload.current,
+        currentTime: action.payload,
         tasks: state.tasks,
         isLoad: state.isLoad,
         isStartTime: state.isStartTime
