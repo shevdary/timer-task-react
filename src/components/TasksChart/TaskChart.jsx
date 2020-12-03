@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-//redux
-import { connect } from "react-redux";
-import moment from "moment";
-import { isDifferenceTime, unixToTime } from "../../helpers/unixToTime";
-//components
-import ButtonGenerate from "../ButtonGenerate/ButtonGenerate";
-//charts
+//chart
 import {
   BarChart,
   Bar,
@@ -16,6 +10,12 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
+//redux
+import { connect } from "react-redux";
+import moment from "moment";
+import { isDifferenceTime} from "../../helpers/unixToTime";
+//componets
+import ButtonGenerate from "../ButtonGenerate/ButtonGenerate";
 
 class Chart extends Component {
   constructor(props) {
@@ -23,20 +23,23 @@ class Chart extends Component {
     this.state = {
       data: []
     };
+  }
+  componentDidMount() {
     this.renderTable();
   }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    this.onCharts();
+  }
+
   renderTable = () => {
     const { data } = this.state;
     const date = data;
     for (let i = 0; i < 24; i++) {
-      date.push({ name: i, minutes: localStorage.getItem("count") });
+      date.push({ name: i, minutes: 0 });
     }
     this.setState({ date: date });
   };
-
-  componentDidMount() {
-    this.onCharts();
-  }
 
   onCharts = () => {
     const { data } = this.state;
@@ -45,10 +48,11 @@ class Chart extends Component {
     tasks.forEach(item => {
       const startTimerHour = moment(item.startTime, "HH:mm:ss");
       const nextHour = moment(startTimerHour.hours() + 1, "HH:mm:ss");
+      const endTimeHour = moment(item.endTime, "HH:mm:ss");
       const durationsInSecond = isDifferenceTime(nextHour, startTimerHour);
       const durationToTime = moment.duration(durationsInSecond, "seconds");
-      const timerDuration = moment.duration(item.spendTime, "second");
-      const increase = durationToTime.minutes() - timerDuration.minutes();
+      const timerDuration = moment.duration(item.spendTime, "seconds");
+      const increase = (durationToTime - timerDuration) / 1000;
       if (increase > 0) {
         copyData[startTimerHour.hours()].minutes += moment(
           item.spendTime,
@@ -56,11 +60,25 @@ class Chart extends Component {
         ).minutes();
       }
       if (increase < 0) {
-        copyData[startTimerHour.hours()].minutes += item.spendTime;
-        copyData[startTimerHour.hours() + 1].minutes += -increase;
+        if (increase * -1 < 3600) {
+          copyData[startTimerHour.hours()].minutes += moment
+            .duration(durationToTime, "seconds")
+            .minutes();
+          copyData[endTimeHour.hours()].minutes += endTimeHour.minutes();
+        }
+        if (increase * -1 > 3600) {
+          copyData[startTimerHour.hours()].minutes += moment
+            .duration(durationToTime, "seconds")
+            .minutes();
+          copyData[startTimerHour.hours() + 1].minutes = 60;
+          copyData[endTimeHour.hours()].minutes += moment
+            .duration(increase * -1, "seconds")
+            .minutes();
+        }
       }
     });
   };
+
   render() {
     return (
       <div>
@@ -76,13 +94,13 @@ class Chart extends Component {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis domain={[0, dataMax => 60]} allowDataOverFlow={true} />
             <Tooltip />
             <Legend />
             <Bar dataKey="minutes" fill="#344dc4" />
           </BarChart>
         </ResponsiveContainer>
-        <ButtonGenerate />
+        <ButtonGenerate/>
       </div>
     );
   }

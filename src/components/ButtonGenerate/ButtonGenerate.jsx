@@ -17,15 +17,14 @@ class ButtonGenerate extends Component {
   onGenerateId = () => {
     const { data } = this.state;
     const date = data;
-
     for (let id = 1; id <= 10; id++) {
-      const {startTime, endTime, durationTime}=this.onGenerateTime();
+      const { startTime, endTime, durationTime } = this.onGenerateTime();
       date.push({
         id: id,
         name: this.onGenerateName(),
-        startTime:startTime,
-        endTime:endTime,
-        spendTime:durationTime
+        startTime: startTime,
+        endTime: endTime,
+        spendTime: durationTime
       });
     }
     this.setState({
@@ -41,6 +40,7 @@ class ButtonGenerate extends Component {
     }
     return name;
   };
+
   onGenerateTime = () => {
     const randomTime = Math.trunc(Math.random() * (5400 - 600 + 1) + 600);
     const randomEnd = Math.trunc(Math.random() * (86400 + 1));
@@ -55,13 +55,14 @@ class ButtonGenerate extends Component {
     this.onGenerateId();
     this.onGenerateName();
     this.onGenerateTime();
-    this.props.onUpdateTasks(this.state.data)
+    this.props.onUpdateTasks(this.state.data);
   };
+
   render() {
     return (
-        <div>
-          <StyleButton onClick={this.onClick}>generate</StyleButton>
-        </div>
+      <div>
+        <StyleButton onClick={this.onClick}>generate</StyleButton>
+      </div>
     );
   }
 }
@@ -71,6 +72,7 @@ const mapStateToProps = state => {
     tasks: state.tasks
   };
 };
+
 const mapDispatchToProps = () => {
   return {
     onUpdateTasks: tasks => onUpdateList(tasks)
