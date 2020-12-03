@@ -9,9 +9,11 @@ import store from "../../store";
 import { isDifferenceTime, unixToTime } from "../../helpers/unixToTime";
 const { dispatch } = store;
 const { onUpdateList } = bindActionCreators(actions, dispatch);
+
 class ButtonGenerate extends Component {
   state = {
-    data: []
+    data: [],
+    isClick: false
   };
 
   onGenerateId = () => {
@@ -40,7 +42,6 @@ class ButtonGenerate extends Component {
     }
     return name;
   };
-
   onGenerateTime = () => {
     const randomTime = Math.trunc(Math.random() * (5400 - 600 + 1) + 600);
     const randomEnd = Math.trunc(Math.random() * (86400 + 1));
@@ -52,17 +53,21 @@ class ButtonGenerate extends Component {
   };
 
   onClick = () => {
+    const { onUpdateTasks } = this.props;
+    const { data } = this.state;
     this.onGenerateId();
     this.onGenerateName();
     this.onGenerateTime();
-    this.props.onUpdateTasks(this.state.data);
+    onUpdateTasks(data);
+    this.setState({
+      isClick: true
+    });
   };
-
   render() {
     return (
-      <div>
-        <StyleButton onClick={this.onClick}>generate</StyleButton>
-      </div>
+        <div>
+          <StyleButton onClick={this.onClick}>generate</StyleButton>
+        </div>
     );
   }
 }
@@ -72,7 +77,6 @@ const mapStateToProps = state => {
     tasks: state.tasks
   };
 };
-
 const mapDispatchToProps = () => {
   return {
     onUpdateTasks: tasks => onUpdateList(tasks)

@@ -13,6 +13,7 @@ import store from "../../store";
 //helpers
 import { AlertDialog } from "../ErrorBoundary/ErrorBoundary";
 import { isDifferenceTime, unixToTime } from "../../helpers/unixToTime";
+import moment from "moment";
 import {
   clearStorage,
   getDataFromStorage,
@@ -20,6 +21,7 @@ import {
   setStorageTimer,
   setTasksStorage
 } from "../../localStorage";
+
 
 const { dispatch } = store;
 const {
@@ -36,7 +38,7 @@ class Timer extends Component {
     isActiveTimer: false,
     isError: false,
     timeIsLoad: 0,
-    timerStart: 0
+    timerStart:0
   };
 
   componentWillMount() {
@@ -45,7 +47,7 @@ class Timer extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", () => {
-      const { isStartTime, tasks, currentTime } = this.props;
+      const { isStartTime, tasks,currentTime } = this.props;
       if (currentTime) {
         setStorageTimer(isStartTime);
       }
@@ -64,7 +66,7 @@ class Timer extends Component {
   }
   componentWillUnmount() {
     window.addEventListener("beforeunload", () => {
-      const { isStartTime, tasks, currentTime } = this.props;
+      const { isStartTime, tasks,currentTime } = this.props;
       if (currentTime) {
         setStorageTimer(isStartTime);
       }
@@ -89,7 +91,7 @@ class Timer extends Component {
   };
 
   onClick = () => {
-    const { isActiveTimer, taskName } = this.state;
+    const { isActiveTimer,taskName } = this.state;
     if (isActiveTimer) {
       taskName ? this.ontimerStop() : this.setState({ isError: true });
     }
@@ -127,23 +129,23 @@ class Timer extends Component {
     const { isActiveTimer, taskName, timeIsLoad } = this.state;
     const isTimerValue = unixToTime(currentTime);
     return (
-      <Box className="container" m={2}>
-        <TextField
-          id="standard-basic"
-          label="Name of your task"
-          onChange={this.onChange}
-          value={taskName}
-        />
-        <Box borderRadius="50%" boxShadow={5} className="Box">
-          <Typography color="primary" variant="h4">
-            {isTimerValue}
-          </Typography>
+        <Box className="container" m={2}>
+          <TextField
+              id="standard-basic"
+              label="Name of your task"
+              onChange={this.onChange}
+              value={taskName}
+          />
+          <Box borderRadius="50%" boxShadow={5} className="Box">
+            <Typography color="primary" variant="h4">
+              {isTimerValue}
+            </Typography>
+          </Box>
+          <StyleButton color="primary" onClick={this.onClick} className="button">
+            {isActiveTimer ? "stop" : "start"}
+          </StyleButton>
+          <AlertDialog open={this.state.isError} handleClose={this.closeError} />
         </Box>
-        <StyleButton color="primary" onClick={this.onClick} className="button">
-          {isActiveTimer ? "stop" : "start"}
-        </StyleButton>
-        <AlertDialog open={this.state.isError} handleClose={this.closeError} />
-      </Box>
     );
   }
 }

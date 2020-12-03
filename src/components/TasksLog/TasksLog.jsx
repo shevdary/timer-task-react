@@ -17,8 +17,9 @@ import {
   StyledTableCell,
   StyleTableRow
 } from "../../helperStyle/customStyles";
-import {bindActionCreators} from "redux";
-import store from "../../store";const { dispatch } = store;
+import { bindActionCreators } from "redux";
+import store from "../../store";
+const { dispatch } = store;
 
 const headerText = [
   "№",
@@ -29,30 +30,21 @@ const headerText = [
   "Info",
   "Delete"
 ];
-const { removeItem} = bindActionCreators(
-    actions,
-    dispatch
-);
+const { removeItem, onUpdateList } = bindActionCreators(actions, dispatch);
 
-const TasksLog = ({ tasks,history,onDelete }) => {
+const TasksLog = ({ tasks, history, onDelete, onUpdateList }) => {
   const [storage, setStorage] = useState([]);
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
-    history.push("/tab-log");
-    if (JSON.parse(localStorage.getItem("tasksData"))) {
-      setStorage(JSON.parse(localStorage.getItem("tasksData")));
-    }
+    history.push("/tasks");
   }, [tasks]);
 
   const onClick = id => {
-   /* let storageList = JSON.parse(localStorage.getItem("tasksData"));
-    localStorage.setItem(
-      "tasksData",
-      JSON.stringify(storageList.filter(item => item.id !== id))
-    );
-    setUpdate(!update);*/
-
+    onDelete(id);
+  };
+  const getInfo = id => {
+    history.push(`/tasks/${id}`);
   };
 
   const TableBodyRow = (item, idx) => {
@@ -66,16 +58,12 @@ const TasksLog = ({ tasks,history,onDelete }) => {
         <TableCell align="left">{item.endTime}</TableCell>
         <TableCell align="left">{item.spendTime}</TableCell>
         <TableCell align="left">
-          <StyleButton
-            color="primary"
-            component={Link}
-            to={{ pathname: `tasks/${item.id}`, state: item }}
-          >
+          <StyleButton color="primary" onClick={() => getInfo(item.id)}>
             Info
           </StyleButton>
         </TableCell>
         <TableCell align="left">
-          <StyleButton color="primary" onClick={()=>onDelete(item.id)}>
+          <StyleButton color="primary" onClick={() => onClick(item.id)}>
             Delete
           </StyleButton>
         </TableCell>
@@ -98,7 +86,7 @@ const TasksLog = ({ tasks,history,onDelete }) => {
           </TableHead>
           <TableBody>{tasks ? tasks.map(TableBodyRow) : true}</TableBody>
         </Table>
-        {tasks.length === 0  ? (
+        {tasks.length === 0 ? (
           <Typography align="center" color="textSecondary" variant="h4">
             Your task list is empty
           </Typography>
@@ -115,8 +103,8 @@ const mapStateToProps = ({ tasks }) => {
 const mapDispatchToProps = dispatch => {
   return {
     onDelete: id => removeItem(id),
-    }
-
+    onUpdateList: tasks => onUpdateList(tasks)
+  };
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(TasksLog);

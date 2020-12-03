@@ -13,7 +13,7 @@ import {
 //redux
 import { connect } from "react-redux";
 import moment from "moment";
-import { isDifferenceTime} from "../../helpers/unixToTime";
+import { isDifferenceTime } from "../../helpers/unixToTime";
 //componets
 import ButtonGenerate from "../ButtonGenerate/ButtonGenerate";
 
@@ -46,8 +46,8 @@ class Chart extends Component {
     const { tasks } = this.props;
     let copyData = data;
     tasks.forEach(item => {
-      const startTimerHour = moment(item.startTime, "HH:mm:ss");
-      const nextHour = moment(startTimerHour.hours() + 1, "HH:mm:ss");
+      const startTimerHour = moment(item.startTime, "HH:mm ");
+      const nextHour = moment(startTimerHour.hours() + 1, "HH:mm ");
       const endTimeHour = moment(item.endTime, "HH:mm:ss");
       const durationsInSecond = isDifferenceTime(nextHour, startTimerHour);
       const durationToTime = moment.duration(durationsInSecond, "seconds");
@@ -100,11 +100,12 @@ class Chart extends Component {
             <Bar dataKey="minutes" fill="#344dc4" />
           </BarChart>
         </ResponsiveContainer>
-        <ButtonGenerate/>
+        <ButtonGenerate />
       </div>
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     tasks: state.tasks

@@ -15,6 +15,7 @@ import { createBrowserHistory } from "history";
 import { themeInfo } from "../../helperStyle/customTheme";
 import green from "@material-ui/core/colors/green";
 import TaskInfoUndefined from "./TaskInfoUndefined";
+import { getDataFromStorage } from "../../localStorage";
 let history = createBrowserHistory();
 
 class TaskInfo extends Component {
@@ -22,9 +23,7 @@ class TaskInfo extends Component {
     const { tasksId, tasks } = this.props;
     let info = tasks.find(item => item.id == tasksId);
     if (info == undefined) {
-      info = JSON.parse(localStorage.getItem("tasksData")).find(
-        item => item.id == tasksId
-      );
+      info = getDataFromStorage().find(item => item.id == tasksId);
     }
     const details =
       info == undefined ? (
@@ -45,11 +44,11 @@ class TaskInfo extends Component {
               <DialogContent dividers>
                 <Typography gutterBottom>ID: {info.id}</Typography>
                 <Typography gutterBottom>
-                  Time start : {info.timeStart}
+                  Time start : {info.startTime}
                 </Typography>
-                <Typography gutterBottom>Time end : {info.timeEnd}</Typography>
+                <Typography gutterBottom>Time end : {info.endTime}</Typography>
                 <Typography gutterBottom>
-                  Time spend : {info.timeSpend}
+                  Time spend : {info.spendTime}
                 </Typography>
               </DialogContent>
               <DialogActions>

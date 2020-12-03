@@ -5,10 +5,10 @@ import TaskTab from "../TasksTab/TaskTab";
 class MainPage extends Component {
   render() {
     return (
-      <div>
-        <Timer />
-        <TaskTab props={this.props.props} />
-      </div>
+        <div>
+          <Timer />
+          <TaskTab props={this.props.props} />
+        </div>
     );
   }
 }

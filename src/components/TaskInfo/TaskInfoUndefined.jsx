@@ -13,20 +13,20 @@ let history = createBrowserHistory();
 
 const TaskInfoUndefined = () => {
   return (
-    <Dialog open={true} fullWidth={"true"} maxWidth="md">
-      <ThemeProvider theme={themeError}>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            You are trying to get info about a non-existent task
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => history.back()} color="secondary" autoFocus>
-            back
-          </Button>
-        </DialogActions>
-      </ThemeProvider>
-    </Dialog>
+      <Dialog open={true} fullWidth={"true"} maxWidth="md">
+        <ThemeProvider theme={themeError}>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              You are trying to get info about a non-existent task
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => history.back()} color="secondary" autoFocus>
+              back
+            </Button>
+          </DialogActions>
+        </ThemeProvider>
+      </Dialog>
   );
 };
 
