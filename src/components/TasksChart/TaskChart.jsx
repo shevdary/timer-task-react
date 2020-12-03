@@ -1,4 +1,10 @@
 import React, { Component } from "react";
+//redux
+import { connect } from "react-redux";
+import moment from "moment";
+import { isDifferenceTime } from "../../helpers/unixToTime";
+//componets
+import ButtonGenerate from "../ButtonGenerate/ButtonGenerate";
 //chart
 import {
   BarChart,
@@ -10,12 +16,6 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
-//redux
-import { connect } from "react-redux";
-import moment from "moment";
-import { isDifferenceTime } from "../../helpers/unixToTime";
-//componets
-import ButtonGenerate from "../ButtonGenerate/ButtonGenerate";
 
 class Chart extends Component {
   constructor(props) {
@@ -94,7 +94,7 @@ class Chart extends Component {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis domain={[0, dataMax => 60]} allowDataOverFlow={true} />
+            <YAxis domain={[0, 60]} allowDataOverFlow={true} />
             <Tooltip />
             <Legend />
             <Bar dataKey="minutes" fill="#344dc4" />

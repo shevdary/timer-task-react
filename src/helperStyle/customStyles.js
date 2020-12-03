@@ -1,12 +1,10 @@
 import {
-  Box,
   Button,
   TableCell,
   TableRow,
   Tabs,
   withStyles
 } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
 
 const StyleTabs = withStyles(theme => ({
   root: {

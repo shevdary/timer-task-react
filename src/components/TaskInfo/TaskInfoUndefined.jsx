@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { ThemeProvider } from "@material-ui/styles";
-import { themeError } from "../../helperStyle/customTheme";
+//material-ui
 import {
   Button,
   Dialog,
@@ -8,25 +7,24 @@ import {
   DialogContent,
   DialogContentText
 } from "@material-ui/core";
-import {createBrowserHistory} from "history";
+//history
+import { createBrowserHistory } from "history";
 let history = createBrowserHistory();
 
 const TaskInfoUndefined = () => {
   return (
-      <Dialog open={true} fullWidth={"true"} maxWidth="md">
-        <ThemeProvider theme={themeError}>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              You are trying to get info about a non-existent task
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => history.back()} color="secondary" autoFocus>
-              back
-            </Button>
-          </DialogActions>
-        </ThemeProvider>
-      </Dialog>
+    <Dialog open={true} fullWidth={"true"} maxWidth="md">
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          You are trying to get info about a non-existent task
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => history.back()} color="secondary" autoFocus>
+          back
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

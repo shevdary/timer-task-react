@@ -22,7 +22,6 @@ import {
   setTasksStorage
 } from "../../localStorage";
 
-
 const { dispatch } = store;
 const {
   startTimer,
@@ -38,7 +37,7 @@ class Timer extends Component {
     isActiveTimer: false,
     isError: false,
     timeIsLoad: 0,
-    timerStart:0
+    timerStart: 0
   };
 
   componentWillMount() {
@@ -94,7 +93,7 @@ class Timer extends Component {
   };
 
   onClick = () => {
-    const { isActiveTimer,taskName } = this.state;
+    const { isActiveTimer, taskName } = this.state;
     if (isActiveTimer) {
       taskName ? this.onTimerStop() : this.setState({ isError: true });
     }
@@ -119,8 +118,8 @@ class Timer extends Component {
     const { taskName } = this.state;
     const stopTimer = moment().format("HH:mm:ss");
     const start = isDifferenceTime(
-        stopTimer,
-        unixToTime(this.props.currentTime)
+      stopTimer,
+      unixToTime(this.props.currentTime)
     );
     onAddedToList(taskName, unixToTime(start), stopTimer);
     clearStorage();
@@ -138,23 +137,23 @@ class Timer extends Component {
     const { isActiveTimer, taskName, timeIsLoad } = this.state;
     const isTimerValue = unixToTime(currentTime);
     return (
-        <Box className="container" m={2}>
-          <TextField
-              id="standard-basic"
-              label="Name of your task"
-              onChange={this.onChange}
-              value={taskName}
-          />
-          <Box borderRadius="50%" boxShadow={5} className="Box">
-            <Typography color="primary" variant="h4">
-              {isTimerValue}
-            </Typography>
-          </Box>
-          <StyleButton color="primary" onClick={this.onClick} className="button">
-            {isActiveTimer ? "stop" : "start"}
-          </StyleButton>
-          <AlertDialog open={this.state.isError} handleClose={this.closeError} />
+      <Box className="container" m={2}>
+        <TextField
+          id="standard-basic"
+          label="Name of your task"
+          onChange={this.onChange}
+          value={taskName}
+        />
+        <Box borderRadius="50%" boxShadow={5} className="Box">
+          <Typography color="primary" variant="h4">
+            {isTimerValue}
+          </Typography>
         </Box>
+        <StyleButton color="primary" onClick={this.onClick} className="button">
+          {isActiveTimer ? "stop" : "start"}
+        </StyleButton>
+        <AlertDialog open={this.state.isError} handleClose={this.closeError} />
+      </Box>
     );
   }
 }

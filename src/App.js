@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
+//components
 import TaskInfo from "./components/TaskInfo/TaskInfo";
 import MainPage from "./components/MainPage/MainPage";
 

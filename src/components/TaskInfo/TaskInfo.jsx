@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+//redux
 import { connect } from "react-redux";
+//components
+import TaskInfoUndefined from "./TaskInfoUndefined";
+//material-ui
 import {
   Typography,
   Button,
@@ -11,12 +15,13 @@ import {
 } from "@material-ui/core";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { createBrowserHistory } from "history";
 import { themeInfo } from "../../helperStyle/customTheme";
 import green from "@material-ui/core/colors/green";
-import TaskInfoUndefined from "./TaskInfoUndefined";
-import { getDataFromStorage } from "../../localStorage";
+//history
+import { createBrowserHistory } from "history";
 let history = createBrowserHistory();
+//helpers
+import { getDataFromStorage } from "../../localStorage";
 
 class TaskInfo extends Component {
   render() {
