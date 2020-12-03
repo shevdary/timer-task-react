@@ -1,4 +1,13 @@
 import React, { useEffect, useState } from "react";
+//redux
+import { connect } from "react-redux";
+import * as actions from "../../reducers/actions";
+import { bindActionCreators } from "redux";
+import store from "../../store";
+const { dispatch } = store;
+//components
+import { AlertDelete } from "../AlertWindow/AlertDialogDelete";
+//material-ui
 import {
   TableCell,
   TableContainer,
@@ -7,44 +16,42 @@ import {
   Paper,
   Table,
   TableBody,
-  Link
+  Typography
 } from "@material-ui/core";
-import { connect } from "react-redux";
-import * as actions from "../../reducers/actions";
-import Typography from "@material-ui/core/Typography";
 import {
   StyleButton,
   StyledTableCell,
   StyleTableRow
 } from "../../helperStyle/customStyles";
-import { bindActionCreators } from "redux";
-import store from "../../store";
-const { dispatch } = store;
+import {headerTable} from "../../helpers/headerTable";
 
-const headerText = [
-  "№",
-  "Task",
-  "Time start",
-  "Time end",
-  "Time spend",
-  "Info",
-  "Delete"
-];
+
 const { removeItem, onUpdateList } = bindActionCreators(actions, dispatch);
 
-const TasksLog = ({ tasks, history, onDelete, onUpdateList }) => {
-  const [storage, setStorage] = useState([]);
-  const [update, setUpdate] = useState(false);
+const TasksLog = ({ tasks, history, onDelete }) => {
+  const [isOpen, setOpen] = useState(false);
+  const [deleteId, setId] = useState(null);
 
   useEffect(() => {
     history.push("/tasks");
   }, [tasks]);
 
-  const onClick = id => {
-    onDelete(id);
-  };
-  const getInfo = id => {
+  const handleGetInfo = id => {
     history.push(`/tasks/${id}`);
+  };
+
+  const handleClick = id => {
+    setOpen(true);
+    setId(id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    onDelete(deleteId);
+    setOpen(false);
   };
 
   const TableBodyRow = (item, idx) => {
@@ -58,26 +65,25 @@ const TasksLog = ({ tasks, history, onDelete, onUpdateList }) => {
         <TableCell align="left">{item.endTime}</TableCell>
         <TableCell align="left">{item.spendTime}</TableCell>
         <TableCell align="left">
-          <StyleButton color="primary" onClick={() => getInfo(item.id)}>
+          <StyleButton color="primary" onClick={() => handleGetInfo(item.id)}>
             Info
           </StyleButton>
         </TableCell>
         <TableCell align="left">
-          <StyleButton color="primary" onClick={() => onClick(item.id)}>
+          <StyleButton color="primary" onClick={() => handleClick(item.id)}>
             Delete
           </StyleButton>
         </TableCell>
       </StyleTableRow>
     );
   };
-
   return (
     <div>
       <TableContainer component={Paper} className="TableContainer">
         <Table aria-label="customized table">
           <TableHead className="table-head">
             <TableRow>
-              {headerText.map((title, key) => (
+              {headerTable.map((title, key) => (
                 <StyledTableCell key={key} align="left">
                   {title}
                 </StyledTableCell>
@@ -94,6 +100,12 @@ const TasksLog = ({ tasks, history, onDelete, onUpdateList }) => {
           false
         )}
       </TableContainer>
+      <AlertDelete
+        open={isOpen}
+        handleClose={handleClose}
+        handleDelete={handleDelete}
+        deleteId={deleteId}
+      />
     </div>
   );
 };

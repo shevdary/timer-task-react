@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 import * as actions from "../../reducers/actions";
 import store from "../../store";
 //helpers
-import { AlertDialog } from "../ErrorBoundary/ErrorBoundary";
+import { AlertDialog } from "../AlertWindow/AlertDialogInfo";
 import { isDifferenceTime, unixToTime } from "../../helpers/unixToTime";
 import moment from "moment";
 import {
