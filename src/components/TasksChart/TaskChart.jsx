@@ -17,7 +17,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-class Chart extends Component {
+class TaskChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,7 +48,7 @@ class Chart extends Component {
     tasks.forEach(item => {
       const startTimerHour = moment(item.startTime, "HH:mm ");
       const nextHour = moment(startTimerHour.hours() + 1, "HH:mm ");
-      const endTimeHour = moment(item.endTime, "HH:mm:ss");
+      const endTimeHour = moment(item.endTime, "HH:mm");
       const durationsInSecond = isDifferenceTime(nextHour, startTimerHour);
       const durationToTime = moment.duration(durationsInSecond, "seconds");
       const timerDuration = moment.duration(item.spendTime, "seconds");
@@ -111,4 +111,4 @@ const mapStateToProps = state => {
     tasks: state.tasks
   };
 };
-export default connect(mapStateToProps)(Chart)
+export default connect(mapStateToProps)(TaskChart)

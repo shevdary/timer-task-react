@@ -2,7 +2,7 @@ import React from "react";
 import TasksLog from "../TasksLog/TasksLog";
 import { AppBar, Tab } from "@material-ui/core";
 import { StyleTabs } from "../../helperStyle/customStyles";
-import Chart from "../TasksChart/TaskChart";
+import TaskChart from "../TasksChart/TaskChart";
 
 const TaskTab = ({ props }) => {
   const page = props.match.params.page;
@@ -36,7 +36,7 @@ const TaskTab = ({ props }) => {
           </StyleTabs>
         </AppBar>
         {value === 0 && <TasksLog history={history}/>}
-        {value === 1 && <Chart />}
+        {value === 1 && <TaskChart />}
       </div>
   );
 };
