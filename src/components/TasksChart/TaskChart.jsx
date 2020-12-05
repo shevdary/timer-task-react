@@ -52,7 +52,7 @@ class TaskChart extends Component {
   render() {
     return (
       <div>
-        <ResponsiveContainer minWidth="100%" minHeight="100%" aspect={5 / 2}>
+        <ResponsiveContainer minWidth="100%" minHeight="100%" aspect={4 / 1}>
           <BarChart
             data={this.state.data}
             margin={{

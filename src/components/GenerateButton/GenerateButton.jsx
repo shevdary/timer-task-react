@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleButton } from '../../material/customStyles';
+import { StyleButton, StyleButtonGenerate } from '../../material/customStyles';
 //redux
 import { connect } from 'react-redux';
 import store from '../../redux/store';
@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 const { cleanTasks, addNewTask } = bindActionCreators(actions, dispatch);
 //utils
 import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
-
 class GenerateButton extends Component {
   state = {
     data: [],
@@ -73,7 +72,9 @@ class GenerateButton extends Component {
   render() {
     return (
       <div>
-        <StyleButton onClick={this.onClick}>generate</StyleButton>
+        <StyleButtonGenerate onClick={this.onClick} m={3}>
+          generate
+        </StyleButtonGenerate>
       </div>
     );
   }

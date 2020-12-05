@@ -37,4 +37,19 @@ const StyleButton = withStyles(theme => ({
   },
 }))(Button);
 
-export { StyleTabs, StyledTableCell, StyleTableRow, StyleButton };
+const StyleButtonGenerate = withStyles(theme => ({
+  root: {
+    backgroundColor: '#ffffff',
+    boxShadow:
+      '0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)',
+    float: 'right',
+    margin: '0px 50px',
+  },
+}))(Button);
+export {
+  StyleTabs,
+  StyledTableCell,
+  StyleTableRow,
+  StyleButton,
+  StyleButtonGenerate,
+};

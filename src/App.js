@@ -8,7 +8,7 @@ import { createBrowserHistory } from 'history';
 
 export default function App() {
   return (
-    <BrowserRouter history={createBrowserHistory()}>
+    <BrowserRouter history={createBrowserHistory()} basename="/">
       <Switch>
         <Redirect exact from="/" to="/tasks" />
         <Route
