@@ -6,7 +6,7 @@ import store from '../../redux/store';
 const { dispatch } = store;
 import * as actions from '../../redux/reducers/tasks';
 import { bindActionCreators } from 'redux';
-const { cleanTasks, updateTasks } = bindActionCreators(actions, dispatch);
+const { cleanTasks, addNewTask } = bindActionCreators(actions, dispatch);
 //utils
 import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
 
@@ -22,7 +22,6 @@ class GenerateButton extends Component {
     for (let id = 1; id <= 10; id++) {
       const { startTime, endTime, durationTime } = this.onGenerateTime();
       date.push({
-        id: id,
         name: this.onGenerateName(),
         startTime: startTime,
         endTime: endTime,
@@ -54,18 +53,21 @@ class GenerateButton extends Component {
     return { startTime, endTime, durationTime };
   };
 
+  onGenerate = () => {
+    this.onGenerateId();
+    this.onGenerateName();
+    this.onGenerateTime();
+  };
+
   onClick = () => {
-    const { onUpdateTasks, onClearList } = this.props;
+    const { onAddNewTasks, onClearList } = this.props;
     const { data } = this.state;
     this.setState({
       isClick: true,
     });
-
     onClearList();
-    this.onGenerateId();
-    this.onGenerateName();
-    this.onGenerateTime();
-    onUpdateTasks(data);
+    this.onGenerate();
+    data.forEach(item => onAddNewTasks(item));
   };
   render() {
     return (
@@ -83,8 +85,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdateTasks: tasks => {
-      updateTasks(tasks);
+    onAddNewTasks: tasksList => {
+      addNewTask(tasksList);
     },
     onClearList: () => {
       cleanTasks();
