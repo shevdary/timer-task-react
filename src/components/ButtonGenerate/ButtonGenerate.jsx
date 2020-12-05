@@ -3,12 +3,13 @@ import { StyleButton } from "../../helperStyle/customStyles";
 //redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as actions from "../../reducers/actions";
-import store from "../../store";
+
+import store from "../../redux/store";
 //helpers
-import { isDifferenceTime, unixToTime } from "../../helpers/unixToTime";
+import { isDifferenceInTime, unixToTime } from "../../helpers/unixToTime";
+import {cleanTasks, updateTasks} from "../../redux/reducers/tasks";
 const { dispatch } = store;
-const { onUpdateList } = bindActionCreators(actions, dispatch);
+
 
 class ButtonGenerate extends Component {
   state = {
@@ -47,21 +48,23 @@ class ButtonGenerate extends Component {
     const randomEnd = Math.trunc(Math.random() * (86400 + 1));
     const durationTime = unixToTime(randomTime);
     const endTime = unixToTime(randomEnd);
-    const difference = isDifferenceTime(endTime, durationTime);
+    const difference = isDifferenceInTime(endTime, durationTime);
     const startTime = unixToTime(difference);
     return { startTime, endTime, durationTime };
   };
 
   onClick = () => {
-    const { onUpdateTasks } = this.props;
+    const { onUpdateTasks,onClearList } = this.props;
     const { data } = this.state;
+    this.setState({
+      isClick: true
+    });
+    onClearList();
     this.onGenerateId();
     this.onGenerateName();
     this.onGenerateTime();
     onUpdateTasks(data);
-    this.setState({
-      isClick: true
-    });
+
   };
   render() {
     return (
@@ -74,12 +77,13 @@ class ButtonGenerate extends Component {
 
 const mapStateToProps = state => {
   return {
-    tasks: state.tasks
+    tasks: state.tasksReducer.tasks
   };
 };
-const mapDispatchToProps = () => {
+const mapDispatchToProps = dispatch => {
   return {
-    onUpdateTasks: tasks => onUpdateList(tasks)
+    onUpdateTasks: tasks => {dispatch(updateTasks(tasks))},
+    onClearList:()=>{dispatch(cleanTasks())}
   };
 };
 
