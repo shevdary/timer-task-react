@@ -10,7 +10,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
-import { themeError } from '../../helperStyle/customTheme';
+import { themeError } from '../../material/customTheme';
 
 export const AlertDialog = ({ open, handleClose }) => {
   return (
@@ -24,7 +24,8 @@ export const AlertDialog = ({ open, handleClose }) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              You are trying close your task without name, enter the title and try again!
+              You are trying close your task without name, enter the title and
+              try again!
             </DialogContentText>
           </DialogContent>
           <DialogActions>

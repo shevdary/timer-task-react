@@ -1,4 +1,14 @@
 import React, { useEffect, useState } from 'react';
+//redux
+const { dispatch } = store;
+import { connect } from 'react-redux';
+import * as actions from '../../redux/reducers/tasks';
+import { bindActionCreators } from 'redux';
+const { removeTask, updateTasks } = bindActionCreators(actions, dispatch);
+import store from '../../redux/store';
+//components
+import { AlertDelete } from '../AlertWindow/AlertDialogDelete';
+//material-ui
 import {
   TableCell,
   TableContainer,
@@ -8,34 +18,14 @@ import {
   Table,
   TableBody,
 } from '@material-ui/core';
-import { connect } from 'react-redux';
-
 import Typography from '@material-ui/core/Typography';
 import {
   StyleButton,
   StyledTableCell,
   StyleTableRow,
-} from '../../helperStyle/customStyles';
-
-import store from '../../redux/store';
-import { AlertDelete } from '../AlertWindow/AlertDialogDelete';
-
-import {
-  removeTask,
-  updateTasks,
-} from '../../redux/reducers/tasks';
-import { bindActionCreators } from 'redux';
-const { dispatch } = store;
-
-const headerText = [
-  '№',
-  'Task',
-  'Time start',
-  'Time end',
-  'Time spend',
-  'Info',
-  'Delete',
-];
+} from '../../material/customStyles';
+//utils
+import { headerTable } from '../../utils/headerTable';
 
 const TasksLog = ({ tasks, history, onDelete }) => {
   const [isOpen, setOpen] = useState(false);
@@ -92,7 +82,7 @@ const TasksLog = ({ tasks, history, onDelete }) => {
         <Table aria-label="customized table">
           <TableHead className="table-head">
             <TableRow>
-              {headerText.map((title, key) => (
+              {headerTable.map((title, key) => (
                 <StyledTableCell key={key} align="left">
                   {title}
                 </StyledTableCell>
@@ -124,10 +114,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onDelete: deleteId => {
-      dispatch(removeTask(deleteId));
+      removeTask(deleteId);
     },
     onUpdateList: tasks => {
-      dispatch(updateTasks(tasks));
+      updateTasks(tasks);
     },
   };
 };

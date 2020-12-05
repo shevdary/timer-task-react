@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { StyleButton } from '../../helperStyle/customStyles';
+import { StyleButton } from '../../material/customStyles';
 //redux
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
 import store from '../../redux/store';
-//helpers
-import { isDifferenceInTime, unixToTime } from '../../helpers/unixToTime';
-import { cleanTasks, updateTasks } from '../../redux/reducers/tasks';
 const { dispatch } = store;
+import * as actions from '../../redux/reducers/tasks';
+import { bindActionCreators } from 'redux';
+const { cleanTasks, updateTasks } = bindActionCreators(actions, dispatch);
+//utils
+import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
 
 class GenerateButton extends Component {
   state = {
@@ -84,10 +84,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onUpdateTasks: tasks => {
-      dispatch(updateTasks(tasks));
+      updateTasks(tasks);
     },
     onClearList: () => {
-      dispatch(cleanTasks());
+      cleanTasks();
     },
   };
 };

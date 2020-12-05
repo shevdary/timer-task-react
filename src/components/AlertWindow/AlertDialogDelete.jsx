@@ -13,7 +13,9 @@ export const AlertDelete = ({ open, handleClose, handleDelete, deleteId }) => {
   return (
     <div>
       <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="xs">
-        <DialogTitle id="alert-dialog-title">Delete the task {deleteId}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          Delete the task {deleteId}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete the task?

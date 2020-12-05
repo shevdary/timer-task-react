@@ -1,19 +1,19 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 //material-ui
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText
-} from "@material-ui/core";
+  DialogContentText,
+} from '@material-ui/core';
 //history
-import { createBrowserHistory } from "history";
+import { createBrowserHistory } from 'history';
 let history = createBrowserHistory();
 
 const TaskInfoUndefined = () => {
   return (
-    <Dialog open={true} fullWidth={"true"} maxWidth="md">
+    <Dialog open={true} fullWidth={'true'} maxWidth="md">
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           You are trying to get info about a non-existent task

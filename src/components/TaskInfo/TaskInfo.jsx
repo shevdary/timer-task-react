@@ -15,7 +15,7 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import green from '@material-ui/core/colors/green';
 //helper
-import { themeInfo } from '../../helperStyle/customTheme';
+import { themeInfo } from '../../material/customTheme';
 import TaskInfoUndefined from './TaskInfoUndefined';
 import { getDataFromStorage } from '../../localStorage';
 //history

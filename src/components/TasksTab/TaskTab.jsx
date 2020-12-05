@@ -1,8 +1,10 @@
 import React from 'react';
+//components
 import TasksLog from '../TasksLog/TasksLog';
-import { AppBar, Tab } from '@material-ui/core';
-import { StyleTabs } from '../../helperStyle/customStyles';
 import TaskChart from '../TasksChart/TaskChart';
+//material-ui
+import { AppBar, Tab } from '@material-ui/core';
+import { StyleTabs } from '../../material/customStyles';
 
 const TaskTab = ({ props }) => {
   const page = props.match.params.page;

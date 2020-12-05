@@ -1,5 +1,5 @@
 //reducer
-import {unixToTime} from "../../helpers/unixToTime";
+import {unixToTime} from "../../utils/unixToTime";
 import {createAction, createReducer, createSlice} from "@reduxjs/toolkit";
 
 const  timerSlice = createSlice({

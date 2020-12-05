@@ -9,15 +9,12 @@ const tasksSlice = createSlice({
     removeTask: (state, action) => {
       state.tasks = state.tasks.filter(tasks => tasks.id !== action.payload);
     },
-
     updateTasks: (state, action) => {
       state.tasks = action.payload;
     },
-
     addNewTask: (state, action) => {
       const { name, startTime, endTime, durationTime } = action.payload;
       const getLastId = state.tasks[0] ? state.tasks[0].id : 0;
-
       state.tasks = [
         {
           id: getLastId + 1,
@@ -29,7 +26,6 @@ const tasksSlice = createSlice({
         ...state.tasks,
       ];
     },
-
     cleanTasks: state => {
       state.tasks = [];
     },

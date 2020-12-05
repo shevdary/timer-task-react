@@ -12,12 +12,12 @@ import { updateTasks, addNewTask } from '../../redux/reducers/tasks';
 import { AlertDialog } from '../AlertWindow/AlertDialogInfo';
 //style
 import './Timer.css';
-import { StyleButton } from '../../helperStyle/customStyles';
 //material-ui
 import { Box, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-//helpers
-import { isDifferenceInTime, unixToTime } from '../../helpers/unixToTime';
+import { StyleButton } from '../../material/customStyles';
+//utils
+import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
 import moment from 'moment';
 import {
   clearStorage,
