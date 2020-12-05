@@ -1,20 +1,19 @@
-import React, { Component } from "react";
-import { StyleButton } from "../../helperStyle/customStyles";
+import React, { Component } from 'react';
+import { StyleButton } from '../../helperStyle/customStyles';
 //redux
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import store from "../../redux/store";
+import store from '../../redux/store';
 //helpers
-import { isDifferenceInTime, unixToTime } from "../../helpers/unixToTime";
-import {cleanTasks, updateTasks} from "../../redux/reducers/tasks";
+import { isDifferenceInTime, unixToTime } from '../../helpers/unixToTime';
+import { cleanTasks, updateTasks } from '../../redux/reducers/tasks';
 const { dispatch } = store;
 
-
-class ButtonGenerate extends Component {
+class GenerateButton extends Component {
   state = {
     data: [],
-    isClick: false
+    isClick: false,
   };
 
   onGenerateId = () => {
@@ -27,20 +26,21 @@ class ButtonGenerate extends Component {
         name: this.onGenerateName(),
         startTime: startTime,
         endTime: endTime,
-        spendTime: durationTime
+        durationTime: durationTime,
       });
     }
     this.setState({
-      data: date
+      data: date,
     });
   };
 
   onGenerateName = () => {
-    const characters = "abcdefghijklmnopqrstuvwxyz";
-    let name = "";
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    let name = '';
     for (let i = 0; i < 5; i++) {
       name += characters.charAt(Math.floor(Math.random() * characters.length));
     }
+
     return name;
   };
   onGenerateTime = () => {
@@ -50,41 +50,46 @@ class ButtonGenerate extends Component {
     const endTime = unixToTime(randomEnd);
     const difference = isDifferenceInTime(endTime, durationTime);
     const startTime = unixToTime(difference);
+
     return { startTime, endTime, durationTime };
   };
 
   onClick = () => {
-    const { onUpdateTasks,onClearList } = this.props;
+    const { onUpdateTasks, onClearList } = this.props;
     const { data } = this.state;
     this.setState({
-      isClick: true
+      isClick: true,
     });
+
     onClearList();
     this.onGenerateId();
     this.onGenerateName();
     this.onGenerateTime();
     onUpdateTasks(data);
-
   };
   render() {
     return (
-        <div>
-          <StyleButton onClick={this.onClick}>generate</StyleButton>
-        </div>
+      <div>
+        <StyleButton onClick={this.onClick}>generate</StyleButton>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    tasks: state.tasksReducer.tasks
+    tasks: state.tasksReducer.tasks,
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdateTasks: tasks => {dispatch(updateTasks(tasks))},
-    onClearList:()=>{dispatch(cleanTasks())}
+    onUpdateTasks: tasks => {
+      dispatch(updateTasks(tasks));
+    },
+    onClearList: () => {
+      dispatch(cleanTasks());
+    },
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps )(ButtonGenerate);
+export default connect(mapStateToProps,mapDispatchToProps )(GenerateButton);

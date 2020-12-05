@@ -11,21 +11,21 @@ const initialState = {
       name: "Name",
       startTime: "16:52:00",
       endTime: "18:47:17",
-      spendTime: "01:54:56"
+      durationTime: "01:54:56"
     },
     {
       id: 1,
       name: "Name",
       startTime: "13:06:32",
       endTime: "13:51:19",
-      spendTime: "00:44:47"
+      durationTime: "00:44:47"
     },
     {
       id: 2,
       name: "Name",
       startTime: "22:08:37",
       endTime: "22:48:37",
-      spendTime: "00:40:00"
+      durationTime: "00:40:00"
     }
   ]
 };
