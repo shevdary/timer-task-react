@@ -10,7 +10,7 @@ export default function App() {
   return (
     <BrowserRouter history={createBrowserHistory()}>
       <Switch>
-        <Redirect exact from="/" to={'/tasks'} />
+        <Redirect exact from="/" to="/tasks" />
         <Route
           exact
           path="/:page"
@@ -21,6 +21,7 @@ export default function App() {
           render={({ match }) => {
             const { id } = match.params;
             return <TaskInfo tasksId={id} />;
+
           }}
         />
       </Switch>

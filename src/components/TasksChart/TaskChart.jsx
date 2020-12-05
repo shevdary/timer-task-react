@@ -24,6 +24,7 @@ class TaskChart extends Component {
       data: [],
     };
   }
+
   componentDidMount() {
     this.renderTable();
   }

@@ -37,7 +37,7 @@ const CountMinuteChart = (copyData, tasks) => {
           .minutes();
         copyData[endTimeHour.hours()].minutes += endTimeHour.minutes();
       }
-      if (increase > 3600) {
+      if (increase * -1 > 3600) {
         copyData[startTimerHour.hours()].minutes += moment
           .duration(durationToTime, 'seconds')
           .minutes();

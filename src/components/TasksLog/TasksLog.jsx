@@ -57,7 +57,7 @@ const TasksLog = ({ tasks, history, onDelete }) => {
     return (
       <StyleTableRow key={item.id}>
         <TableCell component="th" scope="row">
-          {idx + 1}
+          {item.id}
         </TableCell>
         <TableCell align="left">{item.name}</TableCell>
         <TableCell align="left">{item.startTime}</TableCell>

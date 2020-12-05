@@ -68,6 +68,7 @@ class GenerateButton extends Component {
     onClearList();
     this.onGenerate();
     data.forEach(item => onAddNewTasks(item));
+    location.reload();
   };
   render() {
     return (
@@ -94,4 +95,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps )(GenerateButton);
+export default connect(mapStateToProps, mapDispatchToProps)(GenerateButton);
