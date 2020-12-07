@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 //redux
 const { dispatch } = store;
 import { connect } from 'react-redux';
@@ -6,8 +7,10 @@ import * as actions from '../../redux/reducers/tasks';
 import { bindActionCreators } from 'redux';
 const { removeTask, updateTasks } = bindActionCreators(actions, dispatch);
 import store from '../../redux/store';
+
 //components
 import { AlertDelete } from '../AlertWindow/AlertDialogDelete';
+
 //material-ui
 import {
   TableCell,
@@ -24,6 +27,7 @@ import {
   StyledTableCell,
   StyleTableRow,
 } from '../../material/customStyles';
+
 //utils
 import { headerTable } from '../../utils/headerTable';
 
@@ -108,9 +112,11 @@ const TasksLog = ({ tasks, history, onDelete }) => {
     </div>
   );
 };
-const mapStateToProps = state => {
-  return { tasks: state.tasksReducer.tasks };
-};
+
+const mapStateToProps = ({ tasks: { tasks } }) => ({
+  tasks,
+});
+
 const mapDispatchToProps = dispatch => {
   return {
     onDelete: deleteId => {

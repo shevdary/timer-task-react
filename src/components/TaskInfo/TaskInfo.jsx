@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 //redux
 import { connect } from 'react-redux';
+
 //material-ui
 import {
   Typography,
@@ -14,10 +15,12 @@ import {
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import green from '@material-ui/core/colors/green';
-//helper
+
+//utils
 import { themeInfo } from '../../material/customTheme';
 import TaskInfoUndefined from './TaskInfoUndefined';
 import { getDataFromStorage } from '../../localStorage';
+
 //history
 import { createBrowserHistory } from 'history';
 let history = createBrowserHistory();
@@ -72,7 +75,8 @@ class TaskInfo extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { tasks: state.tasksReducer.tasks };
-};
+const mapStateToProps = ({ tasks: { tasks } }) => ({
+  tasks,
+});
+
 export default connect(mapStateToProps)(TaskInfo);

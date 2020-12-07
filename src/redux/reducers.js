@@ -1,9 +1,9 @@
-import tasksReducer from './reducers/tasks';
-import timerReducer from './reducers/timer';
+import tasks from './reducers/tasks';
+import timer from './reducers/timer';
 import { combineReducers } from 'redux';
 
 export default combineReducers({
-  timerReducer,
-  tasksReducer,
+  timer,
+  tasks,
 });
 

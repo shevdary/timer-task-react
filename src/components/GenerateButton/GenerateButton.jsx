@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleButton, StyleButtonGenerate } from '../../material/customStyles';
+import { StyleButtonGenerate } from '../../material/customStyles';
 //redux
 import { connect } from 'react-redux';
 import store from '../../redux/store';
@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 const { cleanTasks, addNewTask } = bindActionCreators(actions, dispatch);
 //utils
 import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
+
 class GenerateButton extends Component {
   state = {
     data: [],
@@ -80,11 +81,10 @@ class GenerateButton extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    tasks: state.tasksReducer.tasks,
-  };
-};
+const mapStateToProps = ({ tasks: { tasks } }) => ({
+  tasks,
+});
+
 const mapDispatchToProps = dispatch => {
   return {
     onAddNewTasks: tasksList => {

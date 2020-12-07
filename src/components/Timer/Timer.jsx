@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 //redux
 import { connect } from 'react-redux';
 import {
@@ -8,14 +9,18 @@ import {
   startTimer,
 } from '../../redux/reducers/timer';
 import { updateTasks, addNewTask } from '../../redux/reducers/tasks';
+
 //components
 import { AlertDialog } from '../AlertWindow/AlertDialogInfo';
+
 //style
 import './Timer.css';
+
 //material-ui
 import { Box, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { StyleButton } from '../../material/customStyles';
+
 //utils
 import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
 import moment from 'moment';
@@ -43,9 +48,7 @@ class Timer extends Component {
   componentDidMount() {
     const { onUpdateTasks } = this.props;
     window.addEventListener('beforeunload', () => {
-      const { isStartTime } = this.props.timer;
-      const { tasks } = this.props.tasks;
-
+      const { isStartTime, tasks } = this.props;
       if (isStartTime != 0) {
         setStorageTimer(isStartTime);
       }
@@ -67,8 +70,7 @@ class Timer extends Component {
 
   componentWillUnmount() {
     window.addEventListener('beforeunload', () => {
-      const { isStartTime } = this.props.timer;
-      const { tasks } = this.props.tasks;
+      const { isStartTime, tasks } = this.props;
 
       if (isStartTime != 0) {
         setStorageTimer(isStartTime);
@@ -81,7 +83,7 @@ class Timer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { tasks } = this.props.tasks;
+    const { tasks } = this.props;
 
     if (prevProps.tasks.tasks != tasks) {
       updateTasks(tasks);
@@ -130,17 +132,14 @@ class Timer extends Component {
 
   onStopTimer = () => {
     const { name } = this.state;
-    const { onStopTimer, onAddNewTask, timer, tasks } = this.props;
+    const { onStopTimer, onAddNewTask, currentTime } = this.props;
 
     const stopTime = moment().format('HH:mm:ss');
-    const startTime = isDifferenceInTime(
-      stopTime,
-      unixToTime(timer.currentTime)
-    );
+    const startTime = isDifferenceInTime(stopTime, unixToTime(currentTime));
     const data = {
       name: name,
       startTime: unixToTime(startTime),
-      durationTime: unixToTime(timer.currentTime),
+      durationTime: unixToTime(currentTime),
       endTime: stopTime,
     };
 
@@ -155,7 +154,7 @@ class Timer extends Component {
   };
 
   render() {
-    const { currentTime } = this.props.timer;
+    const { currentTime } = this.props;
     const { isActiveTimer, name, timeIsLoad } = this.state;
     const isTimerValue = unixToTime(currentTime);
     return (
@@ -183,13 +182,16 @@ class Timer extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({
+  tasks: { tasks },
+  timer: { currentTime, isStartTime },
+}) => {
   return {
-    timer: state.timerReducer,
-    tasks: state.tasksReducer,
+    tasks,
+    currentTime,
+    isStartTime,
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     onStopTimer: () => {

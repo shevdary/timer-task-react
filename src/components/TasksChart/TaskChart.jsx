@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+
 //redux
 import { connect } from 'react-redux';
+
 import moment from 'moment';
 import { CountMinuteChart, isDifferenceInTime } from '../../utils/unixToTime';
+
 //componets
 import ButtonGenerate from '../GenerateButton/GenerateButton';
+
 //recharts
 import {
   BarChart,
@@ -76,9 +80,8 @@ class TaskChart extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    tasks: state.tasksReducer.tasks,
-  };
-};
+const mapStateToProps = ({ tasks: { tasks } }) => ({
+  tasks,
+});
+
 export default connect(mapStateToProps)(TaskChart)
