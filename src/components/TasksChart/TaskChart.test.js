@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import TaskChart from '../TasksChart/TaskChart';
 
 const initialState = {
-  tasksReducer: {
+  tasks: {
     tasks: [
       {
         id: 3,
@@ -51,6 +51,7 @@ describe('render correctly table component', () => {
   describe('when component well mount call the method onCharts', () => {
     it('should add to the array the value of minutes that corresponds to the time', () => {
       const component = container.dive().dive();
+      console.log(container.dive(), "dive")
 
       const minutesTask1 = component.state().data[13].minutes;
       const minutesTask2 = component.state().data[16].minutes;

@@ -11,19 +11,8 @@ export default function App() {
     <BrowserRouter history={createBrowserHistory()} basename="/">
       <Switch>
         <Redirect exact from="/" to="/tasks" />
-        <Route
-          exact
-          path="/:page"
-          component={props => <MainPage props={props} />}
-        />
-        <Route
-          path="/tasks/:id"
-          render={({ match }) => {
-            const { id } = match.params;
-            return <TaskInfo tasksId={id} />;
-
-          }}
-        />
+        <Route exact path="/:page" component={MainPage} />
+        <Route path="/tasks/:id" component={TaskInfo} />
       </Switch>
     </BrowserRouter>
   );

@@ -8,7 +8,7 @@ class MainPage extends Component {
     return (
       <div>
         <Timer />
-        <TaskTab props={this.props.props} />
+        <TaskTab />
       </div>
     );
   }

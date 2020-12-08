@@ -68,8 +68,18 @@ class Timer extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { tasks } = this.props;
+
+    if (prevProps.tasks.tasks != tasks) {
+      updateTasks(tasks);
+      setTasksStorage(tasks);
+      return true;
+    }
+  }
+
   componentWillUnmount() {
-    window.addEventListener('beforeunload', () => {
+    window.removeEventListener('beforeunload', () => {
       const { isStartTime, tasks } = this.props;
 
       if (isStartTime != 0) {
@@ -80,16 +90,6 @@ class Timer extends Component {
         setTasksStorage(tasks);
       }
     });
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { tasks } = this.props;
-
-    if (prevProps.tasks.tasks != tasks) {
-      updateTasks(tasks);
-      setTasksStorage(tasks);
-      return true;
-    }
   }
 
   onUpdate = () => {

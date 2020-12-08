@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { StyleButtonGenerate } from '../../material/customStyles';
-//redux
+
+// redux
 import { connect } from 'react-redux';
 import store from '../../redux/store';
 const { dispatch } = store;
 import * as actions from '../../redux/reducers/tasks';
 import { bindActionCreators } from 'redux';
 const { cleanTasks, addNewTask } = bindActionCreators(actions, dispatch);
-//utils
+
+// utils
 import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
+import faker from 'faker';
+faker.locale="en";
 
 class GenerateButton extends Component {
   state = {
@@ -34,14 +38,10 @@ class GenerateButton extends Component {
   };
 
   onGenerateName = () => {
-    const characters = 'abcdefghijklmnopqrstuvwxyz';
-    let name = '';
-    for (let i = 0; i < 5; i++) {
-      name += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-
+    const name = faker.lorem.sentence();
     return name;
   };
+
   onGenerateTime = () => {
     const randomTime = Math.trunc(Math.random() * (5400 - 600 + 1) + 600);
     const randomEnd = Math.trunc(Math.random() * (86400 + 1));

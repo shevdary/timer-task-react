@@ -30,14 +30,17 @@ import {
 
 //utils
 import { headerTable } from '../../utils/headerTable';
+import { useLocation, useHistory } from 'react-router-dom';
 
-const TasksLog = ({ tasks, history, onDelete }) => {
+const TasksLog = ({ tasks, onDelete }) => {
   const [isOpen, setOpen] = useState(false);
   const [deleteId, setId] = useState(null);
+  const pathname = useLocation().pathname;
+  const history = useHistory();
 
   useEffect(() => {
     history.push('/tasks');
-  }, [tasks]);
+  }, [pathname]);
 
   const handleGetInfo = id => {
     history.push(`/tasks/${id}`);
