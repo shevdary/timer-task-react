@@ -23,4 +23,3 @@ const themeInfo = createMuiTheme({
 });
 
 export { themeError, themeInfo };
-

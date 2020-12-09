@@ -6,13 +6,13 @@ import {
   withStyles,
 } from '@material-ui/core';
 
-const StyleTabs = withStyles(theme => ({
+const StyleTabs = withStyles(() => ({
   root: {
     backgroundColor: '#01bcd5',
   },
 }))(Tabs);
 
-const StyledTableCell = withStyles(theme => ({
+const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: '#ffffff',
     color: theme.palette.text.disabled,
@@ -23,13 +23,13 @@ const StyledTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-const StyleTableRow = withStyles(theme => ({
+const StyleTableRow = withStyles(() => ({
   root: {
     backgroundColor: '#eaf6ff',
   },
 }))(TableRow);
 
-const StyleButton = withStyles(theme => ({
+const StyleButton = withStyles(() => ({
   root: {
     backgroundColor: '#ffffff',
     boxShadow:
@@ -37,15 +37,16 @@ const StyleButton = withStyles(theme => ({
   },
 }))(Button);
 
-const StyleButtonGenerate = withStyles(theme => ({
+const StyleButtonGenerate = withStyles(() => ({
   root: {
     backgroundColor: '#ffffff',
     boxShadow:
       '0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)',
     float: 'right',
-    margin: '0px 50px',
+    margin: '0px 50px 50px 0px',
   },
 }))(Button);
+
 export {
   StyleTabs,
   StyledTableCell,

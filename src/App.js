@@ -1,9 +1,11 @@
 import React from 'react';
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
-//components
+
+// components
 import TaskInfo from './components/TaskInfo/TaskInfo';
 import MainPage from './components/MainPage/MainPage';
-//history
+
+// history
 import { createBrowserHistory } from 'history';
 
 export default function App() {

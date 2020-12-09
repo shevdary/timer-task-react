@@ -1,29 +1,31 @@
 import React from 'react';
-//components
+// components
 import TasksLog from '../TasksLog/TasksLog';
 import TaskChart from '../TasksChart/TaskChart';
-//material-ui
+// material-ui
 import { AppBar, Tab } from '@material-ui/core';
 import { StyleTabs } from '../../material/customStyles';
-//utils
+
+// utils
 import { createBrowserHistory } from 'history';
+import { useParams } from 'react-router-dom';
 const history = createBrowserHistory();
 
 const TaskTab = () => {
-  const page = history.location.pathname;
+  const page = useParams().page;
   const tabNameToIndex = {
-    0: '/tasks',
-    1: '/chart',
+    0: 'tasks',
+    1: 'chart',
   };
   const index = {
-    '/tasks': 0,
-    '/chart': 1,
+    tasks: 0,
+    chart: 1,
   };
   const [value, setValue] = React.useState(index[page]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    history.push(`${tabNameToIndex[newValue]}`);
+    history.push(`/${tabNameToIndex[newValue]}`);
   };
 
   return (

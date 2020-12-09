@@ -1,6 +1,6 @@
 import React from 'react';
 
-//material-ui
+// material-ui
 import {
   Button,
   Dialog,
@@ -9,7 +9,7 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 
-//history
+// history
 import { createBrowserHistory } from 'history';
 let history = createBrowserHistory();
 

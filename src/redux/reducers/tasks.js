@@ -1,4 +1,4 @@
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const tasksSlice = createSlice({
   name: 'tasks',
@@ -7,7 +7,7 @@ const tasksSlice = createSlice({
   },
   reducers: {
     removeTask: (state, action) => {
-      state.tasks = state.tasks.filter(tasks => tasks.id !== action.payload);
+      state.tasks = state.tasks.filter((tasks) => tasks.id !== action.payload);
     },
     updateTasks: (state, action) => {
       state.tasks = action.payload;
@@ -26,7 +26,7 @@ const tasksSlice = createSlice({
         ...state.tasks,
       ];
     },
-    cleanTasks: state => {
+    cleanTasks: (state) => {
       state.tasks = [];
     },
   },

@@ -1,4 +1,4 @@
-const headerTable = [
+const tableHeader = [
   '№',
   'Task',
   'Time start',
@@ -7,4 +7,4 @@ const headerTable = [
   'Info',
   'Delete',
 ];
-export { headerTable };
+export { tableHeader };

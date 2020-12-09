@@ -4,15 +4,15 @@ import { StyleButtonGenerate } from '../../material/customStyles';
 // redux
 import { connect } from 'react-redux';
 import store from '../../redux/store';
-const { dispatch } = store;
 import * as actions from '../../redux/reducers/tasks';
 import { bindActionCreators } from 'redux';
+const { dispatch } = store;
 const { cleanTasks, addNewTask } = bindActionCreators(actions, dispatch);
 
 // utils
-import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
+import { unixToTime } from '../../utils/unixToTime';
+import moment from 'moment';
 import faker from 'faker';
-faker.locale="en";
 
 class GenerateButton extends Component {
   state = {
@@ -43,13 +43,27 @@ class GenerateButton extends Component {
   };
 
   onGenerateTime = () => {
+    const { data } = this.state;
+    let startTime, endTime;
+    const randomGap = Math.trunc(Math.random() * (5400 - 300 + 1) + 300);
     const randomTime = Math.trunc(Math.random() * (5400 - 600 + 1) + 600);
-    const randomEnd = Math.trunc(Math.random() * (86400 + 1));
     const durationTime = unixToTime(randomTime);
-    const endTime = unixToTime(randomEnd);
-    const difference = isDifferenceInTime(endTime, durationTime);
-    const startTime = unixToTime(difference);
+    if (!data[0]) {
+      const randomStart = Math.trunc(Math.random() * (86400 + 1));
+      endTime = unixToTime(randomTime + randomStart);
+      startTime = unixToTime(randomStart);
+    }
 
+    if (data[0]) {
+      const getLastEndTime = moment
+        .duration(data[data.length - 1].endTime)
+        .asSeconds();
+      const nextStartTime = moment
+        .duration(randomGap + getLastEndTime, 's')
+        .asSeconds();
+      startTime = unixToTime(nextStartTime);
+      endTime = unixToTime(randomTime + nextStartTime);
+    }
     return { startTime, endTime, durationTime };
   };
 
@@ -67,7 +81,7 @@ class GenerateButton extends Component {
     });
     onClearList();
     this.onGenerate();
-    data.forEach(item => onAddNewTasks(item));
+    data.forEach((item) => onAddNewTasks(item));
     location.reload();
   };
   render() {
@@ -85,9 +99,9 @@ const mapStateToProps = ({ tasks: { tasks } }) => ({
   tasks,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = () => {
   return {
-    onAddNewTasks: tasksList => {
+    onAddNewTasks: (tasksList) => {
       addNewTask(tasksList);
     },
     onClearList: () => {

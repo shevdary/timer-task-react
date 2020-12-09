@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-//components
+
+// components
 import Timer from '../Timer/Timer';
 import TaskTab from '../TasksTab/TaskTab';
 

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-//redux
+// redux
 const { dispatch } = store;
 import { connect } from 'react-redux';
 import * as actions from '../../redux/reducers/tasks';
@@ -8,10 +8,10 @@ import { bindActionCreators } from 'redux';
 const { removeTask, updateTasks } = bindActionCreators(actions, dispatch);
 import store from '../../redux/store';
 
-//components
+// components
 import { AlertDelete } from '../AlertWindow/AlertDialogDelete';
 
-//material-ui
+// material-ui
 import {
   TableCell,
   TableContainer,
@@ -28,25 +28,20 @@ import {
   StyleTableRow,
 } from '../../material/customStyles';
 
-//utils
-import { headerTable } from '../../utils/headerTable';
-import { useLocation, useHistory } from 'react-router-dom';
+// utils
+import { tableHeader } from '../../utils/tableHeader';
+import { useHistory } from 'react-router-dom';
 
 const TasksLog = ({ tasks, onDelete }) => {
   const [isOpen, setOpen] = useState(false);
   const [deleteId, setId] = useState(null);
-  const pathname = useLocation().pathname;
   const history = useHistory();
 
-  useEffect(() => {
-    history.push('/tasks');
-  }, [pathname]);
-
-  const handleGetInfo = id => {
+  const handleGetInfo = (id) => {
     history.push(`/tasks/${id}`);
   };
 
-  const handleClick = id => {
+  const handleClick = (id) => {
     setOpen(true);
     setId(id);
   };
@@ -89,7 +84,7 @@ const TasksLog = ({ tasks, onDelete }) => {
         <Table aria-label="customized table">
           <TableHead className="table-head">
             <TableRow>
-              {headerTable.map((title, key) => (
+              {tableHeader.map((title, key) => (
                 <StyledTableCell key={key} align="left">
                   {title}
                 </StyledTableCell>
@@ -120,15 +115,15 @@ const mapStateToProps = ({ tasks: { tasks } }) => ({
   tasks,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = () => {
   return {
-    onDelete: deleteId => {
+    onDelete: (deleteId) => {
       removeTask(deleteId);
     },
-    onUpdateList: tasks => {
+    onUpdateList: (tasks) => {
       updateTasks(tasks);
     },
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(TasksLog);
+export default connect(mapStateToProps, mapDispatchToProps)(TasksLog);

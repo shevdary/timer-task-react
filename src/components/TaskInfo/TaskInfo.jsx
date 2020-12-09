@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-//redux
+// redux
 import { connect } from 'react-redux';
 
-//material-ui
+// material-ui
 import {
   Typography,
   Button,
@@ -16,21 +16,21 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import green from '@material-ui/core/colors/green';
 
-//utils
+// utils
 import { themeInfo } from '../../material/customTheme';
 import TaskInfoUndefined from './TaskInfoUndefined';
 import { getDataFromStorage } from '../../localStorage';
 
-//history
-import { useParams } from "react-router-dom";
+// history
+import { useParams } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 let history = createBrowserHistory();
 
 const TaskInfo = ({ tasks }) => {
   const tasksId = useParams().id;
-  let info = tasks.find(item => item.id == tasksId);
+  let info = tasks.find((item) => item.id == tasksId);
   if (info == undefined) {
-    info = getDataFromStorage().find(item => item.id == tasksId);
+    info = getDataFromStorage().find((item) => item.id == tasksId);
   }
   const details =
     info == undefined ? (

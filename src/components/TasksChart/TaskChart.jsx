@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 
-//redux
+// redux
 import { connect } from 'react-redux';
 
-import moment from 'moment';
-import { CountMinuteChart, isDifferenceInTime } from '../../utils/unixToTime';
-
-//componets
+// componets
 import ButtonGenerate from '../GenerateButton/GenerateButton';
 
-//recharts
+// recharts
 import {
   BarChart,
   Bar,
@@ -20,6 +17,9 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+
+// utils
+import { countMinuteChart } from '../../utils/unixToTime';
 
 class TaskChart extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class TaskChart extends Component {
     this.renderTable();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate() {
     this.onCharts();
   }
 
@@ -50,7 +50,7 @@ class TaskChart extends Component {
     const { data } = this.state;
     const { tasks } = this.props;
     let copyData = data;
-    CountMinuteChart(copyData, tasks);
+    countMinuteChart(copyData, tasks);
   };
 
   render() {
@@ -68,7 +68,7 @@ class TaskChart extends Component {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis domain={[0, dataMax => 60]} allowDataOverFlow={true} />
+            <YAxis domain={[0, 60]} allowDataOverFlow={true} />
             <Tooltip />
             <Legend />
             <Bar dataKey="minutes" fill="#344dc4" />
@@ -84,4 +84,4 @@ const mapStateToProps = ({ tasks: { tasks } }) => ({
   tasks,
 });
 
-export default connect(mapStateToProps)(TaskChart)
+export default connect(mapStateToProps)(TaskChart);
