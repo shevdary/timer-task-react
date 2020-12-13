@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // componets
-import ButtonGenerate from '../Button/Button';
+import GenerateButton from '../GenerateButton/GenerateButton';
 
 // recharts
 import {
@@ -22,15 +22,13 @@ import {
 import { countMinuteChart } from '../../utils/unixToTime';
 
 class TaskChart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      chartKey: 0,
-    };
-  }
+  state = {
+    data: [],
+    chartKey: 0,
+  };
+
   componentDidMount() {
-    this.renderTable();
+    this.setAxisChart();
   }
 
   componentDidUpdate(prevProps) {
@@ -38,15 +36,15 @@ class TaskChart extends Component {
     const { tasks } = this.props;
     countMinuteChart(data, tasks);
     if (prevProps.tasks !== tasks) {
-      this.setState({ chartKey : Math.trunc(Math.random() * 10) });
+      this.setState({ chartKey: Math.trunc(Math.random() * 10) });
     }
   }
 
-  renderTable = () => {
+  setAxisChart = () => {
     const { data } = this.state;
     const hourCol = data;
     for (let i = 0; i < 24; i++) {
-      hourCol.push({ name: i, minutes: 0 });
+      hourCol.push({ hour: i, minutes: 0 });
     }
     this.setState({ data: hourCol });
   };
@@ -66,7 +64,7 @@ class TaskChart extends Component {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis dataKey="hour" />
               <YAxis domain={[0, (dataMax) => 60]} allowDataOverFlow={true} />
               <Tooltip />
               <Legend />
@@ -74,7 +72,7 @@ class TaskChart extends Component {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <ButtonGenerate />
+        <GenerateButton />
       </div>
     );
   }

@@ -7,17 +7,14 @@ import store from '../../redux/store';
 import * as actions from '../../redux/reducers/tasks';
 import { bindActionCreators } from 'redux';
 const { dispatch } = store;
-const { cleanTasks, addNewTask, setNewList } = bindActionCreators(
-  actions,
-  dispatch
-);
+const { setNewListTasks} = bindActionCreators(actions, dispatch);
 
 // utils
 import { unixToTime } from '../../utils/unixToTime';
 import moment from 'moment';
 import faker from 'faker';
 
-class Button extends Component {
+class GenerateButton extends Component {
   generateTime = (tasks) => {
     let startTime, endTime;
     const randomGap = Math.trunc(Math.random() * (5400 - 300 + 1) + 300);
@@ -43,8 +40,7 @@ class Button extends Component {
   };
 
   generateTasks = () => {
-    cleanTasks();
-    let newTaskList = [];
+    const newTaskList = [];
     for (let id = 10; id > 0; id--) {
       const { startTime, endTime, durationTimer } = this.generateTime(
         newTaskList
@@ -57,7 +53,7 @@ class Button extends Component {
         durationTime: durationTimer,
       });
     }
-    setNewList(newTaskList);
+    setNewListTasks(newTaskList);
   };
 
   render() {
@@ -71,8 +67,11 @@ class Button extends Component {
   }
 }
 
-export default connect((state) => ({ tasks: state.tasks.tasks }), {
-  addNewTask,
-  cleanTasks,
-  setNewList,
-})(Button);
+export default connect(
+  (state) => ({
+    tasks: state.tasks.tasks,
+  }),
+  {
+    setNewListTasks,
+  }
+)(GenerateButton);

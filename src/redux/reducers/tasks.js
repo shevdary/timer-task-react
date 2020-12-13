@@ -26,10 +26,7 @@ const tasksSlice = createSlice({
         ...state.tasks,
       ];
     },
-    cleanTasks: (state) => {
-      state.tasks = [];
-    },
-    setNewList: (state, action) => {
+    setNewListTasks: (state, action) => {
       state.tasks = action.payload;
     },
   },
@@ -39,7 +36,6 @@ export const {
   removeTask,
   updateTasks,
   addNewTask,
-  cleanTasks,
-  setNewList,
+  setNewListTasks,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;

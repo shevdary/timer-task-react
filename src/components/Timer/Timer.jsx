@@ -30,11 +30,11 @@ import {
   getTimerFromStorage,
   setStorageTimer,
   setTasksStorage,
-} from '../../localStorage';
+} from '../../utils/localStorage';
 
 class Timer extends Component {
   state = {
-    name: '',
+    taskName: '',
     isActiveTimer: false,
     isError: false,
     timeIsLoad: new Date().toLocaleTimeString(),
@@ -56,7 +56,7 @@ class Timer extends Component {
 
     if (getTimerFromStorage()) {
       this.setState({ isActiveTimer: true });
-      this.onUpdate();
+      this.handleUpdate();
     }
 
     if (getDataFromStorage()) {
@@ -88,7 +88,7 @@ class Timer extends Component {
     });
   }
 
-  onUpdate = () => {
+  handleUpdate = () => {
     const { tickTimer, updateTimer } = this.props;
     const { timeIsLoad } = this.state;
     const timerLoad = isDifferenceInTime(timeIsLoad, getTimerFromStorage());
@@ -96,23 +96,23 @@ class Timer extends Component {
     updateTimer(timerLoad);
   };
 
-  onClick = () => {
-    const { isActiveTimer, name } = this.state;
+  handleClick = () => {
+    const { isActiveTimer, taskName } = this.state;
 
     if (isActiveTimer) {
-      name ? this.onStopTimer() : this.setState({ isError: true });
+      taskName ? this.handleStopTimer() : this.setState({ isError: true });
     }
 
     if (!isActiveTimer) {
-      this.onStartTimer();
+      this.handleStartTimer();
     }
   };
 
-  onChange = (e) => {
-    this.setState({ name: e.target.value });
+  handleChange = (e) => {
+    this.setState({ taskName: e.target.value });
   };
 
-  onStartTimer = () => {
+  handleStartTimer = () => {
     const { tickTimer, startTimer } = this.props;
     this.setState({ isActiveTimer: true });
     setStorageTimer(0);
@@ -126,14 +126,14 @@ class Timer extends Component {
     clearInterval(this.timeInterval);
   };
 
-  onStopTimer = () => {
-    const { name } = this.state;
+  handleStopTimer = () => {
+    const { taskName } = this.state;
     const { stopTimer, addNewTask, currentTime } = this.props;
 
     const stopTime = moment().format('HH:mm:ss');
     const startTime = isDifferenceInTime(stopTime, unixToTime(currentTime));
     const data = {
-      name: name,
+      name: taskName,
       startTime: unixToTime(startTime),
       durationTime: unixToTime(currentTime),
       endTime: stopTime,
@@ -142,37 +142,38 @@ class Timer extends Component {
     addNewTask(data);
     stopTimer();
     this.onClearInterval();
-    this.setState({ name: '', isActiveTimer: false });
+    this.setState({ taskName: '', isActiveTimer: false });
   };
 
-  onCloseError = () => {
+  handleCloseError = () => {
     this.setState({ isError: false });
   };
 
   render() {
     const { currentTime } = this.props;
-    const { isActiveTimer, name } = this.state;
+    const { isActiveTimer, taskName, isError } = this.state;
     const isTimerValue = unixToTime(currentTime);
     return (
       <Box className="container" m={2}>
         <TextField
           id="standard-basic"
           label="Name of your task"
-          onChange={this.onChange}
-          value={name}
+          onChange={this.handleChange}
+          value={taskName}
         />
         <Box borderRadius="50%" boxShadow={5} className="Box">
           <Typography color="primary" variant="h4">
             {isTimerValue}
           </Typography>
         </Box>
-        <StyleButton color="primary" onClick={this.onClick} className="button">
+        <StyleButton
+          color="primary"
+          onClick={this.handleClick}
+          className="button"
+        >
           {isActiveTimer ? 'stop' : 'start'}
         </StyleButton>
-        <AlertDialog
-          open={this.state.isError}
-          handleClose={this.onCloseError}
-        />
+        <AlertDialog open={isError} handleClose={this.handleCloseError} />
       </Box>
     );
   }

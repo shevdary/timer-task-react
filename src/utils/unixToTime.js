@@ -13,8 +13,8 @@ const isDifferenceInTime = (onStartTimer, onCLoseTimer) => {
   return resultTime;
 };
 
-const countMinuteChart = (data, tasks) => {
-  data.map((item) => (item.minutes = 0));
+const countMinuteChart = (chartAxis, tasks) => {
+  chartAxis.map((item) => (item.minutes = 0));
   tasks.map((item) => {
     const startTimerInHour = moment(item.startTime, 'HH:mm:ss ');
     const nextHour = moment(startTimerInHour.hours() + 1, 'HH:mm:ss ');
@@ -26,7 +26,7 @@ const countMinuteChart = (data, tasks) => {
       .duration(differenceInSeconds - taskDurationInSeconds, 'ms')
       .asSeconds();
     if (increaseDuration > 0) {
-      data[startTimerInHour.hours()].minutes += moment(
+      chartAxis[startTimerInHour.hours()].minutes += moment(
         item.durationTime,
         'HH:mm:ss'
       ).minutes();
@@ -34,18 +34,18 @@ const countMinuteChart = (data, tasks) => {
 
     if (increaseDuration < 0) {
       if (increaseDuration * -1 < 3600) {
-        data[startTimerInHour.hours()].minutes += moment
+        chartAxis[startTimerInHour.hours()].minutes += moment
           .duration(differenceInSeconds, 'seconds')
           .minutes();
-        data[endTimerInHour.hours()].minutes += endTimerInHour.minutes();
+        chartAxis[endTimerInHour.hours()].minutes += endTimerInHour.minutes();
       }
 
       if (increaseDuration * -1 > 3600) {
-        data[startTimerInHour.hours()].minutes += moment
+        chartAxis[startTimerInHour.hours()].minutes += moment
           .duration(differenceInSeconds, 'seconds')
           .minutes();
-        data[nextHour.hours()].minutes = 60;
-        data[endTimerInHour.hours()].minutes += moment
+        chartAxis[nextHour.hours()].minutes = 60;
+        chartAxis[endTimerInHour.hours()].minutes += moment
           .duration(increaseDuration * -1, 'seconds')
           .minutes();
       }

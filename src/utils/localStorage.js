@@ -1,15 +1,12 @@
-const setStorageTimer = value =>
-  localStorage.setItem('TimeBrowserClosed', value);
+const setStorageTimer = (time) =>
+  localStorage.setItem('TimeBrowserClosed', time);
 
-const setTasksStorage = tasks =>
+const setTasksStorage = (tasks) =>
   localStorage.setItem('tasksData', JSON.stringify(tasks));
 
 const getTimerFromStorage = () => localStorage.getItem('TimeBrowserClosed');
 
-const getDataFromStorage = () => {
-  const data = JSON.parse(localStorage.getItem('tasksData'));
-  return data;
-};
+const getDataFromStorage = () => JSON.parse(localStorage.getItem('tasksData'));
 
 const clearStorage = () => {
   localStorage.clear();

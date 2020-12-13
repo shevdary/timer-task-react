@@ -19,7 +19,7 @@ import green from '@material-ui/core/colors/green';
 // utils
 import { themeInfo } from '../../material/customTheme';
 import TaskInfoUndefined from './TaskInfoUndefined';
-import { getDataFromStorage } from '../../localStorage';
+import { getDataFromStorage } from '../../utils/localStorage';
 
 // history
 import { useParams } from 'react-router-dom';
