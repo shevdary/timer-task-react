@@ -51,6 +51,7 @@ describe('render correctly table component', () => {
   describe('when component well mount call the method onCharts', () => {
     it('should add to the array the value of minutes that corresponds to the time', () => {
       const component = container.dive().dive();
+      F;
 
       const minutesTask1 = component.state().data[13].minutes;
       const minutesTask2 = component.state().data[16].minutes;

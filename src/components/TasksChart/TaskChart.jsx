@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // componets
-import ButtonGenerate from '../GenerateButton/GenerateButton';
+import ButtonGenerate from '../Button/Button';
 
 // recharts
 import {
@@ -26,62 +26,58 @@ class TaskChart extends Component {
     super(props);
     this.state = {
       data: [],
+      chartKey: 0,
     };
   }
-
   componentDidMount() {
     this.renderTable();
   }
 
-  componentDidUpdate() {
-    this.onCharts();
+  componentDidUpdate(prevProps) {
+    const { data } = this.state;
+    const { tasks } = this.props;
+    countMinuteChart(data, tasks);
+    if (prevProps.tasks !== tasks) {
+      this.setState({ chartKey : Math.trunc(Math.random() * 10) });
+    }
   }
 
   renderTable = () => {
     const { data } = this.state;
-    const date = data;
+    const hourCol = data;
     for (let i = 0; i < 24; i++) {
-      date.push({ name: i, minutes: 0 });
+      hourCol.push({ name: i, minutes: 0 });
     }
-    this.setState({ date: date });
-  };
-
-  onCharts = () => {
-    const { data } = this.state;
-    const { tasks } = this.props;
-    let copyData = data;
-    countMinuteChart(copyData, tasks);
+    this.setState({ data: hourCol });
   };
 
   render() {
     return (
       <div>
-        <ResponsiveContainer minWidth="100%" minHeight="100%" aspect={4 / 1}>
-          <BarChart
-            data={this.state.data}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis domain={[0, 60]} allowDataOverFlow={true} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="minutes" fill="#344dc4" />
-          </BarChart>
-        </ResponsiveContainer>
+        <div>
+          <ResponsiveContainer minWidth="100%" minHeight="100%" aspect={4 / 1}>
+            <BarChart
+              data={this.state.data}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis domain={[0, (dataMax) => 60]} allowDataOverFlow={true} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="minutes" fill="#344dc4" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
         <ButtonGenerate />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ tasks: { tasks } }) => ({
-  tasks,
-});
-
-export default connect(mapStateToProps)(TaskChart);
+export default connect((state) => ({ tasks: state.tasks.tasks }))(TaskChart);
