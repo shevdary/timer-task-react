@@ -15,7 +15,7 @@ let history = createBrowserHistory();
 
 const TaskInfoUndefined = () => {
   return (
-    <Dialog open={true} fullWidth={'true'} maxWidth="md">
+    <Dialog open={true} fullWidth='true' maxWidth="md">
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           You are trying to get info about a non-existent task

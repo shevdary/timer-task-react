@@ -32,7 +32,7 @@ import {
 import { tableHeader } from '../../utils/tableHeader';
 import { useHistory } from 'react-router-dom';
 
-const TasksLog = ({ tasks, onDelete }) => {
+const TasksLog = ({ tasks, removeTask }) => {
   const [isOpen, setOpen] = useState(false);
   const [deleteId, setId] = useState(null);
   const history = useHistory();
@@ -51,7 +51,7 @@ const TasksLog = ({ tasks, onDelete }) => {
   };
 
   const handleDelete = () => {
-    onDelete(deleteId);
+    removeTask(deleteId);
     setOpen(false);
   };
 
@@ -111,19 +111,9 @@ const TasksLog = ({ tasks, onDelete }) => {
   );
 };
 
-const mapStateToProps = ({ tasks: { tasks } }) => ({
-  tasks,
-});
-
-const mapDispatchToProps = () => {
-  return {
-    onDelete: (deleteId) => {
-      removeTask(deleteId);
-    },
-    onUpdateList: (tasks) => {
-      updateTasks(tasks);
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TasksLog);
+export default connect(
+  ({ tasks: { tasks } }) => ({
+    tasks,
+  }),
+  { removeTask }
+)(TasksLog);

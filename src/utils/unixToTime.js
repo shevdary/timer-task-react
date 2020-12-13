@@ -7,46 +7,46 @@ const unixToTime = (seconds) => {
 const isDifferenceInTime = (onStartTimer, onCLoseTimer) => {
   const isStartTimer = moment(onStartTimer, 'HH:mm:ss');
   const isCloseTimer = moment(onCLoseTimer, 'HH:mm:ss');
-  const durationInMilisec = isStartTimer.diff(isCloseTimer);
-  const formatDuration = moment.duration(durationInMilisec);
+  const durationInMs = isStartTimer.diff(isCloseTimer);
+  const formatDuration = moment.duration(durationInMs);
   const resultTime = formatDuration.valueOf() / 1000;
   return resultTime;
 };
 
-const countMinuteChart = (copyData, tasks) => {
-  tasks.forEach((item) => {
-    const startTimerHour = moment(item.startTime, 'HH:mm ');
-    const nextHour = moment(startTimerHour.hours() + 1, 'HH:mm ');
-    const endTimeHour = moment(item.endTime, 'HH:mm');
-    const durationsInSecond = isDifferenceInTime(nextHour, startTimerHour);
-    const durationToTime = moment.duration(durationsInSecond, 's');
-    const timerDuration = moment.duration(item.durationTime, 's');
-    const increase = moment
-      .duration(durationToTime - timerDuration, 'ms')
+const countMinuteChart = (data, tasks) => {
+  data.map((item) => (item.minutes = 0));
+  tasks.map((item) => {
+    const startTimerInHour = moment(item.startTime, 'HH:mm:ss ');
+    const nextHour = moment(startTimerInHour.hours() + 1, 'HH:mm:ss ');
+    const endTimerInHour = moment(item.endTime, 'HH:mm:ss');
+    const differenceHour = isDifferenceInTime(nextHour, startTimerInHour);
+    const differenceInSeconds = moment.duration(differenceHour, 's');
+    const taskDurationInSeconds = moment.duration(item.durationTime, 's');
+    const increaseDuration = moment
+      .duration(differenceInSeconds - taskDurationInSeconds, 'ms')
       .asSeconds();
-
-    if (increase > 0) {
-      copyData[startTimerHour.hours()].minutes += moment(
+    if (increaseDuration > 0) {
+      data[startTimerInHour.hours()].minutes += moment(
         item.durationTime,
         'HH:mm:ss'
       ).minutes();
     }
 
-    if (increase < 0) {
-      if (increase * -1 < 3600) {
-        copyData[startTimerHour.hours()].minutes += moment
-          .duration(durationToTime, 'seconds')
+    if (increaseDuration < 0) {
+      if (increaseDuration * -1 < 3600) {
+        data[startTimerInHour.hours()].minutes += moment
+          .duration(differenceInSeconds, 'seconds')
           .minutes();
-        copyData[endTimeHour.hours()].minutes += endTimeHour.minutes();
+        data[endTimerInHour.hours()].minutes += endTimerInHour.minutes();
       }
 
-      if (increase * -1 > 3600) {
-        copyData[startTimerHour.hours()].minutes += moment
-          .duration(durationToTime, 'seconds')
+      if (increaseDuration * -1 > 3600) {
+        data[startTimerInHour.hours()].minutes += moment
+          .duration(differenceInSeconds, 'seconds')
           .minutes();
-        copyData[startTimerHour.hours() + 1].minutes = 60;
-        copyData[endTimeHour.hours()].minutes += moment
-          .duration(increase * -1, 'seconds')
+        data[nextHour.hours()].minutes = 60;
+        data[endTimerInHour.hours()].minutes += moment
+          .duration(increaseDuration * -1, 'seconds')
           .minutes();
       }
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-//material-ui
+// material-ui
 import {
   Dialog,
   DialogActions,
@@ -18,8 +18,8 @@ export const AlertDialog = ({ open, handleClose }) => {
     <div>
       <Dialog open={open} fullWidth={true} maxWidth="md">
         <ThemeProvider theme={themeError}>
-          <DialogTitle id="alert-dialog-title">
-            <Typography variant="h6" color="primary">
+          <DialogTitle id="alert-dialog-title" disableTypography>
+            <Typography variant="h5" color="primary">
               Empty task name
             </Typography>
           </DialogTitle>

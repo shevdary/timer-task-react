@@ -75,8 +75,6 @@ const TaskInfo = ({ tasks }) => {
   return <div>{details}</div>;
 };
 
-const mapStateToProps = ({ tasks: { tasks } }) => ({
+export default connect(({ tasks: { tasks } }) => ({
   tasks,
-});
-
-export default connect(mapStateToProps)(TaskInfo);
+}))(TaskInfo);

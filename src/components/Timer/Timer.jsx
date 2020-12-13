@@ -178,22 +178,18 @@ class Timer extends Component {
   }
 }
 
-const mapStateToProps = ({
-  tasks: { tasks },
-  timer: { currentTime, isStartTime },
-}) => {
-  return {
+export default connect(
+  ({ tasks: { tasks }, timer: { currentTime, isStartTime } }) => ({
     tasks,
     currentTime,
     isStartTime,
-  };
-};
-
-export default connect(mapStateToProps, {
-  addNewTask,
-  updateTasks,
-  tickTimer,
-  startTimer,
-  updateTimer,
-  stopTimer,
-})(Timer);
+  }),
+  {
+    addNewTask,
+    updateTasks,
+    tickTimer,
+    startTimer,
+    updateTimer,
+    stopTimer,
+  }
+)(Timer);
