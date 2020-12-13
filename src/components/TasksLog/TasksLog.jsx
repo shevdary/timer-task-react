@@ -55,23 +55,30 @@ const TasksLog = ({ tasks, removeTask }) => {
     setOpen(false);
   };
 
-  const TableBodyRow = (item, idx) => {
+  const TableBodyRow = (taskItem) => {
     return (
-      <StyleTableRow key={item.id}>
+      <StyleTableRow key={taskItem.id}>
         <TableCell component="th" scope="row">
-          {item.id}
+          {taskItem.id}
         </TableCell>
-        <TableCell align="left">{item.name}</TableCell>
-        <TableCell align="left">{item.startTime}</TableCell>
-        <TableCell align="left">{item.endTime}</TableCell>
-        <TableCell align="left">{item.durationTime}</TableCell>
+        <TableCell align="left" width="30%">
+          <Typography style={{ wordWrap: 'break-word' }}>
+            {taskItem.name}
+          </Typography>
+        </TableCell>
+        <TableCell align="left">{taskItem.startTime}</TableCell>
+        <TableCell align="left">{taskItem.endTime}</TableCell>
+        <TableCell align="left">{taskItem.durationTime}</TableCell>
         <TableCell align="left">
-          <StyleButton color="primary" onClick={() => handleGetInfo(item.id)}>
+          <StyleButton
+            color="primary"
+            onClick={() => handleGetInfo(taskItem.id)}
+          >
             Info
           </StyleButton>
         </TableCell>
         <TableCell align="left">
-          <StyleButton color="primary" onClick={() => handleClick(item.id)}>
+          <StyleButton color="primary" onClick={() => handleClick(taskItem.id)}>
             Delete
           </StyleButton>
         </TableCell>
