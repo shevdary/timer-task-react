@@ -9,7 +9,7 @@ class MainPage extends Component {
     return (
       <div>
         <Timer />
-        <TaskTab history={createBrowserHistory()}/>
+        <TaskTab />
       </div>
     );
   }

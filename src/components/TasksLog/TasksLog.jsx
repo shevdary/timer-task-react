@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-
 // redux
-const { dispatch } = store;
 import { connect } from 'react-redux';
 import * as actions from '../../redux/reducers/tasks';
 import { bindActionCreators } from 'redux';
-const { removeTask, updateTasks } = bindActionCreators(actions, dispatch);
 import store from '../../redux/store';
-
 // components
 import { AlertDelete } from '../AlertWindow/AlertDialogDelete';
-
 // material-ui
 import {
   TableCell,
@@ -27,10 +22,12 @@ import {
   StyledTableCell,
   StyleTableRow,
 } from '../../material/customStyles';
-
-// utils
+// other
 import { tableHeader } from '../../utils/tableHeader';
 import { useHistory } from 'react-router-dom';
+
+const { dispatch } = store;
+const { removeTask } = bindActionCreators(actions, dispatch);
 
 const TasksLog = ({ tasks, removeTask }) => {
   const [isOpen, setOpen] = useState(false);
@@ -98,14 +95,12 @@ const TasksLog = ({ tasks, removeTask }) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>{tasks ? tasks.map(TableBodyRow) : true}</TableBody>
+          <TableBody>{tasks && tasks.map(TableBodyRow)}</TableBody>
         </Table>
-        {tasks.length === 0 ? (
+        {tasks.length === 0 && (
           <Typography align="center" color="textSecondary" variant="h4">
             Your task list is empty
           </Typography>
-        ) : (
-          false
         )}
       </TableContainer>
       <AlertDelete

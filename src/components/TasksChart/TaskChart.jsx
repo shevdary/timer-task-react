@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-
 // redux
 import { connect } from 'react-redux';
-
-// componets
+// components
 import GenerateButton from '../GenerateButton/GenerateButton';
-
 // recharts
 import {
   BarChart,
@@ -17,7 +14,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-
 // utils
 import { countMinuteChart } from '../../utils/unixToTime';
 

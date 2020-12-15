@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 // redux
 import { connect } from 'react-redux';
 import {
@@ -9,18 +8,14 @@ import {
   startTimer,
 } from '../../redux/reducers/timer';
 import { updateTasks, addNewTask } from '../../redux/reducers/tasks';
-
 // components
 import { AlertDialog } from '../AlertWindow/AlertDialogInfo';
-
 // style
 import './Timer.css';
-
 // material-ui
 import { Box, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { StyleButton } from '../../material/customStyles';
-
 // utils
 import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
 import moment from 'moment';

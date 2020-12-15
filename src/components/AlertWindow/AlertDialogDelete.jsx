@@ -1,6 +1,5 @@
 import React from 'react';
-
-//material-ui
+// material-ui
 import {
   Dialog,
   DialogActions,

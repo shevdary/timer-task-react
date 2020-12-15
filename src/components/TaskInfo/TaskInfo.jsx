@@ -24,10 +24,11 @@ const TaskInfo = ({ tasks }) => {
   const { id } = useParams();
   const history = useHistory();
   const info = tasks.find((item) => item.id === Number(id));
-  console.log(id, 'id');
+
   if (!info) {
     return <TaskInfoUndefined />;
   }
+
   return (
     <Dialog
       aria-labelledby="customized-dialog-title"
