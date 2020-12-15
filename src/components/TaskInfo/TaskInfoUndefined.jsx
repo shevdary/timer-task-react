@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 // material-ui
 import {
   Button,
@@ -8,21 +7,26 @@ import {
   DialogContent,
   DialogContentText,
 } from '@material-ui/core';
-
 // history
-import { createBrowserHistory } from 'history';
-let history = createBrowserHistory();
+import { useHistory } from 'react-router-dom';
 
 const TaskInfoUndefined = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const history = useHistory();
+  const handleCloseAlert = () => {
+    setIsOpen(false);
+    history.replace('/tasks');
+  };
+
   return (
-    <Dialog open={true} fullWidth='true' maxWidth="md">
+    <Dialog open={isOpen} fullWidth="true" maxWidth="md">
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           You are trying to get info about a non-existent task
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => history.back()} color="secondary" autoFocus>
+        <Button onClick={handleCloseAlert} color="secondary" autoFocus>
           back
         </Button>
       </DialogActions>

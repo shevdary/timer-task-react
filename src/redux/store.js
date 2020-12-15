@@ -1,5 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-
+import { configureStore } from '@reduxjs/toolkit';
 // reducer
 import reducers from './reducers';
 

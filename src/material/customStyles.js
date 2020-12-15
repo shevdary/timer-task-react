@@ -8,6 +8,7 @@ import {
 
 const StyleTabs = withStyles(() => ({
   root: {
+    color: '#ffffff',
     backgroundColor: '#01bcd5',
   },
 }))(Tabs);

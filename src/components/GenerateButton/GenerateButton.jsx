@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { StyleButtonGenerate } from '../../material/customStyles';
-
 // redux
 import { connect } from 'react-redux';
 import store from '../../redux/store';
 import * as actions from '../../redux/reducers/tasks';
 import { bindActionCreators } from 'redux';
-const { dispatch } = store;
-const { setNewListTasks} = bindActionCreators(actions, dispatch);
-
 // utils
 import { unixToTime } from '../../utils/unixToTime';
 import moment from 'moment';
 import faker from 'faker';
+
+const { dispatch } = store;
+const { setNewListTasks} = bindActionCreators(actions, dispatch);
 
 class GenerateButton extends Component {
   generateTime = (tasks) => {

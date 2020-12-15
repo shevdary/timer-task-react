@@ -1,48 +1,52 @@
-import React from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 // components
-import TasksLog from '../TasksLog/TasksLog';
 import TaskChart from '../TasksChart/TaskChart';
+import TasksLog from '../TasksLog/TasksLog';
 // material-ui
 import { AppBar, Tab } from '@material-ui/core';
+// utils
+import { Route, Switch, Link, useParams, useHistory } from 'react-router-dom';
 import { StyleTabs } from '../../material/customStyles';
 
-// utils
-import { createBrowserHistory } from 'history';
-import { useParams } from 'react-router-dom';
-const history = createBrowserHistory();
-
 const TaskTab = () => {
-  const page = useParams().page;
-  const tabNameToIndex = {
-    0: 'tasks',
-    1: 'chart',
-  };
-  const index = {
-    tasks: 0,
-    chart: 1,
-  };
-  const [value, setValue] = React.useState(index[page]);
+  const { page } = useParams();
+  const history = useHistory();
+  const [value, setValue] = useState(page);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    history.push(`/${tabNameToIndex[newValue]}`);
+  const handleChange = (event, value) => {
+    setValue(value);
+    history.push(`/${value}`);
   };
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" color="default">
         <StyleTabs
           variant="fullWidth"
           value={value}
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="TASKS LOG" />
-          <Tab label="TASKS CHART" />
+          <Tab
+            label="TASKS LOG"
+            index={0}
+            value="tasks"
+            component={Link}
+            to="/tasks"
+          />
+          <Tab
+            label="TASKS CHART"
+            index={1}
+            value="chart"
+            component={Link}
+            to="/chart"
+          />
         </StyleTabs>
       </AppBar>
-      {value === 0 && <TasksLog history={history} />}
-      {value === 1 && <TaskChart />}
+      <Switch>
+        <Route exact path="/tasks" component={TasksLog} />
+        <Route exact path="/chart" component={TaskChart} />
+      </Switch>
     </div>
   );
 };
