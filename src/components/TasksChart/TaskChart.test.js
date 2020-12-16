@@ -32,8 +32,8 @@ const initialState = {
         id: 4,
         name: 'fourth task',
         startTime: '18:56:59',
-        endTime: '20:06:18',
-        durationTime: '01:10:15',
+        endTime: '20:06:14',
+        durationTime: '01:09:15',
       },
     ],
   },
@@ -51,7 +51,6 @@ describe('render correctly table component', () => {
   describe('when component well mount call the method onCharts', () => {
     it('should add to the array the value of minutes that corresponds to the time', () => {
       const component = container.dive().dive();
-      F;
 
       const minutesTask1 = component.state().data[13].minutes;
       const minutesTask2 = component.state().data[16].minutes;
@@ -65,7 +64,7 @@ describe('render correctly table component', () => {
       expect(minutesTask2).toEqual(8);
       expect(minutesTask3).toEqual(52);
       expect(minutesTask5).toEqual(40);
-      expect(minutesTask6).toEqual(4);
+      expect(minutesTask6).toEqual(3);
       expect(minutesTask7).toEqual(60);
       expect(minutesTask8).toEqual(6);
     });
