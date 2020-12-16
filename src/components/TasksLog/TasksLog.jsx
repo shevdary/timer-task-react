@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 // redux
-import { connect } from 'react-redux';
-import * as actions from '../../redux/reducers/tasks';
-import { bindActionCreators } from 'redux';
-import store from '../../redux/store';
+import { connect, useDispatch } from 'react-redux';
+import { removeTask } from '../../redux/reducers/tasks';
 // components
 import { AlertDelete } from '../AlertWindow/AlertDialogDelete';
+import TasksLogData from './TasksLogData';
 // material-ui
 import {
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
@@ -18,70 +16,30 @@ import {
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import {
-  StyleButton,
   StyledTableCell,
-  StyleTableRow,
 } from '../../material/customStyles';
 // other
 import { tableHeader } from '../../utils/tableHeader';
-import { useHistory } from 'react-router-dom';
 
-const { dispatch } = store;
-const { removeTask } = bindActionCreators(actions, dispatch);
-
-const TasksLog = ({ tasks, removeTask }) => {
-  const [isOpen, setOpen] = useState(false);
-  const [deleteId, setId] = useState(null);
-  const history = useHistory();
-
-  const handleGetInfo = (id) => {
-    history.push(`/tasks/${id}`);
-  };
+const TasksLog = ({ tasks }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const dispatch = useDispatch();
 
   const handleClick = (id) => {
-    setOpen(true);
-    setId(id);
+    setIsOpen(true);
+    setDeleteId(id);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setIsOpen(false);
   };
 
   const handleDelete = () => {
-    removeTask(deleteId);
-    setOpen(false);
+    dispatch(removeTask(deleteId));
+    setIsOpen(false);
   };
 
-  const TableBodyRow = (taskItem) => {
-    return (
-      <StyleTableRow key={taskItem.id}>
-        <TableCell component="th" scope="row">
-          {taskItem.id}
-        </TableCell>
-        <TableCell align="left" width="30%">
-          <Typography style={{ wordWrap: 'break-word' }}>
-            {taskItem.name}
-          </Typography>
-        </TableCell>
-        <TableCell align="left">{taskItem.startTime}</TableCell>
-        <TableCell align="left">{taskItem.endTime}</TableCell>
-        <TableCell align="left">{taskItem.durationTime}</TableCell>
-        <TableCell align="left">
-          <StyleButton
-            color="primary"
-            onClick={() => handleGetInfo(taskItem.id)}
-          >
-            Info
-          </StyleButton>
-        </TableCell>
-        <TableCell align="left">
-          <StyleButton color="primary" onClick={() => handleClick(taskItem.id)}>
-            Delete
-          </StyleButton>
-        </TableCell>
-      </StyleTableRow>
-    );
-  };
   return (
     <div>
       <TableContainer component={Paper} className="TableContainer">
@@ -95,7 +53,16 @@ const TasksLog = ({ tasks, removeTask }) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>{tasks && tasks.map(TableBodyRow)}</TableBody>
+          <TableBody>
+            {tasks &&
+              tasks.map((tasksData, key) => (
+                <TasksLogData
+                  taskItem={tasksData}
+                  handleClick={handleClick}
+                  key={key}
+                />
+              ))}
+          </TableBody>
         </Table>
         {tasks.length === 0 && (
           <Typography align="center" color="textSecondary" variant="h4">
@@ -113,9 +80,6 @@ const TasksLog = ({ tasks, removeTask }) => {
   );
 };
 
-export default connect(
-  ({ tasks: { tasks } }) => ({
-    tasks,
-  }),
-  { removeTask }
-)(TasksLog);
+export default connect(({ tasks: { tasks } }) => ({
+  tasks,
+}))(TasksLog);
