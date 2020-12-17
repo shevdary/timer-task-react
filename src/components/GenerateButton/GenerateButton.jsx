@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleButtonGenerate } from '../../material/customStyles';
 // redux
 import { connect, useDispatch } from 'react-redux';
-// utils
+import { updateTasks } from '../../redux/reducers/tasks';
+// other
 import { unixToTime } from '../../utils/unixToTime';
 import moment from 'moment';
 import faker from 'faker';
-import { setNewListTasks } from '../../redux/reducers/tasks';
 
 const GenerateButton = () => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const GenerateButton = () => {
         durationTime: durationTimer,
       });
     }
-    dispatch(setNewListTasks(newTaskList));
+    dispatch(updateTasks(newTaskList));
   };
 
   return (

@@ -1,5 +1,6 @@
 import {
   Button,
+  makeStyles,
   TableCell,
   TableRow,
   Tabs,
@@ -48,10 +49,17 @@ const StyleButtonGenerate = withStyles(() => ({
   },
 }))(Button);
 
+const useStyles = makeStyles({
+  root: {
+    background: 'white',
+  },
+});
+
 export {
   StyleTabs,
   StyledTableCell,
   StyleTableRow,
   StyleButton,
   StyleButtonGenerate,
+  useStyles,
 };
