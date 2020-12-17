@@ -16,7 +16,7 @@ import './Timer.css';
 import { Box, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { StyleButton } from '../../material/customStyles';
-// utils
+// other
 import { isDifferenceInTime, unixToTime } from '../../utils/unixToTime';
 import moment from 'moment';
 import {

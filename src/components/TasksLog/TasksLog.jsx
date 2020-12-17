@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-// redux
 import { connect, useDispatch } from 'react-redux';
+import {
+  TableContainer,
+  TableHead,
+  TableRow,
+  Table,
+  TableBody,
+  Paper,
+} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import { v4 as uuid } from 'uuid';
 import { removeTask } from '../../redux/reducers/tasks';
 // components
 import { AlertDelete } from '../AlertWindow/AlertDialogDelete';
 import TasksLogData from './TasksLogData';
 // material-ui
-import {
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Table,
-  TableBody,
-} from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 import { StyledTableCell } from '../../material/customStyles';
 // other
 import { tableHeader } from '../../utils/tableHeader';
@@ -43,20 +43,20 @@ const TasksLog = ({ tasks }) => {
         <Table aria-label="customized table">
           <TableHead className="table-head">
             <TableRow>
-              {tableHeader.map((title, key) => (
-                <StyledTableCell key={key} align="left">
+              {tableHeader.map((title) => (
+                <StyledTableCell key={uuid()} align="left">
                   {title}
                 </StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {tasks &&
-              tasks.map((tasksData, key) => (
+            {tasks
+              && tasks.map((tasksData) => (
                 <TasksLogData
+                  key={uuid()}
                   taskItem={tasksData}
                   handleClick={handleClick}
-                  key={key}
                 />
               ))}
           </TableBody>

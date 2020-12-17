@@ -1,4 +1,4 @@
-//reducer
+// reducer
 import { createSlice } from '@reduxjs/toolkit';
 
 const timerSlice = createSlice({
@@ -9,7 +9,7 @@ const timerSlice = createSlice({
   },
   reducers: {
     tickTimer: (state) => {
-      state.currentTime = state.currentTime + 1;
+      state.currentTime += 1;
       state.isStartTime = state.isStartTime;
     },
     updateTimer: (state, action) => {

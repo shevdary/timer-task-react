@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
+import {
+  Route, Switch, Link, useParams, useHistory,
+} from 'react-router-dom';
+// material-ui
+import { AppBar, Tab } from '@material-ui/core';
 // components
 import TaskChart from '../TasksChart/TaskChart';
 import TasksLog from '../TasksLog/TasksLog';
-// material-ui
-import { AppBar, Tab } from '@material-ui/core';
 // utils
-import {
-  Route,
-  Switch,
-  Link,
-  useParams,
-  useHistory,
-  BrowserRouter,
-} from 'react-router-dom';
 import { StyleTabs } from '../../material/customStyles';
 import TaskInfo from '../TaskInfo/TaskInfo';
 

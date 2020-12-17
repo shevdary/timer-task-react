@@ -1,15 +1,15 @@
 import React from 'react';
-//redux
+// redux
 import configureStore from 'redux-mock-store';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import TaskChart from '../TasksChart/TaskChart';
+import { beforeEach, describe, expect, it } from '@jest/globals';
+import TaskChart from './TaskChart';
 
 const initialState = {
   tasks: {
     tasks: [
       {
         id: 3,
-        name: 'theeth task',
+        name: 'third task',
         startTime: '16:52:00',
         endTime: '17:52:17',
         durationTime: '01:00:00',
@@ -41,7 +41,8 @@ const initialState = {
 
 describe('render correctly table component', () => {
   const mockStore = configureStore();
-  let store, container;
+  let store;
+  let container;
 
   beforeEach(() => {
     store = mockStore(initialState);

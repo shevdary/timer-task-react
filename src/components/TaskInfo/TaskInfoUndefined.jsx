@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 // material-ui
 import {
   Button,
@@ -7,8 +8,7 @@ import {
   DialogContent,
   DialogContentText,
 } from '@material-ui/core';
-// history
-import { useHistory } from 'react-router-dom';
+// other
 import { useStyles } from '../../material/customStyles';
 
 const TaskInfoUndefined = () => {
@@ -24,7 +24,7 @@ const TaskInfoUndefined = () => {
   return (
     <Dialog
       open={isOpen}
-      fullWidth={true}
+      fullWidth
       maxWidth="md"
       classes={{
         root: classes.root,

@@ -3,12 +3,10 @@ import React from 'react';
 import Timer from '../Timer/Timer';
 import TaskTab from '../TasksTab/TaskTab';
 
-const MainPage = () => {
-  return (
-    <div>
-      <Timer />
-      <TaskTab />
-    </div>
-  );
-};
+const MainPage = () => (
+  <div>
+    <Timer />
+    <TaskTab />
+  </div>
+);
 export default MainPage;

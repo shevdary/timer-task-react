@@ -1,19 +1,24 @@
 import React from 'react';
-import { StyleButton, StyleTableRow } from '../../material/customStyles';
-import { useHistory, useLocation } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom';
+//  material ui
 import { TableCell } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { v4 as uuid } from 'uuid';
+import { StyleButton, StyleTableRow } from '../../material/customStyles';
+//  other
 
 const TasksLogData = ({ taskItem, handleClick }) => {
+  const {
+    id, name, startTime, endTime, durationTime,
+  } = taskItem;
   const history = useHistory();
-  const { id, name, startTime, endTime, durationTime } = taskItem;
-  const handleGetInfo = (id) => {
-    history.push(`/tasks/${id}`);
+
+  const handleGetInfo = (taskId) => {
+    history.push(`/tasks/${taskId}`);
   };
 
   return (
-    <StyleTableRow key={id}>
+    <StyleTableRow key={uuid()}>
       <TableCell component="th" scope="row">
         {id}
       </TableCell>

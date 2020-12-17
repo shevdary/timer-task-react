@@ -1,9 +1,7 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-// components
-import TaskInfoUndefined from './TaskInfoUndefined';
-// redux
 import { connect } from 'react-redux';
+// components
 // material-ui
 import {
   Typography,
@@ -17,6 +15,7 @@ import {
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import green from '@material-ui/core/colors/green';
+import TaskInfoUndefined from './TaskInfoUndefined';
 // other
 import { themeInfo } from '../../material/customTheme';
 import { useStyles } from '../../material/customStyles';
@@ -34,13 +33,13 @@ const TaskInfo = ({ tasks }) => {
   return (
     <Dialog
       aria-labelledby="customized-dialog-title"
-      open={true}
+      open
       classes={{
         root: classes.root,
       }}
       maxWidth="sm"
       onClose={() => history.goBack()}
-      fullWidth={true}
+      fullWidth
     >
       <ThemeProvider theme={themeInfo}>
         <DialogTitle id="customized-dialog-title">
@@ -48,10 +47,22 @@ const TaskInfo = ({ tasks }) => {
           {info.name}
         </DialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>ID: {info.id}</Typography>
-          <Typography gutterBottom>Time start : {info.startTime}</Typography>
-          <Typography gutterBottom>Time end : {info.endTime}</Typography>
-          <Typography gutterBottom>Time spend : {info.durationTime}</Typography>
+          <Typography gutterBottom>
+            ID:
+            {info.id}
+          </Typography>
+          <Typography gutterBottom>
+            Time start :
+            {info.startTime}
+          </Typography>
+          <Typography gutterBottom>
+            Time end :
+            {info.endTime}
+          </Typography>
+          <Typography gutterBottom>
+            Time spend :
+            {info.durationTime}
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button
@@ -59,7 +70,8 @@ const TaskInfo = ({ tasks }) => {
             color="secondary"
             onClick={() => history.goBack()}
           >
-            <ArrowBackIcon /> Back
+            <ArrowBackIcon />
+            Back
           </Button>
         </DialogActions>
       </ThemeProvider>

@@ -18,10 +18,10 @@ const tasksSlice = createSlice({
       state.tasks = [
         {
           id: getLastId + 1,
-          name: name,
-          startTime: startTime,
-          durationTime: durationTime,
-          endTime: endTime,
+          name,
+          startTime,
+          durationTime,
+          endTime,
         },
         ...state.tasks,
       ];
