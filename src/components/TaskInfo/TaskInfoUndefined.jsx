@@ -9,9 +9,11 @@ import {
 } from '@material-ui/core';
 // history
 import { useHistory } from 'react-router-dom';
+import { useStyles } from '../../material/customStyles';
 
 const TaskInfoUndefined = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const classes = useStyles();
   const history = useHistory();
 
   const handleCloseAlert = () => {
@@ -20,7 +22,14 @@ const TaskInfoUndefined = () => {
   };
 
   return (
-    <Dialog open={isOpen} fullWidth={true} maxWidth="md">
+    <Dialog
+      open={isOpen}
+      fullWidth={true}
+      maxWidth="md"
+      classes={{
+        root: classes.root,
+      }}
+    >
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           You are trying to get info about a non-existent task

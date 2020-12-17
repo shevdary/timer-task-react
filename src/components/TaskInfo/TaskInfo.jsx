@@ -19,10 +19,12 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import green from '@material-ui/core/colors/green';
 // other
 import { themeInfo } from '../../material/customTheme';
+import { useStyles } from '../../material/customStyles';
 
 const TaskInfo = ({ tasks }) => {
   const { id } = useParams();
   const history = useHistory();
+  const classes = useStyles();
   const info = tasks.find((item) => item.id === Number(id));
 
   if (!info) {
@@ -33,6 +35,9 @@ const TaskInfo = ({ tasks }) => {
     <Dialog
       aria-labelledby="customized-dialog-title"
       open={true}
+      classes={{
+        root: classes.root,
+      }}
       maxWidth="sm"
       onClose={() => history.goBack()}
       fullWidth={true}

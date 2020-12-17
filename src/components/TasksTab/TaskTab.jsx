@@ -1,12 +1,20 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // components
 import TaskChart from '../TasksChart/TaskChart';
 import TasksLog from '../TasksLog/TasksLog';
 // material-ui
 import { AppBar, Tab } from '@material-ui/core';
 // utils
-import { Route, Switch, Link, useParams, useHistory } from 'react-router-dom';
+import {
+  Route,
+  Switch,
+  Link,
+  useParams,
+  useHistory,
+  BrowserRouter,
+} from 'react-router-dom';
 import { StyleTabs } from '../../material/customStyles';
+import TaskInfo from '../TaskInfo/TaskInfo';
 
 const TaskTab = () => {
   const { page } = useParams();
@@ -46,6 +54,7 @@ const TaskTab = () => {
       <Switch>
         <Route exact path="/tasks" component={TasksLog} />
         <Route exact path="/chart" component={TaskChart} />
+        <Route exact path={`/${page}/:id`} component={TaskInfo} />
       </Switch>
     </div>
   );

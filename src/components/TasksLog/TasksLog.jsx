@@ -15,9 +15,7 @@ import {
   TableBody,
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import {
-  StyledTableCell,
-} from '../../material/customStyles';
+import { StyledTableCell } from '../../material/customStyles';
 // other
 import { tableHeader } from '../../utils/tableHeader';
 
@@ -39,7 +37,6 @@ const TasksLog = ({ tasks }) => {
     dispatch(removeTask(deleteId));
     setIsOpen(false);
   };
-
   return (
     <div>
       <TableContainer component={Paper} className="TableContainer">
